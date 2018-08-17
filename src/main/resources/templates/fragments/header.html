@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" class="app">
+<head>
+    <th-block th:fragment="header-common">
+        <meta charset="utf-8"/>
+        <!--<link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/images/}" />-->
+        <meta name="description" content="san sim"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" th:href="@{/note/css/bootstrap.css}" type="text/css" />
+        <link rel="stylesheet" th:href="@{/note/css/animate.css}" type="text/css" />
+        <link rel="stylesheet" th:href="@{/note/css/font-awesome.min.css}" type="text/css" />
+        <link rel="stylesheet" th:href="@{/note/css/font.css}" type="text/css" cache="false"/>
+        <link rel="stylesheet" th:href="@{/note/js/datatables/datatables.css}" type="text/css"/>
+        <link rel="stylesheet" th:href="@{/note/js/select2/select2.css}" type="text/css"/>
+        <link rel="stylesheet" th:href="@{/note/js/select2/theme.css}" type="text/css"/>
+        <link rel="stylesheet" th:href="@{/note/js/fuelux/fuelux.css}" type="text/css" />
+        <link rel="stylesheet" th:href="@{/note/js/slider/slider.css}" type="text/css" />
+        <link rel="stylesheet" th:href="@{/note/js/datepicker/datepicker.css}" type="text/css"/>
+        <link rel="stylesheet" th:href="@{/note/css/style.css}" type="text/css"/>
+        <link rel="stylesheet" th:href="@{/note/css/app.css}" type="text/css"/>
+        <!--<link rel="stylesheet" th:href="@{/project/angularjs/autocomplete/autocomplete.css}" type="text/css"/>-->
+        <script>
+            var preUrl='';
+        </script>
+    </th-block>
+</head>
+<body>
+<th-block th:fragment="header-menu">
+    <header class="bg-dark dk header navbar navbar-fixed-top-xs" >
+
+        <div class="navbar-header aside-md ">
+            <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html">
+                <i class="fa fa-bars"></i>
+            </a>
+            <a href="/" class="navbar-brand" data-toggle="fullscreen1111"><img th:src="@{/note/images/logo.png}" class="m-r-sm ">QMS</a>
+            <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".nav-user">
+                <i class="fa fa-cog"></i>
+            </a>
+        </div>
+
+        <ul class="nav navbar-nav navbar-right hidden-xs nav-user " >
+            <li class="hidden-xs">
+                <a href="#" class="dropdown-toggle dk" data-toggle="dropdown">
+                    Trợ giúp
+                </a>
+                <section class="dropdown-menu aside-xl">
+                    <section class="panel bg-white">
+                        <header class="panel-heading b-light bg-light">
+                            <strong>Chọn tài liệu</strong>
+                        </header>
+                        <div class=" list-group-alt animated fadeInRight">
+                            <a href="#" class="media list-group-item">
+                              <span class="pull-left thumb-sm">
+                                 <i class="fa fa-book fa-3x"></i>
+                              </span>
+                                <span class="media-body block m-b-none">
+                                hỗ trợ
+                              </span>
+                            </a>
+                        </div>
+                    </section>
+                </section>
+            </li>
+            <li class="dropdown" style="margin-right:14px;">
+                <a href="#" class=" dropdown-toggle "  data-toggle="dropdown" > <span class="thumb-sm avatar pull-left"> <img th:src="@{/note/images/avatar_default.jpg}"> </span></span>  <b class="caret"></b> </a>
+                <ul class="dropdown-menu animated fadeInRight "><span class="arrow top"></span>
+                    <li><a href="#">Profile</a></li>
+                    <li ><a href="/system/user/change-my-pass">Đổi mật khẩu</a></li>
+                    <li class="divider"></li>
+                    <li><a th:href="@{/logout}">Đăng xuất</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </header>
+</th-block>
+
+</body>
+</html>

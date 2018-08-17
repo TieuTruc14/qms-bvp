@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" class="app"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>QMS</title>
+    <div th:replace="fragments/header :: header-common"/>
+</head>
+<body>
+<section class="vbox">
+    <div th:replace="fragments/header :: header-menu" />
+    <section>
+        <section class="hbox stretch">
+            <div th:replace="fragments/leftpanel :: leafpanel" />
+            <!--begin content-->
+            <section id="content">
+                <section class="vbox">
+                    <section class="scrollable padder">
+                        <ul class="breadcrumb no-border no-radius b-b b-light pull-in">
+                            <li><a href="<%=request.getContextPath()%>/"><i class="fa fa-home"></i>&nbsp;Home</a></li>
+                            <li><a href="#">ReceptionDoor</a></li>
+                        </ul>
+                        <section class="panel panel-default">
+                            <header class="panel-heading"><i class="fa fa-caret-square-o-right"></i></header>
+                            <div class="panel-body" style="min-height: 600px;">
+                                <form method="post" action="add" theme="simple"  enctype="multipart/form-data" class="form-horizontal" cssStyle="" validate="true">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" style="line-height: 30px">Tên cửa <span style="color: red">*</span></label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group m-b">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-file-text" aria-hidden="true"></i>
+                                        </span>
+                                                <input name="name" maxlength="100" style="width:100%;" value="${item.name}"
+                                                       placeholder="" class="form-control"/>
+
+                                            </div>
+                                            <!--<form:errors cssStyle="color: red" path="groupPrice.name" />-->
+                                        </div>
+                                    </div>
+
+                                    <div class="line line-dashed line-lg pull-in"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" style="line-height: 30px">Mức giá min</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group m-b">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                        </span>
+                                                <input name="min" maxlength="20" style="width:100%;" value="${item.min}" onkeypress="return restrictCharacters(this, event, digitsOnly);"
+                                                       placeholder="" class="form-control"/>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="line line-dashed line-lg pull-in"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" style="line-height: 30px">Mức giá max <span style="color: red">*</span></label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group m-b">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-chevron-left"></i>
+                                        </span>
+                                                <input name="max" placeholder="" maxlength="20" style="width:100%;" value="${item.max}" onkeypress="return restrictCharacters(this, event, digitsOnly);"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="line line-dashed line-lg pull-in"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" style="line-height: 30px">Mô tả </label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group m-b">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-rotate-right" style="font-size: 11px" aria-hidden="true"></i>
+                                        </span>
+                                                <input name="description" placeholder="" maxlength="500" value="${item.description}" style="width:100%;" class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="line line-dashed line-lg pull-in" style="clear:both ;margin-bottom: 50px"></div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4 col-sm-offset-5">
+                                            <a href="<%=request.getContextPath()%>/category/group-price/list" class="btn btn-default">Hủy bỏ</a>
+                                            <button type="submit" data-loading-text="Thêm mới" class="btn btn-primary">Thêm mới</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </section>
+                    </section>
+                    <footer class="footer bg-white b-t b-light"><small> &copy; 2018</small></footer>
+                </section>
+                <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
+            </section>
+            <!--end content-->
+        </section>
+    </section>
+</section>
+
+<div th:replace="fragments/footer :: footer-common" />
+</body>
+</html>

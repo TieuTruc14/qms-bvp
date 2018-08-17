@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" class="app"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>QMS</title>
+    <div th:replace="fragments/header :: header-common"/>
+</head>
+<body>
+<section class="vbox">
+    <header th:replace="fragments/header :: header" />
+    <section>
+        <section class="hbox stretch">
+            <aside th:replace="fragments/leftpanel :: leafpanel" />
+            <!--begin content-->
+
+            <!--end content-->
+        </section>
+    </section>
+</section>
+</body>
+
+</body>
+</html>

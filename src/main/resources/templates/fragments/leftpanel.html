@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<th-block th:fragment="leafpanel">
+<aside class="bg-dark lter b-r aside-md hidden-print hidden-xs " id="nav" >
+    <section class="vbox">
+        <header class="header bg-primary lter text-center clearfix">
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-dark btn-icon"><i class="fa fa-envelope"></i></button>
+                <div class="btn-group hidden-nav-xs">
+                    <a href="#" class="btn btn-sm btn-primary" >Phản hồi</a>
+                </div>
+            </div>
+        </header>
+        <section class="w-f scrollable">
+            <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
+                <nav class="nav-primary hidden-xs">
+                    <ul class="nav">
+                        <li class=""><a th:href="@{/}">
+                        <i class="fa fa-dashboard icon">
+                            <b class="bg-info"></b>
+                        </i><span>Dash Board</span></a>
+                        </li>
+                        <li class=""><a href="#" class=""> <i class="fa fa-file-text icon"> <b class="bg-primary"></b> </i> <span class="pull-right"> <i class="fa fa-angle-down text"></i> <i class="fa fa-angle-up text-active"></i> </span> <span>Quản lý</span> </a>
+                            <ul class="nav lt">
+                                <li class=""><a th:href="@{/admin/generality}" class=""> <i class="fa fa-angle-right"></i> <span>Thông tin cửa tiếp đón</span> </a></li>
+                            </ul>
+                        </li>
+                        <li class=""><a href="#" class=""> <i class="fa fa-file-text icon"> <b class="bg-primary"></b> </i> <span class="pull-right"> <i class="fa fa-angle-down text"></i> <i class="fa fa-angle-up text-active"></i> </span> <span>Danh mục</span> </a>
+                            <ul class="nav lt">
+                                    <li class=""><a th:href="@{/admin/category/area}" class=""> <i class="fa fa-angle-right"></i> <span>Khu vực tiếp đón</span> </a></li>
+                                    <li class=""><a th:href="@{/admin/category/door}" class=""> <i class="fa fa-angle-right"></i> <span>Cửa tiếp đón</span> </a></li>
+                                    <li class=""><a th:href="@{/admin/category/object-type}" class=""> <i class="fa fa-angle-right"></i> <span>Loại đối tượng tiếp đón</span> </a></li>
+                            </ul>
+                        </li>
+
+                        <!--<sec:authorize access="hasAnyRole('ROLE_SYSTEM_USER_VIEW','ROLE_SYSTEM_GROUP_VIEW','ROLE_SYSTEM_LOG_VIEW')">-->
+                            <li class=""><a href="#" class=""> <i class="fa fa-cogs icon"> <b class="bg-warning"></b> </i> <span class="pull-right"> <i class="fa fa-angle-down text"></i> <i class="fa fa-angle-up text-active"></i> </span> <span>Quản trị hệ thống</span> </a>
+                            <ul class="nav lt">
+                                <!--<sec:authorize access="hasRole('ROLE_SYSTEM_USER_VIEW')">-->
+                                    <li class=""><a th:href="@{/admin/system/user/list}" class=""> <i class="fa fa-angle-right"></i> <span>Người dùng</span> </a></li>
+                                <!--</sec:authorize>-->
+                                <!--<sec:authorize access="hasRole('ROLE_SYSTEM_GROUP_VIEW')">-->
+                                    <li class=""><a th:href="@{/admin/system/group/list}" class=""> <i class="fa fa-angle-right"></i> <span>Nhóm quyền</span> </a></li>
+                                <!--</sec:authorize>-->
+                                <!--<sec:authorize access="hasRole('ROLE_SYSTEM_LOG_VIEW')">-->
+                                    <li class=""><a th:href="@{/admin/system/history/list}" class=""> <i class="fa fa-angle-right"></i> <span>Lịch sử hệ thống</span> </a></li>
+                                <!--</sec:authorize>-->
+                            </ul>
+                            </li>
+                        <!--</sec:authorize>-->
+                    </ul>
+                </nav>
+            </div>
+        </section>
+        <footer class="footer lt hidden-xs b-t b-dark">
+            <a href="#nav" id="changeNavXS" data-toggle="class:nav-xs" class="pull-right btn btn-smbtn-dark btn-icon">
+                <i class="fa fa-angle-left text"></i>
+                <i class="fa fa-angle-right text-active"></i>
+            </a>
+        </footer>
+    </section>
+</aside>
+</th-block>
+</body>
+</html>

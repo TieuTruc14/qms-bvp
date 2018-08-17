@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+</head>
+<body>
+<div th:fragment="footer">
+    <div class="container">
+        <footer>
+            <span sec:authorize="isAuthenticated()">
+                Tài khoản: <span sec:authentication="name"></span> --- <span th:text ="${#authentication.getPrincipal().getFullName()}"></span> |
+                <a th:href="@{/logout}">Đăng xuất</a>
+            </span>
+        </footer>
+    </div>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
+    <style>
+        footer{margin-top:30px;}
+    </style>
+</div>
+<th-block th:fragment="footer-common">
+    <!--<[if lt IE 9]>-->
+    <!--<script th:src="@{/note/js/ie/html5shiv.js}" cache="false"></script>-->
+    <!--<script th:src="@{/note/js/ie/respond.min.js}" cache="false"></script>-->
+    <!--<script th:src="@{/note/js/ie/excanvas.js}" cache="false"></script>-->
+    <!--<[endif]>-->
+    <script th:src="@{/note/js/jquery.min.js}"></script>
+    <script th:src="@{/note/js/bootstrap.js}"></script>
+    <script th:src="@{/note/js/datepicker/bootstrap-datepicker.js}"></script>
+    <script th:src="@{/note/js/app.js}"></script>
+    <script th:src="@{/note/js/app.plugin.js}"></script>
+    <script th:src="@{/note/js/slimscroll/jquery.slimscroll.min.js}"></script>
+    <script th:src="@{/note/js/datatables/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/note/js/select2/select2.min.js}"></script>
+    <script th:src="@{/note/js/fuelux/fuelux.js}"></script>
+    <script th:src="@{/note/js/slider/bootstrap-slider.js}"></script>
+    <script th:src="@{/note/js/libs/moment.min.js}"></script>
+    <script th:src="@{/note/js/combodate/combodate.js}"></script>
+
+
+</th-block>
+</body>
+</html>

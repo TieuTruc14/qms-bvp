@@ -1,0 +1,46 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.4.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'qms.bvp'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-web')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile group: 'org.springframework.security', name: 'spring-security-taglibs', version: '5.0.5.RELEASE'
+
+	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.0.1.RELEASE'
+	compile group: 'org.springframework', name: 'spring-orm', version: '5.0.5.RELEASE'
+	compile group: 'com.zaxxer', name: 'HikariCP', version: '3.1.0'
+//	compile files('ojdbc8.jar')
+	compile files('F:/OSP/projects/Test/frame/ojdbc8.jar')
+	//giup tu reload code
+	compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.0.2.RELEASE'
+	compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.2.RELEASE'
+	compile group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
+// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+
+}

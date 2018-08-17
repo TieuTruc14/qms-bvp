@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" class="bg-dark">
+<head>
+    <title>ManhPT</title>
+    <meta charset="utf-8"/>
+    <meta name="description" content="app,qms"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" th:href="@{/note/css/bootstrap.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/note/css/animate.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/note/css/font-awesome.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/note/css/font.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/note/css/app.css}" type="text/css"/>
+
+    <!--[if lt IE 9]>
+    <script th:src="@{/note/js/ie/html5shiv.js}"></script>
+    <script th:src="@{/note/js/ie/respond.min.js}"></script>
+    <script th:src="@{/note/js/ie/excanvas.js}"></script>
+    <![endif]-->
+</head>
+<body>
+
+<section id="content" class="m-t-lg wrapper-md animated fadeInUp">
+    <div class="container aside-xxl">
+        <!--<a class="navbar-brand block" th:href="index.html"><img th:src="#" class="img-rounded"></a>-->
+        <section class="panel panel-default bg-white m-t-lg">
+            <header class="panel-heading text-center">
+                <strong>Đăng Nhập</strong>
+            </header>
+            <form th:action="@{/login}" method="post" class="panel-body wrapper-lg form-group">
+                <div class="form-group">
+                    <label class="control-label">Tài khoản</label>
+                    <input id="username" name="username" placeholder="username" class="form-control input-lg">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Mật khẩu</label>
+                    <input type="password" id="password" name="password" placeholder="password"
+                           class="form-control input-lg">
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="rememberme" name="remember-me"> Ghi nhớ mật khẩu
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                <div class="line line-dashed"></div>
+                <p class="text-primary">HỖ TRỢ KỸ THUẬT</p>
+                <p class="text-muted">
+                    <small>Di động:0977 258 852 (Mr. Phạm Mạnh)</small>
+                </p>
+            </form>
+        </section>
+    </div>
+</section>
+
+<!-- footer -->
+<footer id="footer">
+    <div class="text-center padder">
+        <p>
+            <small>QMS &copy; 2018</small>
+        </p>
+    </div>
+</footer>
+<!-- / footer -->
+<script th:src="@{/note/js/jquery.min.js}"></script>
+<!-- Bootstrap -->
+<script th:src="@{/note/js/bootstrap.js}"></script>
+<!-- App -->
+<script th:src="@{/note/js/app.js}"></script>
+<script th:src="@{/note/js/slimscroll/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/note/js/app.plugin.js}"></script>
+
+</body>
+</html>
