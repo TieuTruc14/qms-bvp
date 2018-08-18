@@ -45,4 +45,8 @@ public class ReceptionController {
         return new ResponseEntity<Reception>(item, HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping("")
+    public String reception(){
+        return "/public/reception";
+    }
 }

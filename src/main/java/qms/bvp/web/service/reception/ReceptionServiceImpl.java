@@ -105,7 +105,6 @@ public class ReceptionServiceImpl implements ReceptionService {
         Byte priority=item.getPrioritys().last();
         try{
             do{
-
                 TreeSet<Integer> tree=table1.get(priority);
                 int count=0;
                 if(tree.size()>0){

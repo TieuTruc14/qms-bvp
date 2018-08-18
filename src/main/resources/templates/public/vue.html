@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" class="app"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>QMS</title>
+    <div th:replace="fragments/header :: header-common"/>
+</head>
+<body>
+<script>
+    var doorId=[[${door.id}]];
+</script>
+<section class="vbox">
+    <section>
+        <section class="hbox stretch">
+            <!--begin content-->
+            <section id="content" ng-app="qms" ng-controller="qmsCtrl">
+                <section class="vbox">
+                    <section class="scrollable padder">
+                        <ul class="breadcrumb no-border no-radius b-b b-light pull-in">
+                            <li><a href="/"><i class="fa fa-home"></i>Cửa tiếp đón</a></li>
+                        </ul>
+                        <section id="main" class="panel panel-default hidden">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <h3 class="text-primary"><a th:text="${door.area_name}"></a> --- <a th:text="${door.name}"></a></h3>
+                                </div>
+                                <div class="form-group">
+                                    <h4 class="text-warning">NB đang tiếp đón</h4>
+                                    <div class="col-sm-6">
+                                        <h1 class="text-danger">{{item.code}}</h1>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <a id="getReception" class="btn btn-s-md btn-primary" ng-show="receptionEmpty" style="margin-right: 15px" ng-click="getReceptionForDoor()">Lấy số tiếp đón</a>
+                                        <label>{{statusGetReception}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <a id="miss" class="btn btn-s-md btn-warning" style="margin-right: 15px" ng-show="!receptionEmpty" ng-click="missNumber()">Bỏ qua</a>
+                                        <a id="done" class="btn btn-s-md btn-success" style="margin-right: 15px" ng-show="!receptionEmpty" ng-click="doneNumber()">Đã tiếp xong</a>
+                                        <a id="next" class="btn btn-s-md btn-primary " style="margin-right: 15px" ng-show="!receptionEmpty" ng-click="nextNumber()">Đã tiếp xong và mời NB tiếp</a>
+                                        <h4 class="text-danger">{{messageStatus}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+                <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
+            </section>
+            <!--end content-->
+        </section>
+    </section>
+</section>
+
+<div th:replace="fragments/footer :: footer-common" />
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script th:src="@{/js/angularjs/angular.min.js}"></script>
+<script th:src="@{/js/angularjs/angular-sanitize.min.js}"></script>
+<script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/project/public/door.js}"></script>
+</body>
+</html>

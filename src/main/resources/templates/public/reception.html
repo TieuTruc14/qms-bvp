@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" class="app"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>QMS</title>
+    <div th:replace="fragments/header :: header-common"/>
+</head>
+<body>
+<section class="vbox">
+
+    <section>
+        <section class="hbox stretch">
+            <!--begin content-->
+            <section id="content" ng-app="qms" ng-controller="qmsCtrl">
+                <section class="vbox">
+                    <section class="scrollable padder">
+                        <ul class="breadcrumb no-border no-radius b-b b-light pull-in">
+                            <li><a href="/"><i class="fa fa-home"></i>Màn hình tiếp đón</a></li>
+                            <!--<li><a href="#">Generality</a></li>-->
+                        </ul>
+                        <section class="panel panel-default">
+
+                            <div class="panel-body">
+                                <div class="form-group">
+                                   <h3 class="text-danger">{{messageStatus}}</h3>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <h3>Đối tượng</h3>
+                                        <!-- radio -->
+                                        <div class="radio">
+                                            <label class="radio-custom">
+                                                <input type="radio" ng-model="assurance" name="assurance"  ng-value="true">
+                                                <i class="fa fa-circle-o"></i>
+                                                Có BHYT
+                                            </label>
+                                            <label class="radio-custom">
+                                                <input type="radio" ng-model="assurance" name="assurance" ng-value="false">
+                                                <i class="fa fa-circle-o"></i>
+                                                Không BHYT
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h3>Ưu tiên</h3>
+                                        <!-- radio -->
+                                        <div class="radio">
+                                            <label class="radio-custom">
+                                                <input type="radio" ng-model="priority" name="priority" ng-value="true">
+                                                <i class="fa fa-circle-o"></i>
+                                                Có ưu tiên
+                                            </label>
+                                            <label class="radio-custom">
+                                                <input type="radio" ng-model="priority" name="priority" ng-value="false">
+                                                <i class="fa fa-circle-o"></i>
+                                                Không ưu tiên
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <h3>Khu vực</h3>
+                                        <div class="radio">
+                                            <label class="radio-custom"  ng-repeat="item in areas track by $index" style="margin-right: 10px;">
+                                                <input type="radio"  ng-model="area.areaId" name="areaId" ng-value="item.id">
+                                                <i class="fa fa-circle-o"></i>
+                                                {{item.name}}
+                                            </label>
+                                            <!--<label class="radio-custom">-->
+                                                <!--<input type="radio" name="area" checked="checked">-->
+                                                <!--<i class="fa fa-circle-o"></i>-->
+                                                <!--Tầng 2-Khám ngoại trú-->
+                                            <!--</label>-->
+                                            <!--<label class="radio-custom">-->
+                                                <!--<input type="radio" name="area" checked="checked">-->
+                                                <!--<i class="fa fa-circle-o"></i>-->
+                                                <!--Tầng 2-Khám CMU-->
+                                            <!--</label>-->
+                                        </div>
+                                        <h4 class="text-danger">{{areaError}}</h4>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <a id="layso" class="btn btn-s-md btn-warning pull-right" ng-click="genNumber()">Lấy số thứ tự</a>
+
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <a href="javascript:void(0);" class="text-primary">Số tiếp đón:</a>
+                                        <h3 class="text-danger" >{{item.code}}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+
+                </section>
+                <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
+            </section>
+            <!--end content-->
+        </section>
+    </section>
+</section>
+
+<div th:replace="fragments/footer :: footer-common" />
+<script th:src="@{/js/angularjs/angular.min.js}"></script>
+<script th:src="@{/js/angularjs/angular-sanitize.min.js}"></script>
+<script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/project/public/reception.js}"></script>
+</body>
+</html>

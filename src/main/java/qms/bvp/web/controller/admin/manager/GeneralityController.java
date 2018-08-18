@@ -21,7 +21,7 @@ import java.util.List;
  * Created by Admin on 8/16/2018.
  */
 @Controller
-@RequestMapping("/admin/generality")
+@RequestMapping("/admin/management/generality")
 public class GeneralityController {
     private Logger logger= LogManager.getLogger(GeneralityController.class);
     @Autowired
