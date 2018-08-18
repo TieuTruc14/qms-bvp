@@ -25,18 +25,7 @@
                             <div class="text-sm wrapper bg-light lt">
                                 <form cssClass="form-inline padder" action="list" role="form" theme="simple">
                                     <div class="form-group ">
-                                        <!--<div class="col-md-6">-->
-                                            <!--<div class="col-sm-8">-->
-                                                <!--<input type="text" ng-model="name" placeholder="Tên hiển thị" maxlength="50" class="input-sm form-control" />-->
-                                            <!--</div>-->
-                                            <!--<div class="col-sm-4"><a ng-click="search()" class="btn btn-info btn-sm">Tìm kiếm</a></div>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-md-6">-->
-                                            <!--<sec:authorize access="hasRole('ROLE_CATEGORY_GROUP_PRICE_ADD')">-->
-                                                <a class="btn btn-sm btn-primary pull-right"
-                                                   href="#"><i class="fa fa-plus"></i> Thêm mới</a>
-                                            <!--</sec:authorize>-->
-                                        <!--</div>-->
+                                        <a class="btn btn-sm btn-primary pull-right"  data-toggle="modal" data-target="#addItem"><i class="fa fa-plus"></i> Thêm mới</a>
                                     </div>
                                     <div class="line line-dashed line-lg pull-in" style="clear:both ;border-top:0px"></div>
                                 </form>
@@ -111,9 +100,89 @@
                             </footer>
                         </section>
                     </section>
+
                     <footer class="footer bg-white b-t b-light"><small> &copy; 2018</small></footer>
                 </section>
                 <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
+
+                <div class="modal fade"  id="addItem"  role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+                    <div class="modal-dialog" >
+                        <div class="modal-content">
+                            <div class="modal-header" style="padding: 7px;">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h5 class="modal-title">Thêm khu vực</h5>
+                            </div>
+                            <div  theme="simple"  cssClass="form-horizontal" cssStyle="" validate="false">
+                                <div class="modal-body"  style="padding: 10px;">
+                                    <div class="form-group">
+                                        <label class="control-label">Tên khu vực<span class="text-danger">*</span>:</label>
+                                        <input ng-model="item.name"  class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Mô tả:</label>
+                                        <input ng-model="item.description"  class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Tiền tố sinh mã<span class="text-danger">*</span>:</label>
+                                        <input ng-model="item.prefix" maxlength="4" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Số lần gọi loa<span class="text-danger">*</span>:</label>
+                                        <input ng-model="item.loudspeaker_times" type="number" class="form-control" onkeypress="return restrictCharacters(this, event, digitsOnly);"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label text-danger">{{messageError}}</label>
+                                        <label class="control-label text-info">{{messageStatus}}</label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer" style="padding: 10px;" >
+                                    <button id="btnCancel" type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                    <button id="btnAdd" type="submit" class="btn btn-success" ng-click="addItem()">Thêm mới</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade"  id="editItem"  role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+                    <div class="modal-dialog" >
+                        <div class="modal-content">
+                            <div class="modal-header" style="padding: 7px;">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h5 class="modal-title">Cập nhật thông tin khu vực</h5>
+                            </div>
+                            <form  method="POST" action=""  theme="simple" enctype="multipart/form-data" cssClass="form-horizontal" cssStyle="" validate="false">
+                                <div class="modal-body"  style="padding: 10px;">
+                                    <div class="form-group">
+                                        <label class="control-label">Tên khu vực<span class="text-danger">*</span>:</label>
+                                        <input ng-model="item.name"  class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Mô tả:</label>
+                                        <input ng-model="item.description"  class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Tiền tố sinh mã<span class="text-danger">*</span>:</label>
+                                        <input ng-model="item.prefix"  class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Số lần gọi loa<span class="text-danger">*</span>:</label>
+                                        <input ng-model="item.loudspeaker_times"  class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label text-danger">{{messageError}}</label>
+                                        <label class="control-label text-info">{{messageStatus}}</label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer" style="padding: 10px;" >
+                                    <button id="btnCancelEdit" type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                    <button id="btnEdit" type="submit" class="btn btn-success" ng-click="editItem()">Cập nhật</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
             </section>
             <!--end content-->
         </section>

@@ -24,8 +24,8 @@ public class ReceptionAreaDaoImpl implements ReceptionAreaDao {
     public Optional<PagingResult> page(PagingResult page) {
         int offset=0;
         if(page.getPageNumber()>0) offset=(page.getPageNumber()-1)*page.getNumberPerPage();
-        Long count=(Long)entityManager.createQuery("select count(id) from ReceptionArea").getSingleResult();
-        List<ReceptionArea> list=entityManager.createQuery("Select rea from ReceptionArea as rea ",ReceptionArea.class)
+        Long count=(Long)entityManager.createQuery("select count(id) from ReceptionArea where deleted=false").getSingleResult();
+        List<ReceptionArea> list=entityManager.createQuery("Select rea from ReceptionArea as rea where deleted=false",ReceptionArea.class)
                 .setFirstResult(offset).setMaxResults(page.getNumberPerPage()).getResultList();
         if(list!=null && count>0){
             page.setItems(list);

@@ -17,7 +17,7 @@
                 <section class="vbox">
                     <section class="scrollable padder">
                         <ul class="breadcrumb no-border no-radius b-b b-light pull-in">
-                            <li><a href="/"><i class="fa fa-home"></i>Cửa tiếp đón</a></li>
+                            <li><a href="/"><i class="fa fa-home"></i>Cửa tiếp đón</a></li>tgyry
                         </ul>
                         <section id="main" class="panel panel-default hidden">
                             <div class="panel-body">
@@ -36,9 +36,10 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <a id="miss" class="btn btn-s-md btn-warning" style="margin-right: 15px" ng-show="!receptionEmpty" ng-click="missNumber()">Bỏ qua</a>
-                                        <a id="done" class="btn btn-s-md btn-success" style="margin-right: 15px" ng-show="!receptionEmpty" ng-click="doneNumber()">Đã tiếp xong</a>
-                                        <a id="next" class="btn btn-s-md btn-primary " style="margin-right: 15px" ng-show="!receptionEmpty" ng-click="nextNumber()">Đã tiếp xong và mời NB tiếp</a>
+                                        <a id="miss" class="btn btn-s-md btn-warning" style="margin-right: 15px" ng-show="!receptionEmpty" ng-click="confirmReception(3)">Bỏ qua</a>
+                                        <a id="miss-next" class="btn btn-s-md btn-info" style="margin-right: 15px" ng-show="!receptionEmpty" ng-click="confirmReception(4)">Bỏ qua và lấy NB tiếp</a>
+                                        <a id="done" class="btn btn-s-md btn-success" style="margin-right: 15px" ng-show="!receptionEmpty" ng-click="confirmReception(1)">Đã tiếp xong</a>
+                                        <a id="done-next" class="btn btn-s-md btn-primary " style="margin-right: 15px" ng-show="!receptionEmpty" ng-click="confirmReception(2)">Đã tiếp xong và mời NB tiếp</a>
                                         <h4 class="text-danger">{{messageStatus}}</h4>
                                     </div>
                                 </div>
@@ -52,12 +53,12 @@
         </section>
     </section>
 </section>
-
-<div th:replace="fragments/footer :: footer-common" />
-<!--<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>-->
 <script th:src="@{/js/angularjs/angular.min.js}"></script>
 <script th:src="@{/js/angularjs/angular-sanitize.min.js}"></script>
+<div th:replace="fragments/footer :: footer-common" />
+<!--<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>-->
 <script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/angularjs/transform-request.js}"></script>
 <script th:src="@{/js/project/public/door.js}"></script>
 </body>
 </html>

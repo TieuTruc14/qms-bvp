@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TreeSet;
@@ -34,7 +35,7 @@ public class ReceptionDoor implements Serializable{
     private transient Reception reception_current;
     private transient String prefix;
     private transient TreeSet<Byte> prioritys;
-    private transient List<Reception> receptions_miss;
+    private transient List<Reception> receptions_miss=new ArrayList<>();
     @Column(name = "DISABLE",nullable = false,columnDefinition = "boolean default false")
     private Boolean disable;
     @Column(name = "DELETED",nullable = false,columnDefinition = "boolean default false")

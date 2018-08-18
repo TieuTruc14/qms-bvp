@@ -31,11 +31,15 @@ public class ReceptionDoorServiceImpl implements ReceptionDoorService {
     public Optional<List<ReceptionDoor>> listAll() {
         return Optional.of(doorRepository.findAll());
     }
+    @Override
+    public Optional<List<ReceptionDoor>> listAllActive() {
+        return doorRepository.listAllActive();
+    }
 
     @Override
     public Hashtable<Integer, ReceptionDoor> initReceptionDoor() {
         Hashtable<Integer, ReceptionDoor> mapReceptionDoor=new Hashtable<>();
-        List<ReceptionDoor> list=listAll().orElse(new ArrayList<>());
+        List<ReceptionDoor> list=listAllActive().orElse(new ArrayList<>());
         for(ReceptionDoor item:list){
             mapReceptionDoor.put(item.getId(),item);
         }

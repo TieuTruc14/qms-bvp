@@ -1,6 +1,5 @@
 
-app.controller('qmsCtrl',['$scope','$http','$filter','$window','$timeout','$q'
-    ,function ($scope,$http,$filter,$window,$timeout,$q) {
+app.controller('qmsCtrl',['$scope','$http','transformRequestFormPost' ,function ($scope,$http,transformRequestFormPost) {
         $scope.doorId=doorId;
         $scope.item="";
         $scope.messageStatus="";
@@ -48,20 +47,25 @@ app.controller('qmsCtrl',['$scope','$http','$filter','$window','$timeout','$q'
                 });
         };
         
-        $scope.missNumber=function () {
-            $scope.object={doorId:doorId,status:3,code:$scope.item.code};
+        $scope.confirmReception=function (status) {
+            //status:  1-da tiep don xong, 2- tiep don xong va lay so tiep theo,3-bo qua,4-bo qua va lay so tiep theo
+            $scope.object={doorId:doorId,status:status,code:$scope.item.code};
             $http({
                 method : 'POST',
                 url : preUrl+"/door/confirm-reception",
                 data : $scope.object,
-                headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+                headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8' },
+                transformRequest: transformRequestFormPost
             }).then(function (response) {
                 if(response!=null && response!='undefined'){
                     if(response.status==200){
                         $scope.item=response.data;
+                    }else if(response.status==202){
+                        $scope.receptionEmpty=true;
+                        $scope.statusGetReception="Thực hiện thành công!";
                     }else if(response.status==204){
                         $scope.receptionEmpty=true;
-                        $scope.statusGetReception="Không có đối tượng tiếp đón phù hợp!";
+                        $scope.statusGetReception="Chưa có đối tượng tiếp đón phù hợp!";
                     }else if(response.status==404){
                         $scope.receptionEmpty=true;
                         $scope.statusGetReception="Có lỗi xảy ra, hãy thử lại sau!";
@@ -73,43 +77,29 @@ app.controller('qmsCtrl',['$scope','$http','$filter','$window','$timeout','$q'
                 $scope.statusGetReception="Có lỗi xảy ra, hãy thử lại sau!";
                 $scope.endGetData();
             });
-            // $http.post(preUrl+"/door/confirm-reception",JSON.stringify(object))
-            //     .then(function (response) {
-            //         if(response!=null && response!='undefined'){
-            //             if(response.status==200){
-            //                 $scope.item=response.data;
-            //             }else if(response.status==204){
-            //                 $scope.receptionEmpty=true;
-            //                 $scope.statusGetReception="Không có đối tượng tiếp đón phù hợp!";
-            //             }else if(response.status==404){
-            //                 $scope.receptionEmpty=true;
-            //                 $scope.statusGetReception="Có lỗi xảy ra, hãy thử lại sau!";
-            //             }
-            //             $scope.endGetData();
-            //         }
-            //     },function(response){
-            //         $scope.receptionEmpty=true;
-            //         $scope.statusGetReception="Có lỗi xảy ra, hãy thử lại sau!";
-            //         $scope.endGetData();
-            //     });
         };
+
 
         $scope.preGetData=function () {
             $scope.messageStatus="";
             $scope.statusGetReception="";
             var miss = angular.element( document.querySelector( '#miss' ) );
+            var miss_next = angular.element( document.querySelector( '#miss-next' ) );
             var done = angular.element( document.querySelector( '#done' ) );
-            var next = angular.element( document.querySelector( '#next' ) );
+            var done_next = angular.element( document.querySelector( '#done-next' ) );
             miss.addClass('disabled');
+            miss_next.addClass('disabled');
             done.addClass('disabled');
-            next.addClass('disabled');
+            done_next.addClass('disabled');
         };
         $scope.endGetData=function () {
             var miss = angular.element( document.querySelector( '#miss' ) );
+            var miss_next = angular.element( document.querySelector( '#miss-next' ) );
             var done = angular.element( document.querySelector( '#done' ) );
-            var next = angular.element( document.querySelector( '#next' ) );
+            var done_next = angular.element( document.querySelector( '#done-next' ) );
             miss.removeClass('disabled');
+            miss_next.removeClass('disabled');
             done.removeClass('disabled');
-            next.removeClass('disabled');
+            done_next.removeClass('disabled');
         }
     }]);

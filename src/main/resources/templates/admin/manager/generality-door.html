@@ -42,7 +42,10 @@
                                         <td class="align-center">{{item.name}}</td>
                                         <td class="align-center">{{item.code}}</td>
                                         <td class="align-center">
-                                            <span ng-repeat="miss in item.receptions_miss">{{miss,}}</span>
+                                            <span ng-repeat="miss in item.receptions_miss track by $index" >
+                                                <span ng-if="item.receptions_miss.length != ($index+1)" >{{miss}},</span>
+                                                <span ng-if="item.receptions_miss.length == ($index+1)" >{{miss}}</span>
+                                            </span>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -59,10 +62,9 @@
         </section>
     </section>
 </section>
-
-<div th:replace="fragments/footer :: footer-common" />
 <script th:src="@{/js/angularjs/angular.min.js}"></script>
 <script th:src="@{/js/angularjs/angular-sanitize.min.js}"></script>
+<div th:replace="fragments/footer :: footer-common" />
 <script th:src="@{/js/common.js}"></script>
 <script th:src="@{/js/project/admin/manager/generality-door.js}"></script>
 </body>

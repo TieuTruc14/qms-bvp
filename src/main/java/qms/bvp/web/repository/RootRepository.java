@@ -41,11 +41,11 @@ public class RootRepository {
 
     @PostConstruct
     public void init(){
-        listReceptionAreas=areaService.listAll().orElse(new ArrayList<>());
+        listReceptionAreas=areaService.listAllActive().orElse(new ArrayList<>());
         for(ReceptionArea item:listReceptionAreas){
             mapReceptionAreas.put(item.getId(),item);
         }
-        mapNumberOfReceptionArea=areaService.initAreaWithOrderNumber().orElse(new Hashtable<>());
+        mapNumberOfReceptionArea=areaService.initAreaWithOrderNumber(listReceptionAreas).orElse(new Hashtable<>());
         receptionObjectTypeList=objectTypeService.listAll().orElse(new ArrayList<>());
         mapReceptionDoor=doorService.initReceptionDoor();
         genInfoMapReceptionDoor();
@@ -107,19 +107,18 @@ public class RootRepository {
             mapAreaAndNumberMapReception.put(ra.getId(),table2);
         }
 
-        //for mapNumberOfReceptionArea
-        mapAreaWithReception.forEach((k,v)->{
-            Integer max=0;
-            for(Reception item:v){
-                if(max.compareTo(item.getOrder_number())<0) max=new Integer(item.getOrder_number().intValue());
-            }
-            mapNumberOfReceptionArea.put(k,max);
-        });
+        // cai nay sai vi load nay chi la nhung reception wait. Da load o tren roi
+//        mapAreaWithReception.forEach((k,v)->{
+//            Integer max=0;
+//            for(Reception item:v){
+//                if(max.compareTo(item.getOrder_number())<0) max=new Integer(item.getOrder_number().intValue());
+//            }
+//            mapNumberOfReceptionArea.put(k,max);
+//        });
 //        for(Map.Entry<Integer, List<Reception>> entry : mapAreaWithReception.entrySet()) {
 //            Integer key = entry.getKey();
 //            List<Reception> value = entry.getValue();
 //        }
-
     }
 
     private void loadCurrentReceptionAndMissReceptionOfDoor(){

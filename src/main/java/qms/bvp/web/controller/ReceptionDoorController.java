@@ -31,8 +31,8 @@ public class ReceptionDoorController {
     ReceptionService receptionService;
 
     @PostMapping("/confirm-reception")
-    public ResponseEntity<Reception> nextOrMissReceptionOfDoor(Integer doorId, int status,String code){
-        //status:  1-da tiep don xong, 2- tiep don xong va lay so tiep theo,3-bo qua
+    public ResponseEntity<Reception> nextOrMissReceptionOfDoor(Integer doorId, byte status,String code){
+        //status:  1-da tiep don xong, 2- tiep don xong va lay so tiep theo,3-bo qua,4-bo qua va lay so tiep theo
         Reception reception=null;
         try{
             ReceptionDoor checkDoor=rootService.getReceptionDoorById(doorId);
@@ -47,15 +47,21 @@ public class ReceptionDoorController {
                 switch (status){
                     case 1:
                         check=receptionService.confirmReceptionOfDoor(doorId, ReceptionStatus.DaTiepDon).orElse(false);
+                        break;
                     case 2:
                         check=receptionService.confirmReceptionOfDoor(doorId, ReceptionStatus.DaTiepDon).orElse(false);
+                        break;
                     case 3:
                         check=receptionService.confirmReceptionOfDoor(doorId, ReceptionStatus.BoQua).orElse(false);
+                        break;
+                    case 4:
+                        check=receptionService.confirmReceptionOfDoor(doorId, ReceptionStatus.BoQua).orElse(false);
+                        break;
                     default:
                 }
 
                 if(check){//lay reception moi
-                    if(status==1){
+                    if(status==1 || status==3){
                         return new ResponseEntity<Reception>(reception, HttpStatus.ACCEPTED);//202- da chap nhan
                     }else{
                         reception=receptionService.getReceptionForDoor(checkDoor);
@@ -74,30 +80,6 @@ public class ReceptionDoorController {
         }
         return new ResponseEntity<Reception>(reception, HttpStatus.NOT_FOUND);
     }
-
-//    @PostMapping("/confirm-reception")
-//    public ResponseEntity<Boolean> confirmReceptionOfDoor(Integer doorId,String code){
-//        //status: 3-bo qua, 2-da tiep don xong, 1- quay lai
-//        try{
-//            ReceptionDoor checkDoor=rootService.getReceptionDoorById(doorId);
-//            if(checkDoor==null){
-//                return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
-//            }
-//            if(checkDoor.getOrder_number_current()!=null){
-//                if(!code.equals(checkDoor.getPrefix()+checkDoor.getOrder_number_current())){
-//                    return new  ResponseEntity<Boolean>(false, HttpStatus.NOT_FOUND);
-//                }
-//                boolean check=receptionService.confirmReceptionOfDoor(doorId,2).orElse(false);
-//                if(check){//xac nhan thanh cong
-//                    return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-//                }
-//            }
-//        }catch (Exception e){
-//            logger.error("have a error in method confirmReceptionOfDoor:"+e.getMessage());
-//            return new ResponseEntity<Boolean>(false, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//        return new ResponseEntity<Boolean>(false, HttpStatus.NO_CONTENT);
-//    }
 
     @GetMapping("/current-reception")
     public  ResponseEntity<Reception> getCurrentReceptionDoor(Integer doorId){

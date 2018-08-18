@@ -6,8 +6,10 @@ package qms.bvp.model.view;
 public class AreaView {
     private Integer id;
     private String name;
+    private String description;
     private String prefix;
     private Byte loudspeaker_times;
+    private Boolean disable;
 
     public Integer getId() {
         return id;
@@ -25,6 +27,14 @@ public class AreaView {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getPrefix() {
         return prefix;
     }
@@ -39,5 +49,13 @@ public class AreaView {
 
     public void setLoudspeaker_times(Byte loudspeaker_times) {
         this.loudspeaker_times = loudspeaker_times;
+    }
+
+    public Boolean getDisable() {
+        return disable;
+    }
+
+    public void setDisable(Boolean disable) {
+        this.disable = disable;
     }
 }

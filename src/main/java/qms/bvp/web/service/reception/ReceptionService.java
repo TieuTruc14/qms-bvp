@@ -15,5 +15,5 @@ public interface ReceptionService {
     Optional<List<Reception>> getReceptionCurrentInDoor();
     Optional<List<Reception>> getAllReceptionMissOfDoor();
     Reception getReceptionForDoor(ReceptionDoor item);
-    Optional<Boolean> confirmReceptionOfDoor(Integer doorId,int status);
+    Optional<Boolean> confirmReceptionOfDoor(Integer doorId,byte status);
 }

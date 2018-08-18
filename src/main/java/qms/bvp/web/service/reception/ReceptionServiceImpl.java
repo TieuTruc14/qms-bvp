@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import qms.bvp.common.DateUtils;
+import qms.bvp.common.ReceptionStatus;
 import qms.bvp.model.Reception;
 import qms.bvp.model.ReceptionArea;
 import qms.bvp.model.ReceptionDoor;
@@ -35,22 +36,11 @@ public class ReceptionServiceImpl implements ReceptionService {
         item.setOrder_number(new Integer(numberCurrent.intValue()+1));
         item.setCode(checkArea.getPrefix()+item.getOrder_number());
         item.setDate_created(new Date());
-        item.setStatus(Byte.valueOf("0"));
+        item.setStatus(ReceptionStatus.DangChoTiepDon);
         item=receptionRepository.save(item);
         rootService.addReceptionToMap(item);
-//        rootRepository.mapNumberOfReceptionArea.put(item.getReception_area(),new Integer(numberCurrent.intValue()+1));
-//        addReceptionToMapArea(item);
         return item;
     }
-
-//    private synchronized void addReceptionToMapArea(Reception item){
-//        Hashtable<Byte,TreeSet<Integer>> table1=rootRepository.mapAreaAndPriorityMapOrderNumber.get(item.getReception_area());
-//        TreeSet<Integer> tree1=table1.get(item.getPriority());
-//        tree1.add(item.getOrder_number());
-//        Hashtable<Integer,Reception> table2=rootRepository.mapAreaAndNumberMapReception.get(item.getReception_area());
-//        table2.put(item.getOrder_number(),item);
-//    }
-
 
     @Override
     public Optional<List<Reception>> getAllReceptionWaitInDB() {
@@ -112,7 +102,7 @@ public class ReceptionServiceImpl implements ReceptionService {
                         for(Integer number:tree){
                             reception=table2.get(number);
                             if(reception!=null){
-                                reception.setStatus((byte)1);
+                                reception.setStatus(ReceptionStatus.DangTiepDon);
                                 reception.setReception_door(item.getId());
                                 orderNumber=new Integer(number.intValue());
                                 break;
@@ -135,22 +125,19 @@ public class ReceptionServiceImpl implements ReceptionService {
             receptionRepository.save(reception);
             rootService.removeReceptionInMap(reception);
         }
-
         return reception;
     }
 
-
-
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public synchronized Optional<Boolean> confirmReceptionOfDoor(Integer doorId, int status) {
+    public synchronized Optional<Boolean> confirmReceptionOfDoor(Integer doorId, byte status) {
         ReceptionDoor itemDoor=rootService.getReceptionDoorById(doorId);
         if(itemDoor!=null){
             Reception reception=itemDoor.getReception_current();
-            if(status==2){
-                reception.setStatus((byte)2);
+            if(status==ReceptionStatus.DaTiepDon){
+                reception.setStatus(ReceptionStatus.DaTiepDon);
             }else{
-                reception.setStatus((byte)3);
+                reception.setStatus(ReceptionStatus.BoQua);
             }
             reception.setDate_updated(new Date());
             receptionRepository.save(reception);

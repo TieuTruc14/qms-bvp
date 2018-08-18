@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface ReceptionDoorService {
     Optional<PagingResult> page(PagingResult page);
     Optional<List<ReceptionDoor>> listAll();
+    Optional<List<ReceptionDoor>> listAllActive();
     Hashtable<Integer,ReceptionDoor> initReceptionDoor();
 
 }
