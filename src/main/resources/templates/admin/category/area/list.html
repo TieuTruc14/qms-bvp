@@ -25,7 +25,7 @@
                             <div class="text-sm wrapper bg-light lt">
                                 <form cssClass="form-inline padder" action="list" role="form" theme="simple">
                                     <div class="form-group ">
-                                        <a class="btn btn-sm btn-primary pull-right"  data-toggle="modal" data-target="#addItem"><i class="fa fa-plus"></i> Thêm mới</a>
+                                        <a class="btn btn-sm btn-primary pull-right"  data-toggle="modal" data-target="#addItem" ng-click="addClick()"><i class="fa fa-plus"></i> Thêm mới</a>
                                     </div>
                                     <div class="line line-dashed line-lg pull-in" style="clear:both ;border-top:0px"></div>
                                 </form>
@@ -40,9 +40,9 @@
                                         <th class="box-shadow-inner small_col text-center">Tiền tố</th>
                                         <th class="box-shadow-inner small_col text-center">Lần gọi loa</th>
                                         <th class="box-shadow-inner small_col text-center">Mô tả</th>
-                                        <th class="box-shadow-inner small_col text-center">Trạng thái</th>
+                                        <!--<th class="box-shadow-inner small_col text-center">Trạng thái</th>-->
                                         <!--<sec:authorize access="hasRole('ROLE_CATEGORY_GROUP_PRICE_EDIT')">-->
-                                            <!--<th class="box-shadow-inner small_col text-center">Hoạt động</th>-->
+                                            <th class="box-shadow-inner small_col text-center">Hoạt động</th>
                                         <!--</sec:authorize>-->
                                     </tr>
                                     </thead>
@@ -54,25 +54,25 @@
                                         <td class="align-center">{{item.prefix}}</td>
                                         <td class="align-center">{{item.loudspeaker_times}}</td>
                                         <td class="align-center">{{item.description}}</td>
-                                        <td class="align-center" ng-switch on="item.disable">
-                                            <span ng-switch-when="true" >Đã khóa</span>
-                                            <span ng-switch-default >Đang hoạt động</span>
-                                        </td>
+                                        <!--<td class="align-center" ng-switch on="item.disable">-->
+                                            <!--<span ng-switch-when="true" >Đã khóa</span>-->
+                                            <!--<span ng-switch-default >Đang hoạt động</span>-->
+                                        <!--</td>-->
                                         <!--<sec:authorize access="hasAnyRole('ROLE_CATEGORY_GROUP_PRICE_EDIT','ROLE_CATEGORY_GROUP_PRICE_DELETE')">-->
-                                            <!--<td class="align-center">-->
-                                                <!--<div class="btn-group">-->
-                                                    <!--<button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"><i-->
-                                                            <!--class="fa fa-random"></i></button>-->
-                                                    <!--<ul class="dropdown-menu pull-right">-->
+                                            <td class="align-center">
+                                                <div class="btn-group">
+                                                    <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"><i
+                                                            class="fa fa-random"></i></button>
+                                                    <ul class="dropdown-menu pull-right">
                                                         <!--<sec:authorize access="hasAnyRole('ROLE_CATEGORY_GROUP_PRICE_EDIT')">-->
-                                                            <!--<li><a href="<%=request.getContextPath()%>/category/group-price/edit/{{item.id}}"><i class="fa fa-pencil-square-o"></i>Sửa</a></li>-->
+                                                            <li><a href="" data-toggle="modal" data-target="#editItem" ng-click="editClick(item)"><i class="fa fa-pencil-square-o"></i>Sửa</a></li>
                                                         <!--</sec:authorize>-->
                                                         <!--<sec:authorize access="hasAnyRole('ROLE_CATEGORY_GROUP_PRICE_DELETE')">-->
                                                             <!--<li><a href="javascript:void(0)" data-toggle="modal" data-target="#deleteItem" ng-click="deleteItem(item.id)"><i class="fa fa-pencil-square-o"></i>Xóa</a></li>-->
                                                         <!--</sec:authorize>-->
-                                                    <!--</ul>-->
-                                                <!--</div>-->
-                                            <!--</td>-->
+                                                    </ul>
+                                                </div>
+                                            </td>
                                         <!--</sec:authorize>-->
                                     </tr>
 
@@ -151,7 +151,7 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                 <h5 class="modal-title">Cập nhật thông tin khu vực</h5>
                             </div>
-                            <form  method="POST" action=""  theme="simple" enctype="multipart/form-data" cssClass="form-horizontal" cssStyle="" validate="false">
+                            <div   theme="simple" cssClass="form-horizontal" cssStyle="" validate="false">
                                 <div class="modal-body"  style="padding: 10px;">
                                     <div class="form-group">
                                         <label class="control-label">Tên khu vực<span class="text-danger">*</span>:</label>
@@ -167,7 +167,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Số lần gọi loa<span class="text-danger">*</span>:</label>
-                                        <input ng-model="item.loudspeaker_times"  class="form-control"/>
+                                        <input ng-model="item.loudspeaker_times" type="number" class="form-control"  onkeypress="return restrictCharacters(this, event, digitsOnly);"/>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label text-danger">{{messageError}}</label>
@@ -178,7 +178,7 @@
                                     <button id="btnCancelEdit" type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
                                     <button id="btnEdit" type="submit" class="btn btn-success" ng-click="editItem()">Cập nhật</button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>

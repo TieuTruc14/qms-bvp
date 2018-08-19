@@ -53,15 +53,15 @@ public class AreaController {
     }
 
     @PostMapping("/add")
-//    public ResponseEntity<Byte> add(@Valid AreaView item, BindingResult result, RedirectAttributes attributes, HttpServletRequest request){
-    public ResponseEntity<Byte> add(@RequestBody AreaView item){
-//        areaViewValidator.validate(item,result);
-//        if(result.hasErrors()){
-//            return new ResponseEntity<Byte>(Byte.valueOf("0"), HttpStatus.EXPECTATION_FAILED);//417
-//        }
-        if(StringUtils.isBlank(item.getName()) || StringUtils.isBlank(item.getPrefix()) || item.getLoudspeaker_times()==null){
+    public ResponseEntity<Byte> add(@Valid AreaView item, BindingResult result, RedirectAttributes attributes, HttpServletRequest request){
+//    public ResponseEntity<Byte> add(@RequestBody AreaView item){
+        areaViewValidator.validate(item,result);
+        if(result.hasErrors()){
             return new ResponseEntity<Byte>(Byte.valueOf("0"), HttpStatus.EXPECTATION_FAILED);//417
         }
+//        if(StringUtils.isBlank(item.getName()) || StringUtils.isBlank(item.getPrefix()) || item.getLoudspeaker_times()==null){
+//            return new ResponseEntity<Byte>(Byte.valueOf("0"), HttpStatus.EXPECTATION_FAILED);//417
+//        }
         try{
             boolean checkExits=areaService.checkAreaByNameOrPrefix(item.getName(),item.getPrefix()).orElse(true);
             if(checkExits) return new ResponseEntity<Byte>(Byte.valueOf("2"), HttpStatus.CONFLICT);//409
@@ -78,14 +78,17 @@ public class AreaController {
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<Byte> edit(@Valid AreaView item, BindingResult result, RedirectAttributes attributes, HttpServletRequest request){
-        areaViewValidator.validate(item,result);
+    public ResponseEntity<Byte> edit(@RequestBody AreaView item,BindingResult result, RedirectAttributes attributes, HttpServletRequest request){
+                areaViewValidator.validate(item,result);
         if(result.hasErrors()){
             return new ResponseEntity<Byte>(Byte.valueOf("0"), HttpStatus.EXPECTATION_FAILED);//417
         }
+//        if(StringUtils.isBlank(item.getName()) || StringUtils.isBlank(item.getPrefix()) || item.getLoudspeaker_times()==null){
+//            return new ResponseEntity<Byte>(Byte.valueOf("0"), HttpStatus.EXPECTATION_FAILED);//417
+//        }
         try{
-            boolean checkExits=areaService.checkAreaByNameOrPrefix(item.getName(),item.getPrefix()).orElse(true);
-            if(checkExits) return new ResponseEntity<Byte>(Byte.valueOf("2"), HttpStatus.CONFLICT);//409
+//            boolean checkExits=areaService.checkAreaByNameOrPrefix(item.getName(),item.getPrefix()).orElse(true);
+//            if(checkExits) return new ResponseEntity<Byte>(Byte.valueOf("2"), HttpStatus.CONFLICT);//409
             Byte value=areaService.edit(item).orElse(Byte.valueOf("0"));
             if(value==1){
                 return new ResponseEntity<Byte>(Byte.valueOf("1"), HttpStatus.OK);

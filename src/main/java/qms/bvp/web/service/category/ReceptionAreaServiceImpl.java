@@ -101,9 +101,9 @@ public class ReceptionAreaServiceImpl implements ReceptionAreaService {
         if(user==null) return Optional.of(Byte.valueOf("2"));
         ReceptionArea itemDB=areaRepository.findById(item.getId()).orElse(null);
         if(itemDB==null) return Optional.of(Byte.valueOf("3"));
-        if((new Date()).getTime()-itemDB.getDate_created().getTime()>86400000){
-            return Optional.of(Byte.valueOf("5"));//ko cho xoa khi da tao qua 1 ngay
-        }
+//        if((new Date()).getTime()-itemDB.getDate_created().getTime()>86400000){
+//            return Optional.of(Byte.valueOf("5"));//ko cho xoa khi da tao qua 1 ngay
+//    }
         itemDB.setName(item.getName());
         itemDB.setPrefix(item.getPrefix());
         itemDB.setDate_updated(new Date());

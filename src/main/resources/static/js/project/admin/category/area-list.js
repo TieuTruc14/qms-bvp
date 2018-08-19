@@ -44,7 +44,6 @@ app.controller('qmsCtrl',['$scope','$http'
                         if(response!=null && response!='undefined' && response.status==200){
                             $scope.messageStatus="Thêm thành công!";
                             $scope.loadPage(1);
-
                         }
                         $scope.enableBtn();
                     },function(response){
@@ -67,25 +66,24 @@ app.controller('qmsCtrl',['$scope','$http'
             if(!$scope.validate()){
                 $scope.enableBtn();
             }else{
-                $http.put(preUrl+"/admin/category/area/edit",JSON.stringify($scope.item))
+                var data=JSON.parse(JSON.stringify($scope.item));
+                $http.put(preUrl+"/admin/category/area/edit",data,{headers: {'Content-Type': 'application/json;charset=utf-8;'}})
                     .then(function (response) {
-                        if(response!=null && response!='undefined' ){
-                            if(response.status==200){
-                                $scope.messageStatus="Thêm thành công!";
-                                $scope.loadPage(1);
-                            }else if(response.status==403){
-                                $scope.messageError="Không đủ quyền thực hiện!";
-                            }else if(response.status==404){
-                                $scope.messageError="Có lỗi xảy ra, hãy thử lại sau!";
-                            }else if(response.status=409){
-                                $scope.messageError="Tên hoặc tiền tố đã bị trùng lặp dữ liệu!";
-                            }else if(response.status==417){
-                                $scope.messageError="Thông tin gửi lên server chưa đầy đủ!";
-                            }else{$scope.messageError="Có lỗi xảy ra, hãy thử lại sau!";}
+                        if(response!=null && response!='undefined' && response.status==200){
+                            $scope.messageStatus="Cập nhật thành công!";
+                            $scope.loadPage(1);
                         }
                         $scope.enableBtn();
                     },function(response){
-                        $scope.messageError="Có lỗi xảy ra, hãy thử lại sau!";
+                        if(response.status==403){
+                            $scope.messageError="Không đủ quyền thực hiện!";
+                        }else if(response.status==404){
+                            $scope.messageError="Có lỗi xảy ra, hãy thử lại sau!";
+                        }else if(response.status=409){
+                            $scope.messageError="Tên hoặc tiền tố đã bị trùng lặp dữ liệu!";
+                        }else if(response.status==417){
+                            $scope.messageError="Thông tin gửi lên server chưa đầy đủ!";
+                        }else{$scope.messageError="Có lỗi xảy ra, hãy thử lại sau!";}
                         $scope.enableBtn();
                     });
             }
