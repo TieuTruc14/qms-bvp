@@ -37,7 +37,7 @@ public class AreaController {
 
     @GetMapping("")
     public String list(Model model){
-        return "/admin/category/area/list";
+        return "admin/category/area/list";
     }
 
     @GetMapping("/page")
@@ -53,15 +53,11 @@ public class AreaController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Byte> add(@Valid AreaView item, BindingResult result, RedirectAttributes attributes, HttpServletRequest request){
-//    public ResponseEntity<Byte> add(@RequestBody AreaView item){
+    public ResponseEntity<Byte> add(@RequestBody AreaView item, BindingResult result, RedirectAttributes attributes, HttpServletRequest request){
         areaViewValidator.validate(item,result);
         if(result.hasErrors()){
             return new ResponseEntity<Byte>(Byte.valueOf("0"), HttpStatus.EXPECTATION_FAILED);//417
         }
-//        if(StringUtils.isBlank(item.getName()) || StringUtils.isBlank(item.getPrefix()) || item.getLoudspeaker_times()==null){
-//            return new ResponseEntity<Byte>(Byte.valueOf("0"), HttpStatus.EXPECTATION_FAILED);//417
-//        }
         try{
             boolean checkExits=areaService.checkAreaByNameOrPrefix(item.getName(),item.getPrefix()).orElse(true);
             if(checkExits) return new ResponseEntity<Byte>(Byte.valueOf("2"), HttpStatus.CONFLICT);//409
@@ -80,15 +76,10 @@ public class AreaController {
     @PutMapping("/edit")
     public ResponseEntity<Byte> edit(@RequestBody AreaView item,BindingResult result, RedirectAttributes attributes, HttpServletRequest request){
                 areaViewValidator.validate(item,result);
-        if(result.hasErrors()){
+        if(result.hasErrors() || item.getId()==null || item.getId().intValue()==0){
             return new ResponseEntity<Byte>(Byte.valueOf("0"), HttpStatus.EXPECTATION_FAILED);//417
         }
-//        if(StringUtils.isBlank(item.getName()) || StringUtils.isBlank(item.getPrefix()) || item.getLoudspeaker_times()==null){
-//            return new ResponseEntity<Byte>(Byte.valueOf("0"), HttpStatus.EXPECTATION_FAILED);//417
-//        }
         try{
-//            boolean checkExits=areaService.checkAreaByNameOrPrefix(item.getName(),item.getPrefix()).orElse(true);
-//            if(checkExits) return new ResponseEntity<Byte>(Byte.valueOf("2"), HttpStatus.CONFLICT);//409
             Byte value=areaService.edit(item).orElse(Byte.valueOf("0"));
             if(value==1){
                 return new ResponseEntity<Byte>(Byte.valueOf("1"), HttpStatus.OK);
@@ -101,6 +92,21 @@ public class AreaController {
             logger.error("Have an error on method edit:"+e.getMessage());
         }
         return new ResponseEntity<Byte>(Byte.valueOf("0"), HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Byte> delete(@PathVariable("id") Integer id){
+        try{
+            Byte result=areaService.delete(id).orElse(Byte.valueOf("0"));
+            if(result==1){
+                return new ResponseEntity<Byte>(result,HttpStatus.OK);
+            }else if(result==5){
+                return new ResponseEntity<Byte>(result,HttpStatus.CONFLICT);
+            }
+        }catch (Exception e){
+            logger.error("Have an error method delete(): "+e.getMessage());
+        }
+        return new ResponseEntity<Byte>(Byte.valueOf("0"),HttpStatus.NOT_FOUND);
     }
 
 

@@ -26,4 +26,14 @@ public class ReceptionObjectTypeServiceImpl implements ReceptionObjectTypeServic
     public Optional<List<ReceptionObjectType>> listAll() {
         return Optional.of(typeRepository.findAll());
     }
+
+    @Override
+    public Optional<List<ReceptionObjectType>> listAllActive() {
+        return typeRepository.listAllActive();
+    }
+
+    @Override
+    public Optional<List<ReceptionObjectType>> listAllNotDeleted() {
+        return typeRepository.listAllNotDeleted();
+    }
 }

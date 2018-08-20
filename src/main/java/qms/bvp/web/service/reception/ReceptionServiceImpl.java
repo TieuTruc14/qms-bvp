@@ -147,4 +147,14 @@ public class ReceptionServiceImpl implements ReceptionService {
         }
         return Optional.of(false);
     }
+
+    @Override
+    public Optional<Long> countReceptionByDoor(Integer doorId) {
+        return receptionRepository.countReceptionByDoor(doorId);
+    }
+
+    @Override
+    public Optional<Long> countReceptionByArea(Integer areaId) {
+        return receptionRepository.countReceptionByArea(areaId);
+    }
 }

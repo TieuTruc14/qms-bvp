@@ -47,6 +47,6 @@ public class ReceptionController {
 
     @GetMapping("")
     public String reception(){
-        return "/public/reception";
+        return "public/reception";
     }
 }

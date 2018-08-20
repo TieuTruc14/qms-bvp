@@ -4,7 +4,7 @@ app.controller('qmsCtrl',['$scope','$http','$filter','$window','$timeout','$q'
         $scope.name="";
         $scope.dataLoaded=false;
         $scope.page=page;
-        $http.get(preUrl+"/admin/category/object-type/listAll",{params:{name:$scope.name}})
+        $http.get(preUrl+"/admin/category/object-type/list",{params:{name:$scope.name}})
             .then(function (response) {
                 if(response!=null && response!='undefined' && response.status==200){
                     $scope.page=response.data;
@@ -15,7 +15,7 @@ app.controller('qmsCtrl',['$scope','$http','$filter','$window','$timeout','$q'
 
         $scope.search=function () {
             $scope.page=page;
-            $http.get(preUrl+"/admin/category/object-type/listAll",{params:{name:$scope.name}})
+            $http.get(preUrl+"/admin/category/object-type/list",{params:{name:$scope.name}})
                 .then(function (response) {
                     if(response!=null && response!='undefined' && response.status==200){
                         $scope.page=response.data;
@@ -29,7 +29,7 @@ app.controller('qmsCtrl',['$scope','$http','$filter','$window','$timeout','$q'
 
         $scope.loadPage=function (pageNumber) {
             if(pageNumber>=1){
-                $http.get(preUrl+"/admin/category/object-type/listAll", {params: {p:pageNumber,name:$scope.name}})
+                $http.get(preUrl+"/admin/category/object-type/list", {params: {p:pageNumber,name:$scope.name}})
                     .then(function (response) {
                         $scope.page=response.data;
                         $scope.page.pageList=getPageList($scope.page);

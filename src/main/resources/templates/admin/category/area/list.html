@@ -68,7 +68,7 @@
                                                             <li><a href="" data-toggle="modal" data-target="#editItem" ng-click="editClick(item)"><i class="fa fa-pencil-square-o"></i>Sửa</a></li>
                                                         <!--</sec:authorize>-->
                                                         <!--<sec:authorize access="hasAnyRole('ROLE_CATEGORY_GROUP_PRICE_DELETE')">-->
-                                                            <!--<li><a href="javascript:void(0)" data-toggle="modal" data-target="#deleteItem" ng-click="deleteItem(item.id)"><i class="fa fa-pencil-square-o"></i>Xóa</a></li>-->
+                                                            <li><a href="" data-toggle="modal" data-target="#deleteItem" ng-click="deleteClick(item.id)"><i class="fa fa-pencil-square-o"></i>Xóa</a></li>
                                                         <!--</sec:authorize>-->
                                                     </ul>
                                                 </div>
@@ -177,6 +177,54 @@
                                 <div class="modal-footer" style="padding: 10px;" >
                                     <button id="btnCancelEdit" type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
                                     <button id="btnEdit" type="submit" class="btn btn-success" ng-click="editItem()">Cập nhật</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade"  id="deleteItem"  role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+                    <div class="modal-dialog" >
+                        <div class="modal-content">
+                            <div class="modal-header" style="padding: 7px;">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h5 class="modal-title">Xóa đối tượng</h5>
+                            </div>
+                            <div  theme="simple"  cssClass="form-horizontal" cssStyle="" validate="false">
+                                <div class="modal-body"  style="padding: 10px;">
+                                    <div class="form-group">
+                                        <label class="control-label">Bạn xác định xóa đối tượng này?</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label text-danger">{{messageError}}</label>
+                                        <label class="control-label text-info">{{messageStatus}}</label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer" style="padding: 10px;" >
+                                    <button id="btnCancelDel" type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                                    <button id="btnDel" type="button" class="btn btn-danger" ng-click="deleteItem()">Xóa</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade"  id="confirm"  role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+                    <div class="modal-dialog" >
+                        <div class="modal-content">
+                            <div class="modal-header" style="padding: 7px;">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h5 class="modal-title">Thông báo</h5>
+                            </div>
+                            <div  theme="simple"  cssClass="form-horizontal" cssStyle="" validate="false">
+                                <div class="modal-body"  style="padding: 10px;">
+                                    <div class="form-group">
+                                        <label class="control-label text-danger">{{messageError}}</label>
+                                        <label class="control-label text-info">{{messageStatus}}</label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer" style="padding: 10px;" >
+                                    <button  type="button" class="btn btn-default" data-dismiss="modal">OK</button>
                                 </div>
                             </div>
                         </div>

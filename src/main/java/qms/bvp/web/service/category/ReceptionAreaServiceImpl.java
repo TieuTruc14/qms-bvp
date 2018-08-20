@@ -3,6 +3,7 @@ package qms.bvp.web.service.category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import qms.bvp.common.DateUtils;
 import qms.bvp.common.PagingResult;
 import qms.bvp.model.Reception;
@@ -10,6 +11,7 @@ import qms.bvp.model.ReceptionArea;
 import qms.bvp.model.User;
 import qms.bvp.model.view.AreaView;
 import qms.bvp.web.repository.category.ReceptionAreaRepository;
+import qms.bvp.web.service.reception.ReceptionService;
 
 import java.util.*;
 
@@ -20,6 +22,10 @@ import java.util.*;
 public class ReceptionAreaServiceImpl implements ReceptionAreaService {
     @Autowired
     ReceptionAreaRepository areaRepository;
+    @Autowired
+    ReceptionService receptionService;
+    @Autowired
+    ReceptionDoorService doorService;
 
     @Override
     public Optional<PagingResult> page(PagingResult page) {
@@ -80,6 +86,7 @@ public class ReceptionAreaServiceImpl implements ReceptionAreaService {
 
     @Override
     public Optional<Byte> add(AreaView item) {
+        if(item==null) return Optional.of(Byte.valueOf("3"));
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(user==null) return Optional.of(Byte.valueOf("2"));
         ReceptionArea ra=new ReceptionArea();
@@ -97,13 +104,11 @@ public class ReceptionAreaServiceImpl implements ReceptionAreaService {
 
     @Override
     public Optional<Byte> edit(AreaView item) {
+        if(item==null) return Optional.of(Byte.valueOf("3"));
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(user==null) return Optional.of(Byte.valueOf("2"));
         ReceptionArea itemDB=areaRepository.findById(item.getId()).orElse(null);
         if(itemDB==null) return Optional.of(Byte.valueOf("3"));
-//        if((new Date()).getTime()-itemDB.getDate_created().getTime()>86400000){
-//            return Optional.of(Byte.valueOf("5"));//ko cho xoa khi da tao qua 1 ngay
-//    }
         itemDB.setName(item.getName());
         itemDB.setPrefix(item.getPrefix());
         itemDB.setDate_updated(new Date());
@@ -112,6 +117,27 @@ public class ReceptionAreaServiceImpl implements ReceptionAreaService {
         itemDB.setDeleted(false);
         itemDB.setLoudspeaker_times(item.getLoudspeaker_times());
         itemDB.setDescription(item.getDescription());
+        areaRepository.save(itemDB);
+        return Optional.of(Byte.valueOf("1"));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Optional<Byte> delete(Integer id) {
+        if(id==null) return  Optional.of(Byte.valueOf("3"));
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(user==null) return Optional.of(Byte.valueOf("2"));
+        ReceptionArea itemDB=areaRepository.findById(id).orElse(null);
+        if(itemDB==null) return Optional.of(Byte.valueOf("3"));
+        if((new Date()).getTime()-itemDB.getDate_created().getTime()>86400000){
+            return Optional.of(Byte.valueOf("5"));//ko cho xoa khi da tao qua 1 ngay
+        }
+        Long count=receptionService.countReceptionByArea(id).orElse(Long.valueOf("0"));
+        if(count.longValue()>0) return Optional.of(Byte.valueOf("5"));
+        doorService.deleteAllDoorOfArea(id,user.getId(),new Date());
+        itemDB.setDeleted(true);
+        itemDB.setUser_updated(user.getId());
+        itemDB.setDate_updated(new Date());
         areaRepository.save(itemDB);
         return Optional.of(Byte.valueOf("1"));
     }

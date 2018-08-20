@@ -17,7 +17,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -34,10 +38,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // Cấu hình remember me, thời gian là 1296000 giây/15 ngay
+        http.rememberMe().key("uniqueAndSecret").tokenValiditySeconds(1296000);
 
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/reception/**", "/door/**","/area/**").permitAll()
+                .antMatchers("/reception/**", "/door/**","/area/**").permitAll()
 //                .antMatchers("/admin/**").hasAnyRole("ROLE_ADMIN")
 //                .antMatchers("/user/**").hasAnyRole("ROLE_USER")
                 .anyRequest().authenticated()
@@ -54,6 +60,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .httpBasic();
     }
+
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new ManhUserDetailService();

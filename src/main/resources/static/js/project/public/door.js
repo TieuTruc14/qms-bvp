@@ -26,11 +26,13 @@ app.controller('qmsCtrl',['$scope','$http','transformRequestFormPost' ,function 
             });
         
         $scope.getReceptionForDoor=function () {
+            $scope.statusGetReception="";
             $http.get(preUrl+"/door/current-reception",{params:{doorId:doorId}})
                 .then(function (response) {
                     if(response!=null && response!='undefined'){
                         if(response.status==200){
                             $scope.item=response.data;
+                            $scope.receptionEmpty=false;
                         }else if(response.status==204){
                             $scope.receptionEmpty=true;
                             $scope.statusGetReception="Không có đối tượng tiếp đón phù hợp!";
@@ -50,6 +52,7 @@ app.controller('qmsCtrl',['$scope','$http','transformRequestFormPost' ,function 
         $scope.confirmReception=function (status) {
             //status:  1-da tiep don xong, 2- tiep don xong va lay so tiep theo,3-bo qua,4-bo qua va lay so tiep theo
             $scope.object={doorId:doorId,status:status,code:$scope.item.code};
+            $scope.statusGetReception="";
             $http({
                 method : 'POST',
                 url : preUrl+"/door/confirm-reception",
@@ -71,6 +74,7 @@ app.controller('qmsCtrl',['$scope','$http','transformRequestFormPost' ,function 
                         $scope.statusGetReception="Có lỗi xảy ra, hãy thử lại sau!";
                     }
                     $scope.endGetData();
+                    $scope.item="";
                 }
             },function(response){
                 $scope.receptionEmpty=true;

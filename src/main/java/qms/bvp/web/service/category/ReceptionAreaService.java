@@ -21,4 +21,5 @@ public interface ReceptionAreaService {
     Optional<Boolean> checkAreaByNameOrPrefix(String name,String prefix);
     Optional<Byte> add(AreaView item);
     Optional<Byte> edit(AreaView item);
+    Optional<Byte> delete(Integer id);
 }

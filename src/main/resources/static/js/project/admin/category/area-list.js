@@ -46,6 +46,7 @@ app.controller('qmsCtrl',['$scope','$http'
                             $scope.loadPage(1);
                         }
                         $scope.enableBtn();
+                        $scope.confirmShow();
                     },function(response){
                         if(response.status==403){
                             $scope.messageError="Không đủ quyền thực hiện!";
@@ -74,6 +75,7 @@ app.controller('qmsCtrl',['$scope','$http'
                             $scope.loadPage(1);
                         }
                         $scope.enableBtn();
+                        $scope.confirmShow();
                     },function(response){
                         if(response.status==403){
                             $scope.messageError="Không đủ quyền thực hiện!";
@@ -101,15 +103,52 @@ app.controller('qmsCtrl',['$scope','$http'
             return true;
         };
 
+        //delete
+        $scope.deleteId=0;
+        $scope.deleteClick=function (id) {
+            $scope.deleteId=0;
+            $scope.messageStatus="";
+            $scope.messageError="";
+            if(id>0){
+                $scope.deleteId=id;
+            }
+        };
+
+        $scope.deleteItem=function () {
+            if($scope.deleteId>0){
+                $http.delete(preUrl+"/admin/category/area/delete/"+$scope.deleteId,{headers: {'Content-Type': 'application/json;charset=utf-8;'}})
+                    .then(function (response) {
+                        if(response!=null && response!='undefined' && response.status==200){
+                            $scope.messageStatus="Đã xóa thành công!";
+                            $scope.loadPage(1);
+                        }
+                        $scope.enableBtn();
+                        $scope.confirmShow();
+                    },function(response){
+                        if(response.status==403){
+                            $scope.messageError="Không đủ quyền thực hiện!";
+                        }else if(response.status=409){
+                            $scope.messageError="Không thể xóa do đối tượng đã tạo quá 1 ngày hoặc đã thực hiện tiếp đón!";
+                            $scope.confirmShow();
+                        }else{$scope.messageError="Có lỗi xảy ra, hãy thử lại sau!";}
+                        $scope.enableBtn();
+                    });
+            }
+        };
+
         $scope.disableBtn=function () {
             var btnCancel = angular.element( document.querySelector( '#btnCancel' ) );
             var btnAdd = angular.element( document.querySelector( '#btnAdd' ) );
             var btnCancelEdit = angular.element( document.querySelector( '#btnCancelEdit' ) );
             var btnEdit = angular.element( document.querySelector( '#btnEdit' ) );
+            var btnCencelDel = angular.element( document.querySelector( '#btnCencelDel' ) );
+            var btnDel = angular.element( document.querySelector( '#btnDel' ) );
             btnCancel.addClass('disabled');
             btnAdd.addClass('disabled');
             btnCancelEdit.addClass('disabled');
             btnEdit.addClass('disabled');
+            btnCencelDel.addClass('disabled');
+            btnDel.addClass('disabled');
         };
 
         $scope.enableBtn=function () {
@@ -117,10 +156,21 @@ app.controller('qmsCtrl',['$scope','$http'
             var btnAdd = angular.element( document.querySelector( '#btnAdd' ) );
             var btnCancelEdit = angular.element( document.querySelector( '#btnCancelEdit' ) );
             var btnEdit = angular.element( document.querySelector( '#btnEdit' ) );
+            var btnCencelDel = angular.element( document.querySelector( '#btnCencelDel' ) );
+            var btnDel = angular.element( document.querySelector( '#btnDel' ) );
             btnCancel.removeClass('disabled');
             btnAdd.removeClass('disabled');
             btnCancelEdit.removeClass('disabled');
             btnEdit.removeClass('disabled');
+            btnCencelDel.removeClass('disabled');
+            btnDel.removeClass('disabled');
+        };
+
+        $scope.confirmShow=function () {
+            $('#addItem').modal('hide');
+            $('#editItem').modal('hide');
+            $('#deleteItem').modal('hide');
+            $('#confirm').modal('show');
         };
 
     }]);

@@ -44,6 +44,25 @@ public class IndexController {
         return "login";
     }
 
+    @GetMapping("/404")
+    public String get404() {
+        return "public/error/404";
+    }
+
+    @GetMapping("/401")
+    public String get401() {
+        return "public/error/401";
+    }
+
+    @GetMapping("/403")
+    public String get403() {
+        return "public/error/403";
+    }
+
+    @GetMapping("/500")
+    public String get500() {
+        return "public/error/500";
+    }
 
     @GetMapping("/area/list")
     public ResponseEntity<List<AreaView>> listAreas(){

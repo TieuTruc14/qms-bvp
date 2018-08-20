@@ -29,7 +29,7 @@ public class GeneralityController {
 
     @GetMapping("")
     public String list(Model model){
-        return "/admin/manager/generality-door";
+        return "admin/manager/generality-door";
     }
 
     @GetMapping("/list-door")

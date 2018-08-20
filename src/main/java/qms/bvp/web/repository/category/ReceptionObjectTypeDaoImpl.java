@@ -24,8 +24,8 @@ public class ReceptionObjectTypeDaoImpl implements ReceptionObjectTypeDao {
     public Optional<PagingResult> page(PagingResult page) {
         int offset=0;
         if(page.getPageNumber()>0) offset=(page.getPageNumber()-1)*page.getNumberPerPage();
-        Long count=(Long)entityManager.createQuery("select count(id) from ReceptionObjectType").getSingleResult();
-        List<ReceptionObjectType> list=entityManager.createQuery("Select rea from ReceptionObjectType as rea ",ReceptionObjectType.class)
+        Long count=(Long)entityManager.createQuery("select count(id) from ReceptionObjectType where deleted=false").getSingleResult();
+        List<ReceptionObjectType> list=entityManager.createQuery("Select rea from ReceptionObjectType as rea where rea.deleted=false",ReceptionObjectType.class)
                 .setFirstResult(offset).setMaxResults(page.getNumberPerPage()).getResultList();
         if(list!=null && count>0){
             page.setItems(list);

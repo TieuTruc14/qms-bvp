@@ -12,4 +12,6 @@ import java.util.Optional;
 public interface ReceptionObjectTypeService {
     Optional<PagingResult> page(PagingResult page);
     Optional<List<ReceptionObjectType>> listAll();
+    Optional<List<ReceptionObjectType>> listAllActive();
+    Optional<List<ReceptionObjectType>> listAllNotDeleted();
 }

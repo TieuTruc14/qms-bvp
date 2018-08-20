@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" class="app"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>QMS</title>
+    <div th:replace="fragments/header :: header-common"/>
+</head>
+<body>
+<style>
+    .navbar-brand img {
+        max-height: 50px;
+    }
+</style>
+<section class="m-t-lg wrapper-md animated fadeInUp">
+    <div class="row m-n">
+        <div class="col-sm-4 col-sm-offset-4">
+            <div class="text-center m-b-lg">
+                <h1 class="h text-white animated fadeInDownBig">403</h1>
+            </div>
+            <article class="media">
+                <div class="pull-left">
+                    <span class="pull-left thumb-sm"><img th:src="@{/images/cry.png}" class="img-circle" style="opacity: 0.5"></span>
+                </div>
+                <div class="media-body">
+                    <a href="" class="h4 text-warning">BẠN KHÔNG ĐỦ QUYỀN THỰC HIỆN CHỨC NĂNG NÀY!</a>
+                    <small class="block m-t-xs">Hãy bấm vào link bên dưới để trở lại trang chủ</small>
+                </div>
+            </article>
+            <div class="list-group m-b-sm bg-white m-b-lg" style="margin-top:10px;">
+                <a th:href="@{/}" class="list-group-item ">
+                    <i class="fa fa-chevron-right icon-muted"></i>
+                    <i class="fa fa-fw fa-home icon-muted"></i> <span class="text-info">Trở về trang chủ</span>
+                </a>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<div th:replace="fragments/footer :: footer-common" />
+</body>
+</html>

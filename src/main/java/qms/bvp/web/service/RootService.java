@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import qms.bvp.model.Reception;
+import qms.bvp.model.ReceptionArea;
 import qms.bvp.model.ReceptionDoor;
 import qms.bvp.model.ReceptionObjectType;
 import qms.bvp.web.repository.RootRepository;
@@ -49,6 +50,10 @@ public class RootService {
 
     public ReceptionDoor getReceptionDoorById(Integer doorId){
         ReceptionDoor item=rootRepository.mapReceptionDoor.get(doorId);
+        return item;
+    }
+    public ReceptionArea getReceptionAreaById(Integer areaId){
+        ReceptionArea item=rootRepository.mapReceptionAreas.get(areaId);
         return item;
     }
     public List<ReceptionDoor> listAllReceptionDoor(){

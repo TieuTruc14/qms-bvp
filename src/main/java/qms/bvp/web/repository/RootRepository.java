@@ -46,7 +46,7 @@ public class RootRepository {
             mapReceptionAreas.put(item.getId(),item);
         }
         mapNumberOfReceptionArea=areaService.initAreaWithOrderNumber(listReceptionAreas).orElse(new Hashtable<>());
-        receptionObjectTypeList=objectTypeService.listAll().orElse(new ArrayList<>());
+        receptionObjectTypeList=objectTypeService.listAllActive().orElse(new ArrayList<>());
         mapReceptionDoor=doorService.initReceptionDoor();
         genInfoMapReceptionDoor();
         initReceptionWaitAndmapNumberOfReceptionArea(listReceptionAreas,receptionObjectTypeList);

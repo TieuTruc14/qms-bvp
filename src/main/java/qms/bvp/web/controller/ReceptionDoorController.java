@@ -130,7 +130,7 @@ public class ReceptionDoorController {
             });
         }
         model.addAttribute("door",item);
-        return "/public/door";
+        return "public/door";
     }
 
     @GetMapping("/info/{id}")
