@@ -2,8 +2,9 @@ package qms.bvp.web.service.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import qms.bvp.common.PagingResult;
 import qms.bvp.model.User;
-import qms.bvp.web.repository.UserRepository;
+import qms.bvp.web.repository.user.UserRepository;
 
 import java.util.Optional;
 
@@ -23,5 +24,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findUserByUsername(String username) {
         return userRepository.findUserByUsername(username);
+    }
+
+    @Override
+    public Optional<PagingResult> page(PagingResult page,String username) {
+        return userRepository.page(page,username);
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import qms.bvp.common.DateUtils;
+import qms.bvp.common.PagingResult;
 import qms.bvp.common.ReceptionStatus;
 import qms.bvp.model.Reception;
 import qms.bvp.model.ReceptionArea;
@@ -89,6 +90,7 @@ public class ReceptionServiceImpl implements ReceptionService {
     public synchronized Reception getReceptionForDoor(ReceptionDoor item) {
         if(item==null) return null;
         Reception reception=null;
+        Reception receptionSwap=null;
         Integer orderNumber=null;
         Hashtable<Byte,TreeSet<Integer>> table1=rootRepository.mapAreaAndPriorityMapOrderNumber.get(item.getReception_area().getId());
         Hashtable<Integer,Reception> table2=rootRepository.mapAreaAndNumberMapReception.get(item.getReception_area().getId());
@@ -100,12 +102,17 @@ public class ReceptionServiceImpl implements ReceptionService {
                 if(tree.size()>0){
                     while (count<10){
                         for(Integer number:tree){
-                            reception=table2.get(number);
-                            if(reception!=null){
-                                reception.setStatus(ReceptionStatus.DangTiepDon);
-                                reception.setReception_door(item.getId());
-                                orderNumber=new Integer(number.intValue());
-                                break;
+                            receptionSwap=table2.get(number);//neu gan' reception ngay ma ko tao doi tuong moi se sai neu checkTypeObject=false do reception da change value nen return se != null
+                            if(receptionSwap!=null){
+                                //check xem co' cung` loai doi' tuong giua door va reception ko
+                                boolean checkTypeObject=checkReceptionAndDoorHaveSameValue(receptionSwap,item);
+                                if(checkTypeObject){
+                                    reception=receptionSwap;
+                                    reception.setStatus(ReceptionStatus.DangTiepDon);
+                                    reception.setReception_door(item.getId());
+                                    orderNumber=new Integer(number.intValue());
+                                    break;
+                                }
                             }
                         }
                         if(orderNumber!=null) break;
@@ -126,6 +133,23 @@ public class ReceptionServiceImpl implements ReceptionService {
             rootService.removeReceptionInMap(reception);
         }
         return reception;
+    }
+
+    /**
+     * Kiem tra cua co tiep don' doi' tuong reception nay khong
+     * @param reception
+     * @param door
+     * @return
+     */
+    private boolean checkReceptionAndDoorHaveSameValue(Reception reception,ReceptionDoor door){
+        boolean check=false;
+        for(Long value:door.getTree_value()){
+            if((value.longValue() & reception.getReception_type_value().longValue())>0){
+                check=true;
+                break;
+            }
+        }
+        return check;
     }
 
     @Override
@@ -156,5 +180,10 @@ public class ReceptionServiceImpl implements ReceptionService {
     @Override
     public Optional<Long> countReceptionByArea(Integer areaId) {
         return receptionRepository.countReceptionByArea(areaId);
+    }
+
+    @Override
+    public Optional<PagingResult> page(PagingResult page) {
+        return receptionRepository.page(page);
     }
 }

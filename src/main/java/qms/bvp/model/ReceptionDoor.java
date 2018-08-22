@@ -35,6 +35,7 @@ public class ReceptionDoor implements Serializable{
     private transient Reception reception_current;
     private transient String prefix;
     private transient TreeSet<Byte> prioritys;
+    private transient TreeSet<Long> tree_value;
     private transient List<Reception> receptions_miss=new ArrayList<>();
     @Column(name = "DISABLE",nullable = false,columnDefinition = "boolean default false")
     private Boolean disable;
@@ -175,5 +176,13 @@ public class ReceptionDoor implements Serializable{
 
     public void setUser_updated(Long user_updated) {
         this.user_updated = user_updated;
+    }
+
+    public TreeSet<Long> getTree_value() {
+        return tree_value;
+    }
+
+    public void setTree_value(TreeSet<Long> tree_value) {
+        this.tree_value = tree_value;
     }
 }

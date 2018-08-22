@@ -14,7 +14,7 @@ import java.util.Optional;
  * Created by Admin on 8/15/2018.
  */
 @Repository
-public interface ReceptionRepository extends JpaRepository<Reception,Long> {
+public interface ReceptionRepository extends JpaRepository<Reception,Long>,ReceptionDao {
     @Query("Select re from Reception re where re.status=0 and (re.date_created between ?1 and ?2)")
     Optional<List<Reception>> listAllReceptionWait(Date from, Date to);
 

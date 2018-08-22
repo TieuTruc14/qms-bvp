@@ -1,5 +1,6 @@
 package qms.bvp.web.service.reception;
 
+import qms.bvp.common.PagingResult;
 import qms.bvp.model.Reception;
 import qms.bvp.model.ReceptionDoor;
 
@@ -18,4 +19,5 @@ public interface ReceptionService {
     Optional<Boolean> confirmReceptionOfDoor(Integer doorId,byte status);
     Optional<Long> countReceptionByDoor(Integer doorId);
     Optional<Long> countReceptionByArea(Integer doorId);
+    Optional<PagingResult> page(PagingResult page);
 }

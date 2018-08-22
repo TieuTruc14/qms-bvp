@@ -19,6 +19,7 @@ app.controller('qmsCtrl',['$scope','$http','$filter','$window','$timeout','$q'
             });
 
         $scope.genNumber=function () {
+            $scope.item="";
             $scope.preGetData();
             if(!$scope.genObject()){
                 $scope.endGetData();

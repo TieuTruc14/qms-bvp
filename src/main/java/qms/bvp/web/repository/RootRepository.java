@@ -59,17 +59,25 @@ public class RootRepository {
         mapReceptionDoor.forEach((k,v)->{
             ReceptionDoor item=v;
             item.setPrefix(item.getReception_area().getPrefix());
-            item.setPrioritys(getPriorityDoor(item.getReception_type_value()));
+            getPriorityAndValueDoor(item);
         });
     }
-    private TreeSet<Byte> getPriorityDoor(Long reception_type_value){
+
+    /**
+     * gen danh sach doi' tuong cua tiep don' va danh sach' muc' uu tien tiep don'
+     * @param door
+     */
+    private void getPriorityAndValueDoor(ReceptionDoor door){
         TreeSet<Byte> tree=new TreeSet<>();
+        TreeSet<Long> treeValue=new TreeSet<>();
         for(ReceptionObjectType item:receptionObjectTypeList){
-            if((reception_type_value.longValue() & item.getValue().longValue())>0){
+            if((door.getReception_type_value().longValue() & item.getValue().longValue())>0){
                 tree.add(item.getPriority());
+                treeValue.add(item.getValue());
             }
         }
-        return tree;
+        door.setPrioritys(tree);
+        door.setTree_value(treeValue);
     }
 
     private void initReceptionWaitAndmapNumberOfReceptionArea(List<ReceptionArea> listReceptionAreas,List<ReceptionObjectType> receptionObjectTypeList){

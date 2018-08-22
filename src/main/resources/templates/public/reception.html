@@ -63,20 +63,10 @@
                                         <h3>Khu vực</h3>
                                         <div class="radio">
                                             <label class="radio-custom"  ng-repeat="item in areas track by $index" style="margin-right: 10px;">
-                                                <input type="radio"  ng-model="area.areaId" name="areaId" ng-value="item.id">
+                                                <input type="radio"  ng-model="area.areaId" name="areaId" value="item.id" ng-value="item.id"/>
                                                 <i class="fa fa-circle-o"></i>
                                                 {{item.name}}
                                             </label>
-                                            <!--<label class="radio-custom">-->
-                                                <!--<input type="radio" name="area" checked="checked">-->
-                                                <!--<i class="fa fa-circle-o"></i>-->
-                                                <!--Tầng 2-Khám ngoại trú-->
-                                            <!--</label>-->
-                                            <!--<label class="radio-custom">-->
-                                                <!--<input type="radio" name="area" checked="checked">-->
-                                                <!--<i class="fa fa-circle-o"></i>-->
-                                                <!--Tầng 2-Khám CMU-->
-                                            <!--</label>-->
                                         </div>
                                         <h4 class="text-danger">{{areaError}}</h4>
                                     </div>

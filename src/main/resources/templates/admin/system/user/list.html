@@ -17,7 +17,7 @@
                     <section class="scrollable padder">
                         <ul class="breadcrumb no-border no-radius b-b b-light pull-in">
                             <li><a href="/"><i class="fa fa-home"></i>&nbsp;Home</a></li>
-                            <li><a href="#">Area</a></li>
+                            <li><a href="#">User</a></li>
                         </ul>
                         <section class="panel panel-default">
                             <header class="panel-heading"><i class="fa fa-caret-square-o-right"></i> Dữ liệu
@@ -36,13 +36,11 @@
                                     <thead>
                                     <tr>
                                         <th class="box-shadow-inner small_col text-center">#</th>
-                                        <th class="box-shadow-inner small_col text-center">Tên khu vực</th>
-                                        <th class="box-shadow-inner small_col text-center">Tiền tố</th>
-                                        <th class="box-shadow-inner small_col text-center">Lần gọi loa</th>
+                                        <th class="box-shadow-inner small_col text-center">Username</th>
+                                        <th class="box-shadow-inner small_col text-center">Họ tên</th>
                                         <th class="box-shadow-inner small_col text-center">Mô tả</th>
-                                        <!--<th class="box-shadow-inner small_col text-center">Trạng thái</th>-->
                                         <!--<sec:authorize access="hasRole('ROLE_CATEGORY_GROUP_PRICE_EDIT')">-->
-                                            <th class="box-shadow-inner small_col text-center">Hoạt động</th>
+                                        <th class="box-shadow-inner small_col text-center">Hoạt động</th>
                                         <!--</sec:authorize>-->
                                     </tr>
                                     </thead>
@@ -55,24 +53,24 @@
                                         <td class="align-center">{{item.loudspeaker_times}}</td>
                                         <td class="align-center">{{item.description}}</td>
                                         <!--<td class="align-center" ng-switch on="item.disable">-->
-                                            <!--<span ng-switch-when="true" >Đã khóa</span>-->
-                                            <!--<span ng-switch-default >Đang hoạt động</span>-->
+                                        <!--<span ng-switch-when="true" >Đã khóa</span>-->
+                                        <!--<span ng-switch-default >Đang hoạt động</span>-->
                                         <!--</td>-->
                                         <!--<sec:authorize access="hasAnyRole('ROLE_CATEGORY_GROUP_PRICE_EDIT','ROLE_CATEGORY_GROUP_PRICE_DELETE')">-->
-                                            <td class="align-center">
-                                                <div class="btn-group">
-                                                    <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"><i
-                                                            class="fa fa-random"></i></button>
-                                                    <ul class="dropdown-menu pull-right">
-                                                        <!--<sec:authorize access="hasAnyRole('ROLE_CATEGORY_GROUP_PRICE_EDIT')">-->
-                                                            <li><a href="" data-toggle="modal" data-target="#editItem" ng-click="editClick(item)"><i class="fa fa-pencil-square-o"></i>Sửa</a></li>
-                                                        <!--</sec:authorize>-->
-                                                        <!--<sec:authorize access="hasAnyRole('ROLE_CATEGORY_GROUP_PRICE_DELETE')">-->
-                                                            <li><a href="" data-toggle="modal" data-target="#deleteItem" ng-click="deleteClick(item.id)"><i class="fa fa-pencil-square-o"></i>Xóa</a></li>
-                                                        <!--</sec:authorize>-->
-                                                    </ul>
-                                                </div>
-                                            </td>
+                                        <td class="align-center">
+                                            <div class="btn-group">
+                                                <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"><i
+                                                        class="fa fa-random"></i></button>
+                                                <ul class="dropdown-menu pull-right">
+                                                    <!--<sec:authorize access="hasAnyRole('ROLE_CATEGORY_GROUP_PRICE_EDIT')">-->
+                                                    <li><a href="" data-toggle="modal" data-target="#editItem" ng-click="editClick(item)"><i class="fa fa-pencil-square-o"></i>Sửa</a></li>
+                                                    <!--</sec:authorize>-->
+                                                    <!--<sec:authorize access="hasAnyRole('ROLE_CATEGORY_GROUP_PRICE_DELETE')">-->
+                                                    <li><a href="" data-toggle="modal" data-target="#deleteItem" ng-click="deleteClick(item.id)"><i class="fa fa-pencil-square-o"></i>Xóa</a></li>
+                                                    <!--</sec:authorize>-->
+                                                </ul>
+                                            </div>
+                                        </td>
                                         <!--</sec:authorize>-->
                                     </tr>
 
@@ -241,6 +239,6 @@
 <script th:src="@{/js/angularjs/angular.min.js}"></script>
 <script th:src="@{/js/angularjs/angular-sanitize.min.js}"></script>
 <script th:src="@{/js/common.js}"></script>
-<script th:src="@{/js/project/admin/category/area-list.js}"></script>
+<script th:src="@{/js/project/admin/system/user.js}"></script>
 </body>
 </html>
