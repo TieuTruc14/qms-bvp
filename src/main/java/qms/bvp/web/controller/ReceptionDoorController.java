@@ -92,15 +92,33 @@ public class ReceptionDoorController {
            if(checkDoor.getReception_current()!=null){
                 reception=checkDoor.getReception_current();
                return new ResponseEntity<Reception>(reception, HttpStatus.OK);
-           }else{
+           }
+        }catch (Exception e){
+            logger.error("have a error in method getCurrentReceptionDoor:"+e.getMessage());
+            return new ResponseEntity<Reception>(reception, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<Reception>(reception, HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/get-reception")
+    public  ResponseEntity<Reception> getReceptionDoor(Integer doorId){
+        Reception reception=null;
+        try{
+            ReceptionDoor checkDoor=rootService.getReceptionDoorById(doorId);
+            if(checkDoor==null){
+                throw new Exception();
+            }
+            if(checkDoor.getReception_current()!=null){
+                reception=checkDoor.getReception_current();
+                return new ResponseEntity<Reception>(reception, HttpStatus.OK);
+            }else{
                 reception=receptionService.getReceptionForDoor(checkDoor);
                 if(reception==null){
                     return new ResponseEntity<Reception>(reception, HttpStatus.NO_CONTENT);//204
                 }else{
                     return new ResponseEntity<Reception>(reception, HttpStatus.OK);
                 }
-           }
-
+            }
         }catch (Exception e){
             logger.error("have a error in method getCurrentReceptionDoor:"+e.getMessage());
             return new ResponseEntity<Reception>(reception, HttpStatus.INTERNAL_SERVER_ERROR);

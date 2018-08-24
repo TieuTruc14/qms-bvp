@@ -13,6 +13,7 @@ import qms.bvp.web.repository.RootRepository;
 import qms.bvp.web.repository.reception.ReceptionRepository;
 import qms.bvp.web.service.RootService;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -37,12 +38,22 @@ public class ReceptionServiceImpl implements ReceptionService {
         item.setOrder_number(new Integer(numberCurrent.intValue()+1));
         item.setCode(checkArea.getPrefix()+item.getOrder_number());
         item.setDate_created(new Date());
+        item.setValue(genValueKeyReception(item.getOrder_number(),item.getDate_created()));
+        if(item.getValue().longValue()==0) return null;
         item.setStatus(ReceptionStatus.DangChoTiepDon);
         item=receptionRepository.save(item);
         rootService.addReceptionToMap(item);
         return item;
     }
 
+    private Long genValueKeyReception(Integer orderNumber,Date date){
+        try{
+            Long value=Long.valueOf(DateUtils.dateToStr(date,"yyMMdd")+orderNumber.intValue());
+            return value;
+        }catch (Exception e){
+            return Long.valueOf(0);
+        }
+    }
     @Override
     public Optional<List<Reception>> getAllReceptionWaitInDB() {
         Date now=new Date();

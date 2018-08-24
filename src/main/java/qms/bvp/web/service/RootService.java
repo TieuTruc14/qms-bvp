@@ -28,15 +28,15 @@ public class RootService {
         return null;
     }
 
-    public byte genPriorityOfReception(Long reception_type_value){
+    public List<Byte> genPriorityOfReception(Long reception_type_value){
         List<ReceptionObjectType> list=rootRepository.receptionObjectTypeList;
-        byte priority=0;
+        List<Byte> prioritys=new ArrayList<>();
         for(ReceptionObjectType item:list){
             if((reception_type_value.longValue() & item.getValue().longValue())>0){
-                if(priority<item.getPriority()) priority=item.getPriority();
+                prioritys.add(item.getPriority());
             }
         }
-        return priority;
+        return prioritys;
     }
 
 
@@ -78,10 +78,13 @@ public class RootService {
         Integer current=rootRepository.mapNumberOfReceptionArea.get(item.getReception_area());
         if(item.getOrder_number().compareTo(current)>0){
             rootRepository.mapNumberOfReceptionArea.put(item.getReception_area(),item.getOrder_number());
-
             Hashtable<Byte,TreeSet<Integer>> table1=rootRepository.mapAreaAndPriorityMapOrderNumber.get(item.getReception_area());
-            TreeSet<Integer> tree1=table1.get(item.getPriority());
-            tree1.add(item.getOrder_number());
+            for(Byte priority:item.getPrioritys()){
+                TreeSet<Integer> tree1=table1.get(priority);
+                if(tree1!=null){
+                    tree1.add(item.getOrder_number());
+                }
+            }
             Hashtable<Integer,Reception> table2=rootRepository.mapAreaAndNumberMapReception.get(item.getReception_area());
             table2.put(item.getOrder_number(),item);
         }
@@ -90,8 +93,10 @@ public class RootService {
     public synchronized void removeReceptionInMap(Reception item){
         Hashtable<Byte,TreeSet<Integer>> table1=rootRepository.mapAreaAndPriorityMapOrderNumber.get(item.getReception_area());
         Hashtable<Integer,Reception> table2=rootRepository.mapAreaAndNumberMapReception.get(item.getReception_area());
-        TreeSet<Integer> tree=table1.get(item.getPriority());
-        tree.remove(item.getOrder_number());
+        for(Byte priority:item.getPrioritys()){
+            TreeSet<Integer> tree=table1.get(priority);
+            tree.remove(item.getOrder_number());
+        }
         table2.remove(item.getOrder_number());
         setCurrentReceptionForDoor(item.getReception_door(),item);
     }

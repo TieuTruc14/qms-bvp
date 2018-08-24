@@ -63,7 +63,7 @@
                                         <h3>Khu vực</h3>
                                         <div class="radio">
                                             <label class="radio-custom"  ng-repeat="item in areas track by $index" style="margin-right: 10px;">
-                                                <input type="radio"  ng-model="area.areaId" name="areaId" value="item.id" ng-value="item.id"/>
+                                                <input type="radio"  ng-model="area.areaId" name="areaId" value="{{item.id}}"/>
                                                 <i class="fa fa-circle-o"></i>
                                                 {{item.name}}
                                             </label>

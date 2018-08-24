@@ -27,7 +27,7 @@ app.controller('qmsCtrl',['$scope','$http','transformRequestFormPost' ,function 
         
         $scope.getReceptionForDoor=function () {
             $scope.statusGetReception="";
-            $http.get(preUrl+"/door/current-reception",{params:{doorId:doorId}})
+            $http.get(preUrl+"/door/get-reception",{params:{doorId:doorId}})
                 .then(function (response) {
                     if(response!=null && response!='undefined'){
                         if(response.status==200){
@@ -73,8 +73,11 @@ app.controller('qmsCtrl',['$scope','$http','transformRequestFormPost' ,function 
                         $scope.receptionEmpty=true;
                         $scope.statusGetReception="Có lỗi xảy ra, hãy thử lại sau!";
                     }
+                    if(response.status!=200){
+                        $scope.item="";
+                    }
                     $scope.endGetData();
-                    $scope.item="";
+
                 }
             },function(response){
                 $scope.receptionEmpty=true;

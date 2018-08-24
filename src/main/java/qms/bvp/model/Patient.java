@@ -1,10 +1,9 @@
 package qms.bvp.model;
 
+import qms.bvp.common.DateUtils;
+
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Arrays;
-import java.util.NoSuchElementException;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Created by Admin on 8/9/2018.
@@ -59,6 +58,7 @@ public class Patient implements Serializable{
 //            System.out.println(i);
 //        }
 //    }
+
 
 
     private Long id;

@@ -26,18 +26,18 @@ public class ReceptionController {
     ReceptionService receptionService;
 
     @GetMapping("/born-number")
-    public ResponseEntity<Reception> getNumber(boolean assurance,Long reception_type_value,Integer areaId) {
+    public ResponseEntity<Reception> getNumber(Long reception_type_value,Integer areaId) {
         Reception item=new Reception();
         try{
             if(reception_type_value==null || areaId==null || reception_type_value.longValue()<=0 || areaId.intValue()<=0){
                 throw new Exception();
             }
-            item.setAssurance(assurance);
+//            item.setAssurance(assurance);
             item.setReception_type_value(reception_type_value);
-            item.setPriority(rootService.genPriorityOfReception(reception_type_value));
+            item.setPrioritys(rootService.genPriorityOfReception(reception_type_value));
             item.setReception_area(areaId);
             item=receptionService.createReception(item);
-            return new ResponseEntity<Reception>(item, HttpStatus.OK);
+            if(item!=null) return new ResponseEntity<Reception>(item, HttpStatus.OK);
         }catch (Exception e){
             logger.error("Have an error when born number reception method getNumber:"+e.getMessage());
             item=null;

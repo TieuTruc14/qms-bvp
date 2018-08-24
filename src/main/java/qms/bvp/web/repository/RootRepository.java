@@ -6,6 +6,7 @@ import qms.bvp.model.ReceptionArea;
 import qms.bvp.model.ReceptionDoor;
 import qms.bvp.model.Reception;
 import qms.bvp.model.ReceptionObjectType;
+import qms.bvp.web.service.RootService;
 import qms.bvp.web.service.category.ReceptionAreaService;
 import qms.bvp.web.service.category.ReceptionDoorService;
 import qms.bvp.web.service.category.ReceptionObjectTypeService;
@@ -38,6 +39,8 @@ public class RootRepository {
     ReceptionDoorService doorService;
     @Autowired
     ReceptionService receptionService;
+    @Autowired
+    RootService rootService;
 
     @PostConstruct
     public void init(){
@@ -92,6 +95,7 @@ public class RootRepository {
         }
 
         for(Reception item:listReception){
+            item.setPrioritys(rootService.genPriorityOfReception(item.getReception_type_value()));
             List<Reception> lst=mapAreaWithReception.get(item.getReception_area());
             lst.add(item);
         }
@@ -103,12 +107,12 @@ public class RootRepository {
             for(Byte i:set){
                 table1.put(i,new TreeSet<Integer>());
             }
-
             List<Reception> lst=mapAreaWithReception.get(ra.getId());
             for(Reception item: lst){
-                TreeSet<Integer> tree=table1.get(item.getPriority());
-                tree.add(item.getOrder_number());
-
+                for(Byte priority:item.getPrioritys()){
+                    TreeSet<Integer> tree=table1.get(priority);
+                    tree.add(item.getOrder_number());
+                }
                 table2.put(item.getOrder_number(),item);
             }
             mapAreaAndPriorityMapOrderNumber.put(ra.getId(),table1);

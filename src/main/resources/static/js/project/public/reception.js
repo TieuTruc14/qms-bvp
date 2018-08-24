@@ -25,7 +25,7 @@ app.controller('qmsCtrl',['$scope','$http','$filter','$window','$timeout','$q'
                 $scope.endGetData();
                 return ;
             }
-            $http.get(preUrl+"/reception/born-number",{params: {assurance:$scope.assurance,reception_type_value:$scope.reception_type_value,areaId:$scope.area.areaId}})
+            $http.get(preUrl+"/reception/born-number",{params: {reception_type_value:$scope.reception_type_value,areaId:$scope.area.areaId}})
                 .then(function (response) {
                     if(response!=null && response!='undefined' && response.status==200){
                         $scope.item=response.data;

@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Admin on 09/08/2018.
@@ -26,14 +27,13 @@ public class Reception implements Serializable {
     private String code;
     @Column(name = "RECEPTION_TYPE_VALUE")
     private Long reception_type_value;
-    @Column(name = "ASSURANCE",nullable = false,columnDefinition = "boolean default false")
-    private Boolean assurance;
+    @Column(name = "VALUE",nullable = false,unique = true)
+    private Long value;
     @Column(name = "STATUS",nullable = false,columnDefinition = "byte default 0")
     private Byte status;//0-chua kham, 1-dang kham,2-da kham,3-bo qua(miss)
     @Column(name = "RECEPTION_DOOR")
     private Integer reception_door;
-    @Column(name = "PRIORITY",nullable = false)
-    private Byte priority;
+    private transient List<Byte> prioritys;
     @Column(name = "DATE_CREATED")
     private Date date_created;
     @Column(name = "USER_CREATED")
@@ -83,12 +83,12 @@ public class Reception implements Serializable {
         this.reception_type_value = reception_type_value;
     }
 
-    public Boolean getAssurance() {
-        return assurance;
+    public Long getValue() {
+        return value;
     }
 
-    public void setAssurance(Boolean assurance) {
-        this.assurance = assurance;
+    public void setValue(Long value) {
+        this.value = value;
     }
 
     public Byte getStatus() {
@@ -107,12 +107,12 @@ public class Reception implements Serializable {
         this.reception_door = reception_door;
     }
 
-    public Byte getPriority() {
-        return priority;
+    public List<Byte> getPrioritys() {
+        return prioritys;
     }
 
-    public void setPriority(Byte priority) {
-        this.priority = priority;
+    public void setPrioritys(List<Byte> prioritys) {
+        this.prioritys = prioritys;
     }
 
     public Date getDate_created() {
