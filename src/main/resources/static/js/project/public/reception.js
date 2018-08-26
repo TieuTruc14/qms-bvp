@@ -1,12 +1,14 @@
 
 app.controller('qmsCtrl',['$scope','$http','$filter','$window','$timeout','$q'
     ,function ($scope,$http,$filter,$window,$timeout,$q) {
+        $(".hidden1").css({"display": "block"});
         $scope.dataLoaded=false;
         $scope.item="";
         $scope.areas="";
         $scope.priority=false;
         $scope.reception_type_value=0;
-        $scope.area={areaId:0};
+        // $scope.area={areaId:0};
+        $scope.areaId=0;
         $scope.assurance=true;
         $scope.areaError="";
         $scope.messageStatus="";
@@ -25,7 +27,7 @@ app.controller('qmsCtrl',['$scope','$http','$filter','$window','$timeout','$q'
                 $scope.endGetData();
                 return ;
             }
-            $http.get(preUrl+"/reception/born-number",{params: {reception_type_value:$scope.reception_type_value,areaId:$scope.area.areaId}})
+            $http.get(preUrl+"/reception/born-number",{params: {reception_type_value:$scope.reception_type_value,areaId:$scope.areaId}})
                 .then(function (response) {
                     if(response!=null && response!='undefined' && response.status==200){
                         $scope.item=response.data;
@@ -52,12 +54,16 @@ app.controller('qmsCtrl',['$scope','$http','$filter','$window','$timeout','$q'
                     $scope.reception_type_value=2;
                 }
             }
-            if($scope.area.areaId==0){
+            if($scope.areaId==0){
                 $scope.areaError="Cần chọn khu vực khám";
                 return false;
             }
             return true;
 
+        };
+        
+        $scope.selectArea=function (areaId) {
+          $scope.areaId=areaId;
         };
         
         $scope.preGetData=function () {

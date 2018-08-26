@@ -1,5 +1,6 @@
 package qms.bvp.web.service.reception;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,20 +39,20 @@ public class ReceptionServiceImpl implements ReceptionService {
         item.setOrder_number(new Integer(numberCurrent.intValue()+1));
         item.setCode(checkArea.getPrefix()+item.getOrder_number());
         item.setDate_created(new Date());
-        item.setValue(genValueKeyReception(item.getOrder_number(),item.getDate_created()));
-        if(item.getValue().longValue()==0) return null;
+        item.setValue(genValueKeyReception(item.getOrder_number(),item.getReception_area(),item.getDate_created()));
+        if(StringUtils.isBlank(item.getValue())) return null;
         item.setStatus(ReceptionStatus.DangChoTiepDon);
         item=receptionRepository.save(item);
         rootService.addReceptionToMap(item);
         return item;
     }
 
-    private Long genValueKeyReception(Integer orderNumber,Date date){
+    private String genValueKeyReception(Integer orderNumber,Integer areaId,Date date){
         try{
-            Long value=Long.valueOf(DateUtils.dateToStr(date,"yyMMdd")+orderNumber.intValue());
+            String value=DateUtils.dateToStr(date,"yyMMdd")+"-"+areaId.intValue()+"-"+orderNumber.intValue();
             return value;
         }catch (Exception e){
-            return Long.valueOf(0);
+            return "";
         }
     }
     @Override

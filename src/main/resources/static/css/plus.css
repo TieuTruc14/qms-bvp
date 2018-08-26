@@ -1,0 +1,63 @@
+.list-ul-sim {
+    background: #ffffff;
+    color: #137fd2;
+    border-radius: 3px;
+    padding-bottom: 20px;
+    list-style: square;
+}
+ul.list-ul-sim {
+    padding: 15px 20px;
+    margin: 0;
+}
+ul.list-ul-sim li {
+    margin-bottom: 10px;
+}
+ul.list-ul-sim li a {
+    color: #333;
+}
+ul.list-ul-sim li a:visited {
+    font-weight: bold;
+}
+
+.list-ul-sim label {
+    margin: 0;
+    color: #333;
+    cursor: pointer;
+}
+.list-ul-sim li label:hover{
+    color: #17a2b8 !important;
+}
+.list-ul-sim input[type=checkbox] {
+    display: none;
+}
+.list-ul-sim input[type=checkbox] + span + label:after {
+    content: "";
+}
+.list-ul-sim input[type=checkbox]:checked + span + label {
+    font-weight: bold
+}
+.list-ul-sim input[type=checkbox]:checked + span + label:after {
+    /*font-family: 'Font Awesome 5 Free';*/
+    font-family: 'Arial';
+    content: "x";
+    color: #f13131;
+    font-weight: 800;
+    font-size: 12px;
+}
+.list-ul-sim input[type=checkbox] + span {
+    display: none
+}
+.list-ul-sim input[type=checkbox]:checked + span + label > span {
+    pointer-events: none;
+    display: none
+}
+.list-ul-sim input[type=checkbox]:checked + span {
+    pointer-events: none;
+    display: inline-block;
+    font-weight: bold;
+    color: #333;
+}
+
+.list-ul-sim input[type=checkbox]:checked + span + label:after {
+    padding: 0 5px;
+}

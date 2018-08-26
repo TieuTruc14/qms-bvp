@@ -28,12 +28,13 @@ public class Reception implements Serializable {
     @Column(name = "RECEPTION_TYPE_VALUE")
     private Long reception_type_value;
     @Column(name = "VALUE",nullable = false,unique = true)
-    private Long value;
+    private String value;
     @Column(name = "STATUS",nullable = false,columnDefinition = "byte default 0")
     private Byte status;//0-chua kham, 1-dang kham,2-da kham,3-bo qua(miss)
     @Column(name = "RECEPTION_DOOR")
     private Integer reception_door;
-    private transient List<Byte> prioritys;
+//    private transient List<Byte> prioritys;
+    private transient Byte priority;
     @Column(name = "DATE_CREATED")
     private Date date_created;
     @Column(name = "USER_CREATED")
@@ -83,11 +84,11 @@ public class Reception implements Serializable {
         this.reception_type_value = reception_type_value;
     }
 
-    public Long getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(Long value) {
+    public void setValue(String value) {
         this.value = value;
     }
 
@@ -107,12 +108,12 @@ public class Reception implements Serializable {
         this.reception_door = reception_door;
     }
 
-    public List<Byte> getPrioritys() {
-        return prioritys;
+    public Byte getPriority() {
+        return priority;
     }
 
-    public void setPrioritys(List<Byte> prioritys) {
-        this.prioritys = prioritys;
+    public void setPriority(Byte priority) {
+        this.priority = priority;
     }
 
     public Date getDate_created() {

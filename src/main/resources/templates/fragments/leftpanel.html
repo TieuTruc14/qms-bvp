@@ -43,16 +43,16 @@
                             </i><span>Thông tin tiếp đón</span></a>
                         </li>
                         <!--<sec:authorize access="hasAnyRole('ROLE_SYSTEM_USER_VIEW','ROLE_SYSTEM_GROUP_VIEW','ROLE_SYSTEM_LOG_VIEW')">-->
-                            <li class="" ><a href="#" class=""> <i class="fa fa-cogs icon"> <b class="bg-warning"></b> </i> <span class="pull-right"> <i class="fa fa-angle-down text"></i> <i class="fa fa-angle-up text-active"></i> </span> <span>Quản trị hệ thống</span> </a>
+                            <li th:classappend="${T(qms.bvp.common.Utils).isActive(#httpServletRequest.getContextPath()+'/admin/system', #httpServletRequest)} ? 'active' : '' " ><a href="#" class=""> <i class="fa fa-cogs icon"> <b class="bg-warning"></b> </i> <span class="pull-right"> <i class="fa fa-angle-down text"></i> <i class="fa fa-angle-up text-active"></i> </span> <span>Quản trị hệ thống</span> </a>
                                 <ul class="nav lt">
                                     <!--<sec:authorize access="hasRole('ROLE_SYSTEM_USER_VIEW')">-->
-                                        <li class=""><a th:href="@{/admin/system/user/list}" class=""> <i class="fa fa-angle-right"></i> <span>Người dùng</span> </a></li>
+                                        <li class="" th:classappend="${T(qms.bvp.common.Utils).isActive(#httpServletRequest.getContextPath()+'/admin/system/user', #httpServletRequest)} ? 'active' : '' "><a th:href="@{/admin/system/user}" class=""> <i class="fa fa-angle-right"></i> <span>Người dùng</span> </a></li>
                                     <!--</sec:authorize>-->
                                     <!--<sec:authorize access="hasRole('ROLE_SYSTEM_GROUP_VIEW')">-->
-                                        <li class=""><a th:href="@{/admin/system/group/list}" class=""> <i class="fa fa-angle-right"></i> <span>Nhóm quyền</span> </a></li>
+                                        <li class="" th:classappend="${T(qms.bvp.common.Utils).isActive(#httpServletRequest.getContextPath()+'/admin/system/group', #httpServletRequest)} ? 'active' : '' "><a th:href="@{/admin/system/group}" class=""> <i class="fa fa-angle-right"></i> <span>Nhóm quyền</span> </a></li>
                                     <!--</sec:authorize>-->
                                     <!--<sec:authorize access="hasRole('ROLE_SYSTEM_LOG_VIEW')">-->
-                                        <li class=""><a th:href="@{/admin/system/history/list}" class=""> <i class="fa fa-angle-right"></i> <span>Lịch sử hệ thống</span> </a></li>
+                                        <li class=""><a th:href="@{/admin/system/history}" class=""> <i class="fa fa-angle-right"></i> <span>Lịch sử hệ thống</span> </a></li>
                                     <!--</sec:authorize>-->
                                 </ul>
                             </li>

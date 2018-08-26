@@ -34,10 +34,13 @@ public class UserDaoImpl implements UserDao {
         List<Predicate> predicates = new ArrayList<Predicate>();
         int offset=0;
         if(page.getPageNumber()>0) offset=(page.getPageNumber()-1)*page.getNumberPerPage();
-        predicates.add(cb.notEqual(root.get("deleted"),true));
         if(StringUtils.isNotBlank(username)){
             predicates.add(cb.like(root.get("username"),"%"+username+"%"));
         }
+        predicates.add(cb.notEqual(root.get("deleted"),true));
+        q.select(root).where(predicates.toArray(new Predicate[]{})).orderBy(cb.asc(root.get("username")));
+        List<User> list = entityManager.createQuery(q).setFirstResult(offset).setMaxResults(page.getNumberPerPage()).getResultList();
+        if(list==null) Optional.ofNullable(page);
         CriteriaQuery<Long> criteriaQuery = cb.createQuery(Long.class);
         Root<User> rootCount = criteriaQuery.from(User.class);
         criteriaQuery.select(cb.count(rootCount)).where(predicates.toArray(new Predicate[]{}));
@@ -45,9 +48,6 @@ public class UserDaoImpl implements UserDao {
         if(rowCount==null || rowCount.longValue()==0){
             return Optional.ofNullable(page);
         }
-        q.select(root).where(predicates.toArray(new Predicate[]{})).orderBy(cb.asc(root.get("username")));
-        List<User> list = entityManager.createQuery(q).setFirstResult(offset).setMaxResults(page.getNumberPerPage()).getResultList();
-        if(list==null) Optional.ofNullable(page);
         page.setItems(list);
         page.setRowCount(rowCount);
         return Optional.ofNullable(page);

@@ -95,7 +95,7 @@ public class RootRepository {
         }
 
         for(Reception item:listReception){
-            item.setPrioritys(rootService.genPriorityOfReception(item.getReception_type_value()));
+            item.setPriority(rootService.genPriorityOfReception(item.getReception_type_value()));
             List<Reception> lst=mapAreaWithReception.get(item.getReception_area());
             lst.add(item);
         }
@@ -109,10 +109,12 @@ public class RootRepository {
             }
             List<Reception> lst=mapAreaWithReception.get(ra.getId());
             for(Reception item: lst){
-                for(Byte priority:item.getPrioritys()){
-                    TreeSet<Integer> tree=table1.get(priority);
+//                for(Byte priority:item.getPrioritys()){
+                TreeSet<Integer> tree=table1.get(item.getPriority());
+                if(tree!=null){
                     tree.add(item.getOrder_number());
                 }
+//                }
                 table2.put(item.getOrder_number(),item);
             }
             mapAreaAndPriorityMapOrderNumber.put(ra.getId(),table1);

@@ -48,10 +48,10 @@
 
                                     <tr ng-repeat="item in page.items track by $index">
                                         <td class="align-center">{{(page.pageNumber-1)*page.numberPerPage + $index+1}}</td>
-                                        <td class="align-center">{{item.name}}</td>
-                                        <td class="align-center">{{item.prefix}}</td>
-                                        <td class="align-center">{{item.loudspeaker_times}}</td>
+                                        <td class="align-center">{{item.username}}</td>
+                                        <td class="align-center">{{item.fullname}}</td>
                                         <td class="align-center">{{item.description}}</td>
+                                        <!--<td class="align-center">{{item.description}}</td>-->
                                         <!--<td class="align-center" ng-switch on="item.disable">-->
                                         <!--<span ng-switch-when="true" >Đã khóa</span>-->
                                         <!--<span ng-switch-default >Đang hoạt động</span>-->
@@ -108,25 +108,29 @@
                         <div class="modal-content">
                             <div class="modal-header" style="padding: 7px;">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h5 class="modal-title">Thêm khu vực</h5>
+                                <h5 class="modal-title">Thêm người dùng</h5>
                             </div>
                             <div  theme="simple"  cssClass="form-horizontal" cssStyle="" validate="false">
                                 <div class="modal-body"  style="padding: 10px;">
                                     <div class="form-group">
-                                        <label class="control-label">Tên khu vực<span class="text-danger">*</span>:</label>
-                                        <input ng-model="item.name"  class="form-control"/>
+                                        <label class="control-label">Tài khoản<span class="text-danger">*</span>:</label>
+                                        <input ng-model="item.username"  class="form-control"/>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Mô tả:</label>
-                                        <input ng-model="item.description"  class="form-control"/>
+                                        <label class="control-label">Mật khẩu<span class="text-danger">*</span>:</label>
+                                        <input ng-model="item.password" type="password"  maxlength="50" class="form-control"/>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Tiền tố sinh mã<span class="text-danger">*</span>:</label>
-                                        <input ng-model="item.prefix" maxlength="4" class="form-control"/>
+                                        <label class="control-label">Xác nhận mật khẩu <span style="color: red">*</span></label>
+                                        <input type="password" ng-model="confirmPassword" maxlength="50" style="width:100%;"  class="form-control" />
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Số lần gọi loa<span class="text-danger">*</span>:</label>
-                                        <input ng-model="item.loudspeaker_times" type="number" class="form-control" onkeypress="return restrictCharacters(this, event, digitsOnly);"/>
+                                        <label class="control-label">Họ tên<span class="text-danger">*</span>:</label>
+                                        <input ng-model="item.fullname" maxlength="50" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Mô tả<span class="text-danger">*</span>:</label>
+                                        <input ng-model="item.description"  class="form-control" />
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label text-danger">{{messageError}}</label>
@@ -239,6 +243,6 @@
 <script th:src="@{/js/angularjs/angular.min.js}"></script>
 <script th:src="@{/js/angularjs/angular-sanitize.min.js}"></script>
 <script th:src="@{/js/common.js}"></script>
-<script th:src="@{/js/project/admin/system/user.js}"></script>
+<script th:src="@{/js/project/admin/system/user/list.js}"></script>
 </body>
 </html>

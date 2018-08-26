@@ -34,7 +34,7 @@ public class ReceptionController {
             }
 //            item.setAssurance(assurance);
             item.setReception_type_value(reception_type_value);
-            item.setPrioritys(rootService.genPriorityOfReception(reception_type_value));
+            item.setPriority(rootService.genPriorityOfReception(reception_type_value));
             item.setReception_area(areaId);
             item=receptionService.createReception(item);
             if(item!=null) return new ResponseEntity<Reception>(item, HttpStatus.OK);

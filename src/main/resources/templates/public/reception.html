@@ -6,6 +6,9 @@
     <div th:replace="fragments/header :: header-common"/>
 </head>
 <body>
+<style>
+    .hidden1{display: none;}
+</style>
 <section class="vbox">
 
     <section>
@@ -13,7 +16,7 @@
             <!--begin content-->
             <section id="content" ng-app="qms" ng-controller="qmsCtrl">
                 <section class="vbox">
-                    <section class="scrollable padder">
+                    <section class="scrollable padder hidden1">
                         <ul class="breadcrumb no-border no-radius b-b b-light pull-in">
                             <li><a href="/"><i class="fa fa-home"></i>Màn hình tiếp đón</a></li>
                             <!--<li><a href="#">Generality</a></li>-->
@@ -61,12 +64,9 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <h3>Khu vực</h3>
-                                        <div class="radio">
-                                            <label class="radio-custom"  ng-repeat="item in areas track by $index" style="margin-right: 10px;">
-                                                <input type="radio"  ng-model="area.areaId" name="areaId" value="{{item.id}}"/>
-                                                <i class="fa fa-circle-o"></i>
-                                                {{item.name}}
-                                            </label>
+                                        <div class="btn-group m-b-sm" ng-repeat="item in areas">
+                                            <button type="button" ng-if="item.id==areaId" class="btn btn-info" style="margin-right: 15px;">{{item.name}}</button>
+                                            <button type="button" ng-if="item.id!=areaId" ng-click="selectArea(item.id)" class="btn btn-default" style="margin-right: 15px;">{{item.name}}</button>
                                         </div>
                                         <h4 class="text-danger">{{areaError}}</h4>
                                     </div>

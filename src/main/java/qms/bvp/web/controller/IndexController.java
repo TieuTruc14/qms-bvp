@@ -66,7 +66,7 @@ public class IndexController {
 
     @GetMapping("/area/list")
     public ResponseEntity<List<AreaView>> listAreas(){
-        List<ReceptionArea> listAll=areaService.listAll().orElse(new ArrayList<>());
+        List<ReceptionArea> listAll=areaService.listAllActive().orElse(new ArrayList<>());
         List<AreaView> list=new ArrayList<>();
         listAll.forEach(item->{
             AreaView view=new AreaView();
