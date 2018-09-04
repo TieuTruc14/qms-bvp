@@ -13,4 +13,6 @@ public interface UserService {
     Optional<User> findById(Long id);
     Optional<User> findUserByUsername(String username);
     Optional<PagingResult> page(PagingResult page,String username);
+    boolean checkUserByUsername(String username);
+    Optional<Byte> add(User item,String ip);
 }

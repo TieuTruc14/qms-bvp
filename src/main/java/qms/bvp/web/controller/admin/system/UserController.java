@@ -1,5 +1,6 @@
 package qms.bvp.web.controller.admin.system;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import qms.bvp.common.PagingResult;
+import qms.bvp.common.Utils;
+import qms.bvp.model.User;
 import qms.bvp.web.service.user.UserService;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Admin on 8/25/2018.
@@ -39,8 +44,22 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Byte> add(){
+    public ResponseEntity<Byte> add(String username,String fullname,String password,String description,HttpServletRequest request){
+        if(StringUtils.isBlank(username)||StringUtils.isBlank(fullname)||StringUtils.isBlank(password)){
+            return new ResponseEntity<Byte>(Byte.valueOf("2"),HttpStatus.OK);
+        }
+        try{
+            String ipClient= Utils.getIpClient(request);
+            User item=new User();
+            item.setUsername(username);
+            item.setFullname(fullname);
+            item.setDescription(description);
+            item.setPassword(password);
+            Byte result=userService.add(item,ipClient).orElse(Byte.valueOf("0"));
+            return new ResponseEntity<Byte>(result,HttpStatus.OK);
+        }catch (Exception e){
 
+        }
         return new ResponseEntity<Byte>(Byte.valueOf("0"),HttpStatus.OK);
     }
     @PutMapping("/edit/{id}")

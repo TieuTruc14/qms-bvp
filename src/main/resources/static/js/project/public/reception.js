@@ -29,8 +29,12 @@ app.controller('qmsCtrl',['$scope','$http','$filter','$window','$timeout','$q'
             }
             $http.get(preUrl+"/reception/born-number",{params: {reception_type_value:$scope.reception_type_value,areaId:$scope.areaId}})
                 .then(function (response) {
-                    if(response!=null && response!='undefined' && response.status==200){
-                        $scope.item=response.data;
+                    if(response!=null && response!='undefined' ){
+                        if(response.status==200){
+                            $scope.item=response.data;
+                        }else if(response.status==204){
+                            $scope.messageStatus="Không lấy được số tiếp đón!";
+                        }
                     }
                     $scope.endGetData();
                 },

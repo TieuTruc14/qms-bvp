@@ -75,7 +75,7 @@ public class GroupServiceImpl implements GroupService {
         List<GroupAuthority> groupAuthorities=groupDao.loadByGroupId(id).orElse(null);
         if(groupAuthorities!=null && groupAuthorities.size()>0){
             StringBuilder authoritiesString=new StringBuilder("");
-            groupAuthorities.stream().forEach(g -> authoritiesString.append(g.getAuthority()+","));
+            groupAuthorities.stream().forEach(g -> authoritiesString.append(g.getAuthority_id()+","));
             item.setListAuthority(authoritiesString.toString());
         }
         return Optional.ofNullable(item);

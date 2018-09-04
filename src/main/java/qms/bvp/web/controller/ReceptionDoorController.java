@@ -95,9 +95,9 @@ public class ReceptionDoorController {
            }
         }catch (Exception e){
             logger.error("have a error in method getCurrentReceptionDoor:"+e.getMessage());
-            return new ResponseEntity<Reception>(reception, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Reception>(reception, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Reception>(reception, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<Reception>(reception, HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/get-reception")
@@ -121,7 +121,7 @@ public class ReceptionDoorController {
             }
         }catch (Exception e){
             logger.error("have a error in method getCurrentReceptionDoor:"+e.getMessage());
-            return new ResponseEntity<Reception>(reception, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Reception>(reception, HttpStatus.NOT_FOUND);
         }
     }
 

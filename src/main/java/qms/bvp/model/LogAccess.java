@@ -8,77 +8,41 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "LOG_ACCESS")
+@Table(name = "log_access")
 @Data
 public class LogAccess implements Serializable{
     private static final long serialVersionUID = 1451508189162183268L;
 
     @Id
-    @SequenceGenerator(name="LOG_ACCESS_SEQ", sequenceName="LOG_ACCESS_SEQ",allocationSize=1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOG_ACCESS_SEQ")
-    @Column(name = "ID", nullable = false)
+//    @SequenceGenerator(name="LOG_ACCESS_SEQ", sequenceName="LOG_ACCESS_SEQ",allocationSize=1)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOG_ACCESS_SEQ")
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "USER_ID",nullable = false)
-    private Long userId;
+    @Column(name = "user_id",nullable = false)
+    private Long user_id;
 
-    @Column(name = "MODULE")
+    @Column(name = "module")
     private String module;
 
-    @Column(name = "IP",length = 100)
+    @Column(name = "ip",length = 100)
     private String ip;
 
-    @Column(name = "ACTIONS")
-    private String actions;
+    @Column(name = "action",nullable = false)
+    private String action;
 
-    @Column(name = "DATE_CREATED",nullable = false)
+    @Column(name = "date_created",nullable = false)
     private Date date_created;
 
-    public long getId() {
-        return id;
-    }
+    @Column(name = "table_name",length = 64)
+    private String table_name;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+    @Column(name = "object_id",length = 64)
+    private String object_id;
 
-    public Long getUserId() {
-        return userId;
-    }
+    @Column(name = "object_str")
+    @Lob
+    private String object_str;
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getModule() {
-        return module;
-    }
-
-    public void setModule(String module) {
-        this.module = module;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public String getActions() {
-        return actions;
-    }
-
-    public void setActions(String actions) {
-        this.actions = actions;
-    }
-
-    public Date getDate_created() {
-        return date_created;
-    }
-
-    public void setDate_created(Date date_created) {
-        this.date_created = date_created;
-    }
 }

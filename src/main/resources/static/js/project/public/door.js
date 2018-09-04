@@ -15,8 +15,6 @@ app.controller('qmsCtrl',['$scope','$http','transformRequestFormPost' ,function 
                         $scope.item=response.data;
                     }else if(response.status==204){
                         $scope.receptionEmpty=true;
-                    }else if(response.status==404){
-                        $scope.receptionEmpty=true;
                     }
                     $scope.endGetData();
                 }
@@ -36,9 +34,6 @@ app.controller('qmsCtrl',['$scope','$http','transformRequestFormPost' ,function 
                         }else if(response.status==204){
                             $scope.receptionEmpty=true;
                             $scope.statusGetReception="Không có đối tượng tiếp đón phù hợp!";
-                        }else if(response.status==404){
-                            $scope.receptionEmpty=true;
-                            $scope.statusGetReception="Có lỗi xảy ra, hãy thử lại sau!";
                         }
                         $scope.endGetData();
                     }
@@ -69,9 +64,6 @@ app.controller('qmsCtrl',['$scope','$http','transformRequestFormPost' ,function 
                     }else if(response.status==204){
                         $scope.receptionEmpty=true;
                         $scope.statusGetReception="Chưa có đối tượng tiếp đón phù hợp!";
-                    }else if(response.status==404){
-                        $scope.receptionEmpty=true;
-                        $scope.statusGetReception="Có lỗi xảy ra, hãy thử lại sau!";
                     }
                     if(response.status!=200){
                         $scope.item="";

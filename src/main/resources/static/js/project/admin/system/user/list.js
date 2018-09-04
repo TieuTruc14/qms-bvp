@@ -1,8 +1,8 @@
 
 app.controller('qmsCtrl',['$scope','$http',function ($scope,$http) {
-        $scope.username="";
+        $scope.confirmPassword="";
         $scope.dataLoaded=false;
-        $scope.items="";
+        $scope.item={};
         $http.get(preUrl+"/admin/system/user/list")
             .then(function (response) {
                 if(response!=null && response!='undefined' && response.status==200){
@@ -22,12 +22,15 @@ app.controller('qmsCtrl',['$scope','$http',function ($scope,$http) {
                     });
             }
         };
-        // $scope.reload=function () {
-        //     $http.get(preUrl+"/admin/management/generality/list-door")
-        //         .then(function (response) {
-        //             if(response!=null && response!='undefined' && response.status==200){
-        //                 $scope.items=response.data;
-        //             }
-        //         });
-        // }
+
+
+        $scope.addItem=function () {
+            
+        };
+        $scope.validate=function () {
+          if($scope.item.password==$scope.confirmPassword){
+
+          }
+        }
+
     }]);

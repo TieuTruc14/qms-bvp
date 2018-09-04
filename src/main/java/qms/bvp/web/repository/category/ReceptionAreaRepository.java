@@ -20,7 +20,7 @@ public interface ReceptionAreaRepository extends JpaRepository<ReceptionArea,Int
     @Query(value = "select ra.id, (select max(re.order_number) from reception re where re.reception_area=ra.id and re.date_created BETWEEN ?1 and ?2) from reception_area ra",nativeQuery = true)
     Optional<List<Object[]>> getMaxOrderNumberByArea(Date from,Date to);
 
-    @Query("select ra from ReceptionArea ra where ra.deleted=false and ra.disable=false")
+    @Query(value="select ra.* from reception_area ra where ra.deleted=false and ra.disable=false",nativeQuery = true)
     Optional<List<ReceptionArea>> listAllActive();
 
     @Query("select ra from ReceptionArea ra where ra.deleted=false")
