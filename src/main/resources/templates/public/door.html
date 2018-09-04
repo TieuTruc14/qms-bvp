@@ -17,7 +17,7 @@
                 <section class="vbox">
                     <section class="scrollable padder">
                         <ul class="breadcrumb no-border no-radius b-b b-light pull-in">
-                            <li><a href="/"><i class="fa fa-home"></i>Cửa tiếp đón</a></li>tgyry
+                            <li><a href="/"><i class="fa fa-home"></i>Cửa tiếp đón</a></li>
                         </ul>
                         <section id="main" class="panel panel-default hidden">
                             <div class="panel-body">
@@ -27,7 +27,9 @@
                                 <div class="form-group">
                                     <h4 class="text-warning">NB đang tiếp đón</h4>
                                     <div class="col-sm-6">
-                                        <h1 class="text-danger">{{item.code}}</h1>
+                                        <h1 class="text-danger">
+                                            {{item.code}} <span ng-if="item.suffix.length>0" style="color:#4cc0c1;">({{item.suffix}})</span>
+                                        </h1>
                                     </div>
                                     <div class="col-sm-6">
                                         <a id="getReception" class="btn btn-s-md btn-primary" ng-show="receptionEmpty" style="margin-right: 15px" ng-click="getReceptionForDoor()">Lấy số tiếp đón</a>

@@ -39,6 +39,7 @@
                                     <thead>
                                     <tr>
                                         <th class="box-shadow-inner small_col text-center">#</th>
+                                        <th class="box-shadow-inner small_col text-center">Id</th>
                                         <th class="box-shadow-inner small_col text-center">Khu vực</th>
                                         <th class="box-shadow-inner small_col text-center">Tên cửa</th>
                                         <th class="box-shadow-inner small_col text-center">Đối tượng tiếp đón</th>
@@ -53,6 +54,7 @@
 
                                     <tr ng-repeat="item in page.items track by $index">
                                         <td class="align-center">{{(page.pageNumber-1)*page.numberPerPage + $index+1}}</td>
+                                        <td class="align-center">{{item[0]}}</td>
                                         <td class="align-center">{{item[2]}}</td>
                                         <td class="align-center">{{item[1]}}</td>
                                         <td class="align-center">{{item[3]}}</td>

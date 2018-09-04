@@ -28,6 +28,8 @@ public class ReceptionObjectType implements Serializable {
     private Long value;
     @Column(name = "priority")
     private Byte priority;
+    @Column(name = "suffix")
+    private String suffix;
     @Column(name = "description")
     private String description;
     @Column(name = "disable",nullable = false,columnDefinition = "boolean default false")

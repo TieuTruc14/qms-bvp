@@ -37,9 +37,9 @@ public class User implements Serializable,UserDetails {
     @Column(name = "reception_door")
     private Integer reception_door;
     @Column(name = "disable",nullable = false,columnDefinition = "boolean default false")
-    private Boolean disable;
+    private Boolean disable=false;
     @Column(name = "deleted",nullable = false,columnDefinition = "boolean default false")
-    private Boolean deleted;
+    private Boolean deleted=false;
     @Column(name = "last_access_time")
     private Date last_access_time;
     @Column(name = "date_created")

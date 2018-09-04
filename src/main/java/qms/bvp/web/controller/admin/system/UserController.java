@@ -43,6 +43,19 @@ public class UserController {
         return new ResponseEntity<PagingResult>(page, HttpStatus.OK);
     }
 
+    @GetMapping("/check-username")
+    public ResponseEntity<Boolean> checkUserByUsername(String username){
+        if(StringUtils.isBlank(username)){
+            return new ResponseEntity<Boolean>(true,HttpStatus.OK);
+        }
+        boolean check=true;
+        try{
+            check=userService.checkUserByUsername(username);
+        }catch (Exception e){
+
+        }
+        return new ResponseEntity<Boolean>(check,HttpStatus.OK);
+    }
     @PostMapping("/add")
     public ResponseEntity<Byte> add(String username,String fullname,String password,String description,HttpServletRequest request){
         if(StringUtils.isBlank(username)||StringUtils.isBlank(fullname)||StringUtils.isBlank(password)){
@@ -62,6 +75,7 @@ public class UserController {
         }
         return new ResponseEntity<Byte>(Byte.valueOf("0"),HttpStatus.OK);
     }
+
     @PutMapping("/edit/{id}")
     public ResponseEntity<Byte> edit(){
 

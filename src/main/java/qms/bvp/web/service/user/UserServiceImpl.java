@@ -50,7 +50,9 @@ public class UserServiceImpl implements UserService {
         item.setPassword(encoder.encode(item.getPassword()));
         item.setDate_created(new Date());
         item.setUser_created(user.getId());
-
-        return null;
+//        item.setDeleted(false);
+//        item.setDisable(false);
+        userRepository.save(item);
+        return Optional.of(Byte.valueOf("1"));
     }
 }

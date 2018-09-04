@@ -35,6 +35,7 @@ public class Reception implements Serializable {
     private Integer reception_door;
 //    private transient List<Byte> prioritys;
     private transient Byte priority;
+    private transient String suffix;
     @Column(name = "date_created")
     private Date date_created;
     @Column(name = "user_created")

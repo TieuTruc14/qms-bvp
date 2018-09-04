@@ -1,5 +1,6 @@
 package qms.bvp.web.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,30 +24,24 @@ public class RootService {
     @Autowired
     RootRepository rootRepository;
 
-    public Reception genReception(Integer areaId){
-
-        return null;
-    }
-
-    public Byte genPriorityOfReception(Long reception_type_value){
+    public Reception genPriorityAndSuffixOfReception(Reception reception){
         List<ReceptionObjectType> list=rootRepository.receptionObjectTypeList;
         Byte prioritys=0;
         for(ReceptionObjectType item:list){
-            if((reception_type_value.longValue() & item.getValue().longValue())>0){
-                if(prioritys.intValue()<item.getPriority().intValue()) prioritys=item.getPriority();
+            if((reception.getReception_type_value().longValue() & item.getValue().longValue())>0){
+                if(prioritys.intValue()<item.getPriority().intValue()){
+                    reception.setPriority(item.getPriority());
+                    if(StringUtils.isNotBlank(item.getSuffix())){
+                        reception.setSuffix(item.getSuffix());
+                    }else{
+                        reception.setSuffix("");
+                    }
+                }
             }
         }
-        return prioritys;
+        return reception;
     }
 
-
-    public boolean checkHaveDoor(Integer doorId){
-        ReceptionDoor item=rootRepository.mapReceptionDoor.get(doorId);
-        if(item!=null){
-            return true;
-        }
-        return false;
-    }
 
     public ReceptionDoor getReceptionDoorById(Integer doorId){
         ReceptionDoor item=rootRepository.mapReceptionDoor.get(doorId);

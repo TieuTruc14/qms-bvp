@@ -95,7 +95,7 @@ public class RootRepository {
         }
 
         for(Reception item:listReception){
-            item.setPriority(rootService.genPriorityOfReception(item.getReception_type_value()));
+            item=rootService.genPriorityAndSuffixOfReception(item);
             List<Reception> lst=mapAreaWithReception.get(item.getReception_area());
             lst.add(item);
         }
