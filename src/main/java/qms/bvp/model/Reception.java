@@ -16,8 +16,6 @@ import java.util.List;
 public class Reception implements Serializable {
     private static final long serialVersionUID = 8156914866552709243L;
     @Id
-//    @SequenceGenerator(name="RECEPTION_SEQ", sequenceName="RECEPTION_SEQ",allocationSize=1)
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RECEPTION_SEQ")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
