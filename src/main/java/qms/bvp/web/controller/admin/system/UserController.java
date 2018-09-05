@@ -76,9 +76,20 @@ public class UserController {
         return new ResponseEntity<Byte>(Byte.valueOf("0"),HttpStatus.OK);
     }
 
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<Byte> edit(){
+    @PutMapping("/edit")
+    public ResponseEntity<Byte> edit(Long id,Boolean disable,String fullname,String description,HttpServletRequest request){
+        if(id==null || !(id.longValue()>0) || StringUtils.isBlank(fullname)){
+            return new ResponseEntity<Byte>(Byte.valueOf("2"),HttpStatus.OK);
+        }
+        Byte result=0;
+        try{
+            User item=userService.findById(id).orElse(null);
+            if(item==null) return new ResponseEntity<Byte>(Byte.valueOf("3"),HttpStatus.OK);
+            String ip=Utils.getIpClient(request);
+            result=userService.edit(id,disable,fullname,description,ip).orElse(Byte.valueOf("0"));
+        }catch (Exception e){
 
-        return new ResponseEntity<Byte>(Byte.valueOf("0"),HttpStatus.OK);
+        }
+        return new ResponseEntity<Byte>(result,HttpStatus.OK);
     }
 }

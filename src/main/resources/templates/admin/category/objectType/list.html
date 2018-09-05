@@ -49,6 +49,7 @@
                                         <th class="box-shadow-inner small_col text-center">#</th>
                                         <th class="box-shadow-inner small_col text-center">Mã</th>
                                         <th class="box-shadow-inner small_col text-center">Tên</th>
+                                        <th class="box-shadow-inner small_col text-center">Hậu tố6v</th>
                                         <th class="box-shadow-inner small_col text-center">Mức ưu tiên</th>
                                         <th class="box-shadow-inner small_col text-center">Trạng thái</th>
                                         <!--<sec:authorize access="hasRole('ROLE_CATEGORY_GROUP_PRICE_EDIT')">-->
@@ -62,6 +63,7 @@
                                         <td class="align-center">{{(page.pageNumber-1)*page.numberPerPage + $index+1}}</td>
                                         <td class="align-center">{{item.code}}</td>
                                         <td class="align-center">{{item.name}}</td>
+                                        <td class="align-center">{{item.suffix}}</td>
                                         <td class="align-center">{{item.priority}}</td>
                                         <td class="align-center" ng-switch on="item.disable">
                                             <span ng-switch-when="true" >Đã khóa</span>

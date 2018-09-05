@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en" class="app"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <title>QMS</title>
+    <title>Danh sách nhóm quyền</title>
     <div th:replace="fragments/header :: header-common"/>
 </head>
 <body>
@@ -17,7 +17,7 @@
                     <section class="scrollable padder">
                         <ul class="breadcrumb no-border no-radius b-b b-light pull-in">
                             <li><a th:href="@{/}"><i class="fa fa-home"></i>&nbsp;Home</a></li>
-                            <li><a href="#">User</a></li>
+                            <li><a href="#">Group</a></li>
                         </ul>
                         <section class="panel panel-default">
                             <header class="panel-heading"><i class="fa fa-caret-square-o-right"></i> Dữ liệu
@@ -36,10 +36,7 @@
                                     <thead>
                                     <tr>
                                         <th class="box-shadow-inner small_col text-center">#</th>
-                                        <th class="box-shadow-inner small_col text-center">Username</th>
-                                        <th class="box-shadow-inner small_col text-center">Họ tên</th>
-                                        <th class="box-shadow-inner small_col text-center">Mô tả</th>
-                                        <th class="box-shadow-inner small_col text-center">Trạng thái</th>
+                                        <th class="box-shadow-inner small_col text-center">Tên nhóm quyền</th>
                                         <!--<sec:authorize access="hasRole('ROLE_CATEGORY_GROUP_PRICE_EDIT')">-->
                                         <th class="box-shadow-inner small_col text-center">Hoạt động</th>
                                         <!--</sec:authorize>-->
@@ -50,12 +47,6 @@
                                     <tr ng-repeat="item in page.items track by $index">
                                         <td class="align-center">{{(page.pageNumber-1)*page.numberPerPage + $index+1}}</td>
                                         <td class="align-center">{{item.username}}</td>
-                                        <td class="align-center">{{item.fullname}}</td>
-                                        <td class="align-center">{{item.description}}</td>
-                                        <td class="align-center" ng-switch on="item.disable">
-                                        <span ng-switch-when="true" >Đã khóa</span>
-                                        <span ng-switch-default >Đang hoạt động</span>
-                                        </td>
                                         <!--<sec:authorize access="hasAnyRole('ROLE_CATEGORY_GROUP_PRICE_EDIT','ROLE_CATEGORY_GROUP_PRICE_DELETE')">-->
                                         <td class="align-center">
                                             <div class="btn-group">
@@ -175,8 +166,8 @@
                                         </div>
                                         <!--<label class="control-label"></label>-->
                                         <!--<label class="switch" style="margin-top:10px;">-->
-                                            <!--<input type="checkbox" ng-model="item.disable" >-->
-                                            <!--<span ></span>-->
+                                        <!--<input type="checkbox" ng-model="item.disable" >-->
+                                        <!--<span ></span>-->
                                         <!--</label>-->
                                     </div>
                                     <div class="form-group">

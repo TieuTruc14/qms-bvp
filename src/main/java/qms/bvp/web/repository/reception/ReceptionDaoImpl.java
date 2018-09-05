@@ -28,7 +28,7 @@ public class ReceptionDaoImpl implements ReceptionDao {
                 "(select ra.name from reception_area ra where ra.id=re.reception_area) area_name," +
                 "(select rd.name from reception_door rd where rd.id=re.reception_door) door_name," +
                 "(select group_concat(ro.name SEPARATOR '; ') as names  from reception_object_type ro where (ro.value & re.reception_type_value)>0) type " +
-                "from Reception re  order by re.date_created desc")
+                "from reception re  order by re.date_created desc")
                 .setFirstResult(offset).setMaxResults(page.getNumberPerPage()).getResultList();
         if(list!=null && count>0){
             page.setItems(list);

@@ -55,4 +55,19 @@ public class UserServiceImpl implements UserService {
         userRepository.save(item);
         return Optional.of(Byte.valueOf("1"));
     }
+
+    @Override
+    public Optional<Byte> edit(Long id,Boolean disable,String fullname,String description, String ip) {
+        User itemDB=userRepository.findUserById(id).orElse(null);
+        if(itemDB==null) return Optional.of(Byte.valueOf("3"));
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        itemDB.setFullname(fullname);
+        itemDB.setDisable(disable);
+        itemDB.setDescription(description);
+        itemDB.setDate_updated(new Date());
+        itemDB.setUser_updated(user.getId());
+        userRepository.save(itemDB);
+        return Optional.of(Byte.valueOf("1"));
+    }
+
 }
