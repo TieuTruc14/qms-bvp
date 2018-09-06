@@ -2,7 +2,7 @@ package qms.bvp.web.service.category;
 
 import qms.bvp.common.PagingResult;
 import qms.bvp.model.ReceptionArea;
-import qms.bvp.model.view.AreaView;
+import qms.bvp.model.swap.AreaSwap;
 
 import java.util.Hashtable;
 import java.util.List;
@@ -19,7 +19,7 @@ public interface ReceptionAreaService {
 
     Optional<List<ReceptionArea>> getByNameOrPrefix(String name,String prefix);
     Optional<Boolean> checkAreaByNameOrPrefix(String name,String prefix);
-    Optional<Byte> add(AreaView item);
-    Optional<Byte> edit(AreaView item);
+    Optional<Byte> add(AreaSwap item);
+    Optional<Byte> edit(AreaSwap item);
     Optional<Byte> delete(Integer id);
 }

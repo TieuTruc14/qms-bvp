@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import qms.bvp.common.Utils;
-import qms.bvp.model.view.AreaView;
+import qms.bvp.model.swap.AreaSwap;
 
 /**
  * Created by Admin on 8/18/2018.
@@ -14,12 +14,12 @@ import qms.bvp.model.view.AreaView;
 public class AreaViewValidator  implements Validator {
     @Override
     public boolean supports(Class<?> paramClass) {
-        return AreaView.class.equals(paramClass);
+        return AreaSwap.class.equals(paramClass);
     }
 
     @Override
     public void validate(Object obj, Errors errors) {
-        AreaView item = (AreaView) obj;
+        AreaSwap item = (AreaSwap) obj;
         Utils.trimAllFieldOfObject(item);
         if(StringUtils.isBlank(item.getName()) || item.getLoudspeaker_times()==null
                 || item.getLoudspeaker_times().intValue()==0 || StringUtils.isBlank(item.getPrefix())){

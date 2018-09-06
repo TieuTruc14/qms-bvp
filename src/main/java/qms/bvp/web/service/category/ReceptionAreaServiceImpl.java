@@ -6,10 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import qms.bvp.common.DateUtils;
 import qms.bvp.common.PagingResult;
-import qms.bvp.model.Reception;
 import qms.bvp.model.ReceptionArea;
 import qms.bvp.model.User;
-import qms.bvp.model.view.AreaView;
+import qms.bvp.model.swap.AreaSwap;
 import qms.bvp.web.repository.category.ReceptionAreaRepository;
 import qms.bvp.web.service.reception.ReceptionService;
 
@@ -85,7 +84,7 @@ public class ReceptionAreaServiceImpl implements ReceptionAreaService {
     }
 
     @Override
-    public Optional<Byte> add(AreaView item) {
+    public Optional<Byte> add(AreaSwap item) {
         if(item==null) return Optional.of(Byte.valueOf("3"));
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(user==null) return Optional.of(Byte.valueOf("2"));
@@ -103,7 +102,7 @@ public class ReceptionAreaServiceImpl implements ReceptionAreaService {
     }
 
     @Override
-    public Optional<Byte> edit(AreaView item) {
+    public Optional<Byte> edit(AreaSwap item) {
         if(item==null) return Optional.of(Byte.valueOf("3"));
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(user==null) return Optional.of(Byte.valueOf("2"));

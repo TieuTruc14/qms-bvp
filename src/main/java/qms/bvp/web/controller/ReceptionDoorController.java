@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import qms.bvp.common.ReceptionStatus;
 import qms.bvp.model.Reception;
 import qms.bvp.model.ReceptionDoor;
-import qms.bvp.model.view.DoorView;
+import qms.bvp.model.swap.DoorSwap;
 import qms.bvp.web.service.RootService;
 import qms.bvp.web.service.reception.ReceptionService;
 
@@ -132,7 +132,7 @@ public class ReceptionDoorController {
         if(door==null){
             return "404";
         }
-        DoorView item=new DoorView();
+        DoorSwap item=new DoorSwap();
         item.setArea_name(door.getReception_area().getName());
         item.setName(door.getName());
         item.setId(door.getId());
@@ -152,11 +152,11 @@ public class ReceptionDoorController {
     }
 
     @GetMapping("/info/{id}")
-    public ResponseEntity<DoorView> getDoorInfo(@PathVariable("id") Integer doorId){
+    public ResponseEntity<DoorSwap> getDoorInfo(@PathVariable("id") Integer doorId){
         ReceptionDoor door=rootService.getReceptionDoorById(doorId);
-        DoorView item=new DoorView();
+        DoorSwap item=new DoorSwap();
         if(door==null){
-            return new ResponseEntity<DoorView>(item, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<DoorSwap>(item, HttpStatus.NOT_FOUND);
         }
         item.setArea_name(door.getReception_area().getName());
         item.setName(door.getName());
@@ -172,6 +172,6 @@ public class ReceptionDoorController {
                 listStr.add(re.getCode());
             });
         }
-        return new ResponseEntity<DoorView>(item, HttpStatus.OK);
+        return new ResponseEntity<DoorSwap>(item, HttpStatus.OK);
     }
 }

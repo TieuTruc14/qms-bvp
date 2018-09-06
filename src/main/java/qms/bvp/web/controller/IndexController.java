@@ -4,14 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import qms.bvp.model.ReceptionArea;
-import qms.bvp.model.ReceptionDoor;
-import qms.bvp.model.view.AreaView;
-import qms.bvp.model.view.DoorView;
+import qms.bvp.model.swap.AreaSwap;
 import qms.bvp.web.service.RootService;
 import qms.bvp.web.service.category.ReceptionAreaService;
 
@@ -65,18 +61,18 @@ public class IndexController {
     }
 
     @GetMapping("/area/list")
-    public ResponseEntity<List<AreaView>> listAreas(){
+    public ResponseEntity<List<AreaSwap>> listAreas(){
         List<ReceptionArea> listAll=areaService.listAllActive().orElse(new ArrayList<>());
-        List<AreaView> list=new ArrayList<>();
+        List<AreaSwap> list=new ArrayList<>();
         listAll.forEach(item->{
-            AreaView view=new AreaView();
+            AreaSwap view=new AreaSwap();
             view.setId(item.getId());
             view.setName(item.getName());
             view.setPrefix(item.getPrefix());
             view.setLoudspeaker_times(item.getLoudspeaker_times());
             list.add(view);
         });
-        return new ResponseEntity<List<AreaView>>(list, HttpStatus.OK);
+        return new ResponseEntity<List<AreaSwap>>(list, HttpStatus.OK);
     }
 
 

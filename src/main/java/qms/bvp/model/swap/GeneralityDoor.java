@@ -1,10 +1,9 @@
-package qms.bvp.model.view;
+package qms.bvp.model.swap;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.TreeSet;
 
 /**
  * Created by Admin on 8/16/2018.

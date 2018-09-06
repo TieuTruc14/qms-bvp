@@ -35,7 +35,7 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
                 var opts = angular.extend({}, options, scope.$eval(attrs.uiSelect2));
 
                 /*
-                 Convert from Select2 view-model to Angular view-model.
+                 Convert from Select2 swap-model to Angular swap-model.
                  */
                 var convertToAngularModel = function(select2_data) {
                     var model;
@@ -51,7 +51,7 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
                 };
 
                 /*
-                 Convert from Angular view-model to Select2 view-model.
+                 Convert from Angular swap-model to Select2 swap-model.
                  */
                 var convertToSelect2Model = function(angular_data) {
                     var model = [];
@@ -161,7 +161,7 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
                     });
 
                     if (!isSelect) {
-                        // Set the view and model value and update the angular template manually for the ajax/multiple select2.
+                        // Set the swap and model value and update the angular template manually for the ajax/multiple select2.
                         elm.bind("change", function (e) {
                             e.stopImmediatePropagation();
 

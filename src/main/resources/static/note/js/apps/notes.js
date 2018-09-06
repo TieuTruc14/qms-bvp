@@ -129,7 +129,7 @@ $(function(){
   });
 
 
-  // list view
+  // list swap
 
   var NoteListView = Backbone.View.extend({
 
@@ -156,7 +156,7 @@ $(function(){
 
     },
 
-    // Add a single item to the list by creating a view for it, and
+    // Add a single item to the list by creating a swap for it, and
     // appending its element to the `<ul>`.
     addOne: function(note) {
       var view = new NoteItemView({model: note});
@@ -242,7 +242,7 @@ $(function(){
     details: function(id) {
       app.requiredId = id;
       this.list();
-      // close the note detail view
+      // close the note detail swap
       if (this.noteView) this.noteView.close();
       // get the note
       this.note = Notes.get(id);

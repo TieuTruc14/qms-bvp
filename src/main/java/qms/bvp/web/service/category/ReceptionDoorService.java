@@ -2,7 +2,7 @@ package qms.bvp.web.service.category;
 
 import qms.bvp.common.PagingResult;
 import qms.bvp.model.ReceptionDoor;
-import qms.bvp.model.view.Door;
+import qms.bvp.model.swap.Door;
 
 import java.util.Date;
 import java.util.Hashtable;

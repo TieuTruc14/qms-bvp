@@ -1,4 +1,4 @@
-package qms.bvp.model.view;
+package qms.bvp.model.swap;
 
 import lombok.Getter;
 import lombok.Setter;

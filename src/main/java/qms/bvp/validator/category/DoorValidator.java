@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import qms.bvp.common.Utils;
-import qms.bvp.model.view.Door;
+import qms.bvp.model.swap.Door;
 
 /**
  * Created by Admin on 8/20/2018.

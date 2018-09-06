@@ -1,4 +1,4 @@
-package qms.bvp.model.view;
+package qms.bvp.model.swap;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class AuthorityView {
+public class AuthoritySwap {
     private Authority parent;
     private List<Authority> childrens;
 

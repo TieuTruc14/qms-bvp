@@ -9,9 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import qms.bvp.model.ReceptionDoor;
-import qms.bvp.model.view.GeneralityDoor;
+import qms.bvp.model.swap.GeneralityDoor;
 import qms.bvp.web.service.RootService;
 
 import java.util.ArrayList;

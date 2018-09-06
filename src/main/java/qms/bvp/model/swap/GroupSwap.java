@@ -1,4 +1,4 @@
-package qms.bvp.model.view;
+package qms.bvp.model.swap;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class GroupView {
+public class GroupSwap {
     private Integer id;
     private String groupName;
     private String description;

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import qms.bvp.common.PagingResult;
 import qms.bvp.model.*;
-import qms.bvp.model.view.GroupView;
+import qms.bvp.model.swap.GroupSwap;
 import qms.bvp.web.repository.group.GroupDao;
 
 import java.util.*;
@@ -44,7 +44,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     @Transactional
-    public Optional<Boolean> saveGroupView(GroupView item) {
+    public Optional<Boolean> saveGroupView(GroupSwap item) {
         Group group=new Group();
         group.setGroup_name(item.getGroupName());
         group.setDisable(false);
@@ -63,12 +63,12 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Optional<GroupView> getGroupView(Integer id) {
+    public Optional<GroupSwap> getGroupView(Integer id) {
         Group group=groupDao.get(id).orElse(new Group());
         if(group==null || group.getId()==null){
             return null;
         }
-        GroupView item=new GroupView();
+        GroupSwap item=new GroupSwap();
         item.setId(group.getId());
         item.setGroupName(group.getGroup_name());
         item.setDescription(group.getDescription());
@@ -83,7 +83,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     @Transactional
-    public Optional<Boolean> editGroupView(GroupView item) {
+    public Optional<Boolean> editGroupView(GroupSwap item) {
 
         Group group = groupDao.get(item.getId()).orElse(null);
         if (group == null) return Optional.of(false);
@@ -99,7 +99,7 @@ public class GroupServiceImpl implements GroupService {
         return Optional.of(true);
     }
 
-    public void genAuthority(GroupView item,Integer groupId,Long userId){
+    public void genAuthority(GroupSwap item, Integer groupId, Long userId){
         List<String> authorities=new ArrayList<>(Arrays.asList(item.getListAuthority().split(",")));
         List<GroupAuthority> groupAuthorities=new ArrayList<>();
         if(authorities.size()>0){

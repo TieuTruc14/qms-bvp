@@ -7,7 +7,7 @@ import qms.bvp.common.PagingResult;
 import qms.bvp.model.ReceptionArea;
 import qms.bvp.model.ReceptionDoor;
 import qms.bvp.model.User;
-import qms.bvp.model.view.Door;
+import qms.bvp.model.swap.Door;
 import qms.bvp.web.repository.RootRepository;
 import qms.bvp.web.repository.category.ReceptionDoorRepository;
 import qms.bvp.web.service.reception.ReceptionService;

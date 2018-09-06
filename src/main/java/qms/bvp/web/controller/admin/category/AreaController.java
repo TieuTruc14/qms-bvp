@@ -1,6 +1,5 @@
 package qms.bvp.web.controller.admin.category;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +11,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import qms.bvp.common.PagingResult;
-import qms.bvp.model.Reception;
-import qms.bvp.model.ReceptionArea;
-import qms.bvp.model.view.AreaView;
+import qms.bvp.model.swap.AreaSwap;
 import qms.bvp.validator.category.AreaViewValidator;
 import qms.bvp.web.service.category.ReceptionAreaService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Admin on 8/13/2018.
@@ -53,7 +47,7 @@ public class AreaController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Byte> add(@RequestBody AreaView item, BindingResult result, RedirectAttributes attributes, HttpServletRequest request){
+    public ResponseEntity<Byte> add(@RequestBody AreaSwap item, BindingResult result, RedirectAttributes attributes, HttpServletRequest request){
         areaViewValidator.validate(item,result);
         if(result.hasErrors()){
             return new ResponseEntity<Byte>(Byte.valueOf("0"), HttpStatus.EXPECTATION_FAILED);//417
@@ -74,7 +68,7 @@ public class AreaController {
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<Byte> edit(@RequestBody AreaView item,BindingResult result, RedirectAttributes attributes, HttpServletRequest request){
+    public ResponseEntity<Byte> edit(@RequestBody AreaSwap item, BindingResult result, RedirectAttributes attributes, HttpServletRequest request){
                 areaViewValidator.validate(item,result);
         if(result.hasErrors() || item.getId()==null || item.getId().intValue()==0){
             return new ResponseEntity<Byte>(Byte.valueOf("0"), HttpStatus.EXPECTATION_FAILED);//417

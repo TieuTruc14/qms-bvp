@@ -3,7 +3,6 @@ package qms.bvp.web.controller.admin.category;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,14 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import qms.bvp.common.PagingResult;
 import qms.bvp.model.ReceptionArea;
-import qms.bvp.model.ReceptionDoor;
-import qms.bvp.model.view.Door;
+import qms.bvp.model.swap.Door;
 import qms.bvp.validator.category.DoorValidator;
 import qms.bvp.web.service.RootService;
 import qms.bvp.web.service.category.ReceptionDoorService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 /**
  * Created by Admin on 8/13/2018.
