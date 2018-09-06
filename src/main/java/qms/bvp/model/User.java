@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Admin on 8/9/2018.
  */
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Data
 public class User implements Serializable,UserDetails {
     private static final long serialVersionUID = 3386482117850732087L;

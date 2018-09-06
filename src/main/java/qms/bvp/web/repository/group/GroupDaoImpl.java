@@ -29,8 +29,8 @@ public class GroupDaoImpl implements GroupDao {
     public Optional<PagingResult> page(String name, PagingResult page) {
         int offset=0;
         if(page.getPageNumber()>0) offset=(page.getPageNumber()-1)*page.getNumberPerPage();
-        Long count=(Long)entityManager.createQuery("select count(gr.id) from com.osp.model.Group gr where gr.groupName like :name").setParameter("name","%"+name+"%").getSingleResult();
-        List<Group> list=entityManager.createQuery("select gr from com.osp.model.Group gr where gr.groupName like :name",Group.class).setParameter("name","%"+name+"%")
+        Long count=(Long)entityManager.createQuery("select count(gr.id) from qms.bvp.model.Group gr where gr.groupName like :name").setParameter("name","%"+name+"%").getSingleResult();
+        List<Group> list=entityManager.createQuery("select gr from qms.bvp.model.Group gr where gr.groupName like :name",Group.class).setParameter("name","%"+name+"%")
                 .setFirstResult(offset).setMaxResults(page.getNumberPerPage()).getResultList();
         if(list!=null && count>0){
             page.setItems(list);
