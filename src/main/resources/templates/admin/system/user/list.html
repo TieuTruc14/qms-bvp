@@ -64,7 +64,7 @@
                                                 <ul class="dropdown-menu pull-right">
                                                     <!--<sec:authorize access="hasAnyRole('ROLE_CATEGORY_GROUP_PRICE_EDIT')">-->
                                                     <li><a href="" data-toggle="modal" data-target="#editItem" ng-click="editClick(item)"><i class="fa fa-pencil-square-o"></i>Sửa</a></li>
-                                                    <li><a href="" ><i class="fa fa-pencil-square-o"></i>Phân quyền</a></li>
+                                                    <li><a th:href="@{/admin/system/user/user-group/{{item.id}}}" ><i class="fa fa-pencil-square-o"></i>Phân quyền</a></li>
                                                     <!--</sec:authorize>-->
                                                     <!--<sec:authorize access="hasAnyRole('ROLE_CATEGORY_GROUP_PRICE_DELETE')">-->
                                                     <!--<li><a href="" data-toggle="modal" data-target="#deleteItem" ng-click="deleteClick(item.id)"><i class="fa fa-pencil-square-o"></i>Xóa</a></li>-->

@@ -3,7 +3,7 @@ package qms.bvp.web.service.group;
 import org.springframework.transaction.annotation.Transactional;
 import qms.bvp.common.PagingResult;
 import qms.bvp.model.Authority;
-import qms.bvp.model.Group;
+import qms.bvp.model.GroupRole;
 import qms.bvp.model.GroupUser;
 import qms.bvp.model.swap.GroupSwap;
 
@@ -13,8 +13,8 @@ import java.util.Optional;
 @Transactional
 public interface GroupService {
     Optional<PagingResult> page(String name, PagingResult page);
-    Optional<List<Group>> loadAllGroup();
-    Optional<List<Group>> loadAllGroupOfUser(Long userId);
+    Optional<List<GroupRole>> loadAllGroup();
+    Optional<List<GroupRole>> loadAllGroupOfUser(Long userId);
     Optional<GroupSwap> getGroupView(Integer id);
     Optional<List<Authority>> loadAllAuthority();
     Optional<Boolean> saveGroupView(GroupSwap item);

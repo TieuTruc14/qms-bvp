@@ -27,12 +27,12 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Optional<List<Group>> loadAllGroup() {
+    public Optional<List<GroupRole>> loadAllGroup() {
         return groupDao.loadAllGroup();
     }
 
     @Override
-    public Optional<List<Group>> loadAllGroupOfUser(Long userId) {
+    public Optional<List<GroupRole>> loadAllGroupOfUser(Long userId) {
         return groupDao.loadAllGroupOfUser(userId);
     }
 
@@ -45,17 +45,17 @@ public class GroupServiceImpl implements GroupService {
     @Override
     @Transactional
     public Optional<Boolean> saveGroupView(GroupSwap item) {
-        Group group=new Group();
-        group.setGroup_name(item.getGroupName());
-        group.setDisable(false);
-        group.setDeleted(false);
-        group.setDescription(item.getDescription());
+        GroupRole groupRole =new GroupRole();
+        groupRole.setGroup_name(item.getGroupName());
+        groupRole.setDisable(false);
+        groupRole.setDeleted(false);
+        groupRole.setDescription(item.getDescription());
         User user=(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        group.setUser_created(user.getId());
-        group.setUser_updated(user.getId());
-        group.setDate_created(new Date());
-        group.setDate_updated(new Date());
-        Integer groupId=groupDao.add(group).orElse(Integer.valueOf(0));
+        groupRole.setUser_created(user.getId());
+        groupRole.setUser_updated(user.getId());
+        groupRole.setDate_created(new Date());
+        groupRole.setDate_updated(new Date());
+        Integer groupId=groupDao.add(groupRole).orElse(Integer.valueOf(0));
         if(groupId.intValue()==0) return Optional.of(false);
         genAuthority(item,groupId,user.getId());
 
@@ -64,14 +64,14 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public Optional<GroupSwap> getGroupView(Integer id) {
-        Group group=groupDao.get(id).orElse(new Group());
-        if(group==null || group.getId()==null){
+        GroupRole groupRole =groupDao.get(id).orElse(new GroupRole());
+        if(groupRole ==null || groupRole.getId()==null){
             return null;
         }
         GroupSwap item=new GroupSwap();
-        item.setId(group.getId());
-        item.setGroupName(group.getGroup_name());
-        item.setDescription(group.getDescription());
+        item.setId(groupRole.getId());
+        item.setGroupName(groupRole.getGroup_name());
+        item.setDescription(groupRole.getDescription());
         List<GroupAuthority> groupAuthorities=groupDao.loadByGroupId(id).orElse(null);
         if(groupAuthorities!=null && groupAuthorities.size()>0){
             StringBuilder authoritiesString=new StringBuilder("");
@@ -85,15 +85,15 @@ public class GroupServiceImpl implements GroupService {
     @Transactional
     public Optional<Boolean> editGroupView(GroupSwap item) {
 
-        Group group = groupDao.get(item.getId()).orElse(null);
-        if (group == null) return Optional.of(false);
+        GroupRole groupRole = groupDao.get(item.getId()).orElse(null);
+        if (groupRole == null) return Optional.of(false);
 
-        group.setGroup_name(item.getGroupName());
-        group.setDescription(item.getDescription());
+        groupRole.setGroup_name(item.getGroupName());
+        groupRole.setDescription(item.getDescription());
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        group.setUser_updated(user.getId());
-        group.setDate_updated(new Date());
-        Integer groupId = groupDao.edit(group).orElse(Integer.valueOf(0));
+        groupRole.setUser_updated(user.getId());
+        groupRole.setDate_updated(new Date());
+        Integer groupId = groupDao.edit(groupRole).orElse(Integer.valueOf(0));
         if (groupId.intValue() == 0) return Optional.of(false);
         genAuthority(item, groupId, user.getId());
         return Optional.of(true);

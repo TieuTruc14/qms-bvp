@@ -2,8 +2,8 @@ package qms.bvp.web.repository.group;
 
 import qms.bvp.common.PagingResult;
 import qms.bvp.model.Authority;
-import qms.bvp.model.Group;
 import qms.bvp.model.GroupAuthority;
+import qms.bvp.model.GroupRole;
 import qms.bvp.model.GroupUser;
 
 import java.util.List;
@@ -14,12 +14,12 @@ import java.util.Optional;
  */
 public interface GroupDao {
     Optional<PagingResult> page(String name, PagingResult page);
-    Optional<Integer> add(Group item);
-    Optional<Group> get(Integer id);
-    Optional<List<Group>> loadAllGroup();
-    Optional<List<Group>> loadAllGroupOfUser(Long userId);
+    Optional<Integer> add(GroupRole item);
+    Optional<GroupRole> get(Integer id);
+    Optional<List<GroupRole>> loadAllGroup();
+    Optional<List<GroupRole>> loadAllGroupOfUser(Long userId);
     Optional<List<GroupUser>> loadAllGroupUserByGroupId(Integer groupId);
-    Optional<Integer> edit(Group item);
+    Optional<Integer> edit(GroupRole item);
     /*AUTHORITY*/
     Optional<List<Authority>> loadAllAuthority();
     Optional<Boolean> addListGroupAuthority(List<GroupAuthority> items) ;

@@ -19,13 +19,16 @@
                             <li><a th:href="@{/}"><i class="fa fa-home"></i>&nbsp;Home</a></li>
                             <li><a href="#">Group</a></li>
                         </ul>
+                        <div class="m-b-md">
+                            <span style="color:#009900" th:text="${success}"></span>
+                        </div>
                         <section class="panel panel-default">
                             <header class="panel-heading"><i class="fa fa-caret-square-o-right"></i> Dữ liệu
                             </header>
                             <div class="text-sm wrapper bg-light lt">
                                 <form cssClass="form-inline padder" action="list" role="form" theme="simple">
                                     <div class="form-group ">
-                                        <a class="btn btn-sm btn-primary pull-right"  data-toggle="modal" data-target="#addItem" ng-click="addClick()"><i class="fa fa-plus"></i> Thêm mới</a>
+                                        <a class="btn btn-sm btn-primary pull-right" th:href="@{/admin/system/group-authority/add}"><i class="fa fa-plus"></i> Thêm mới</a>
                                     </div>
                                     <div class="line line-dashed line-lg pull-in" style="clear:both ;border-top:0px"></div>
                                 </form>
@@ -37,6 +40,7 @@
                                     <tr>
                                         <th class="box-shadow-inner small_col text-center">#</th>
                                         <th class="box-shadow-inner small_col text-center">Tên nhóm quyền</th>
+                                        <th class="box-shadow-inner small_col text-center">Mô tả</th>
                                         <!--<sec:authorize access="hasRole('ROLE_CATEGORY_GROUP_PRICE_EDIT')">-->
                                         <th class="box-shadow-inner small_col text-center">Hoạt động</th>
                                         <!--</sec:authorize>-->
@@ -46,7 +50,8 @@
 
                                     <tr ng-repeat="item in page.items track by $index">
                                         <td class="align-center">{{(page.pageNumber-1)*page.numberPerPage + $index+1}}</td>
-                                        <td class="align-center">{{item.username}}</td>
+                                        <td class="align-center">{{item.group_name}}</td>
+                                        <td class="align-center">{{item.description }}</td>
                                         <!--<sec:authorize access="hasAnyRole('ROLE_CATEGORY_GROUP_PRICE_EDIT','ROLE_CATEGORY_GROUP_PRICE_DELETE')">-->
                                         <td class="align-center">
                                             <div class="btn-group">
@@ -54,8 +59,7 @@
                                                         class="fa fa-random"></i></button>
                                                 <ul class="dropdown-menu pull-right">
                                                     <!--<sec:authorize access="hasAnyRole('ROLE_CATEGORY_GROUP_PRICE_EDIT')">-->
-                                                    <li><a href="" data-toggle="modal" data-target="#editItem" ng-click="editClick(item)"><i class="fa fa-pencil-square-o"></i>Sửa</a></li>
-                                                    <li><a href="" ><i class="fa fa-pencil-square-o"></i>Phân quyền</a></li>
+                                                    <li><a th:href="@{/admin/system/group-authority/edit/{{item.id}}}"><i class="fa fa-pencil-square-o"></i>Sửa</a></li>
                                                     <!--</sec:authorize>-->
                                                     <!--<sec:authorize access="hasAnyRole('ROLE_CATEGORY_GROUP_PRICE_DELETE')">-->
                                                     <!--<li><a href="" data-toggle="modal" data-target="#deleteItem" ng-click="deleteClick(item.id)"><i class="fa fa-pencil-square-o"></i>Xóa</a></li>-->
@@ -95,148 +99,6 @@
                 </section>
                 <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
 
-                <div class="modal fade"  id="addItem"  role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-                    <div class="modal-dialog" >
-                        <div class="modal-content">
-                            <div class="modal-header" style="padding: 7px;">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h5 class="modal-title">Thêm người dùng</h5>
-                            </div>
-                            <div  theme="simple"  cssClass="form-horizontal" cssStyle="" validate="false">
-                                <div class="modal-body"  style="padding: 10px;">
-                                    <div class="form-group">
-                                        <label class="control-label">Tài khoản<span class="text-danger">*</span>:</label>
-                                        <input ng-model="item.username"  class="form-control"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Mật khẩu<span class="text-danger">*</span>:</label>
-                                        <input ng-model="item.password" type="password"  maxlength="50" class="form-control"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Xác nhận mật khẩu <span style="color: red">*</span></label>
-                                        <input type="password" ng-model="confirmPassword" maxlength="50" style="width:100%;"  class="form-control" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Họ tên<span class="text-danger">*</span>:</label>
-                                        <input ng-model="item.fullname" maxlength="50" class="form-control"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Mô tả:</label>
-                                        <input ng-model="item.description"  class="form-control" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label text-danger">{{messageError}}</label>
-                                        <label class="control-label text-info">{{messageStatus}}</label>
-                                    </div>
-                                </div>
-                                <div class="modal-footer" style="padding: 10px;" >
-                                    <button id="btnCancel" type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
-                                    <button id="btnAdd" type="submit" class="btn btn-success" ng-click="addItem()">Thêm mới</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal fade"  id="editItem"  role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-                    <div class="modal-dialog" >
-                        <div class="modal-content">
-                            <div class="modal-header" style="padding: 7px;">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h5 class="modal-title">Cập nhật thông tin </h5>
-                            </div>
-                            <div  theme="simple"  cssClass="form-horizontal" cssStyle="" validate="false">
-                                <div class="modal-body"  style="padding: 10px;">
-                                    <div class="form-group">
-                                        <label class="control-label">Tài khoản:</label>
-                                        <span class="text-danger">{{item.username}}</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Họ tên<span class="text-danger">*</span>:</label>
-                                        <input ng-model="item.fullname" maxlength="50" class="form-control"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label">Khóa Hoạt động:</label>
-                                        <div class="">
-                                            <label class="switch">
-                                                <input type="checkbox" ng-model="item.disable" >
-                                                <span></span>
-                                            </label>
-                                        </div>
-                                        <!--<label class="control-label"></label>-->
-                                        <!--<label class="switch" style="margin-top:10px;">-->
-                                        <!--<input type="checkbox" ng-model="item.disable" >-->
-                                        <!--<span ></span>-->
-                                        <!--</label>-->
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Mô tả<span class="text-danger">*</span>:</label>
-                                        <input ng-model="item.description"  class="form-control" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label text-danger">{{messageError}}</label>
-                                        <label class="control-label text-info">{{messageStatus}}</label>
-                                    </div>
-                                </div>
-                                <div class="modal-footer" style="padding: 10px;">
-                                    <button id="btnCancelEdit" type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
-                                    <button id="btnEdit" type="submit" class="btn btn-success" ng-click="editItem()">Cập nhật</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="modal fade"  id="deleteItem"  role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-                    <div class="modal-dialog" >
-                        <div class="modal-content">
-                            <div class="modal-header" style="padding: 7px;">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h5 class="modal-title">Xóa đối tượng</h5>
-                            </div>
-                            <div  theme="simple"  cssClass="form-horizontal" cssStyle="" validate="false">
-                                <div class="modal-body"  style="padding: 10px;">
-                                    <div class="form-group">
-                                        <label class="control-label">Bạn xác định xóa đối tượng này?</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label text-danger">{{messageError}}</label>
-                                        <label class="control-label text-info">{{messageStatus}}</label>
-                                    </div>
-                                </div>
-                                <div class="modal-footer" style="padding: 10px;" >
-                                    <button id="btnCancelDel" type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
-                                    <button id="btnDel" type="button" class="btn btn-danger" ng-click="deleteItem()">Xóa</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal fade"  id="confirm"  role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-                    <div class="modal-dialog" >
-                        <div class="modal-content">
-                            <div class="modal-header" style="padding: 7px;">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h5 class="modal-title">Thông báo</h5>
-                            </div>
-                            <div  theme="simple"  cssClass="form-horizontal" cssStyle="" validate="false">
-                                <div class="modal-body"  style="padding: 10px;">
-                                    <div class="form-group">
-                                        <label class="control-label text-danger">{{messageError}}</label>
-                                        <label class="control-label text-info">{{messageStatus}}</label>
-                                    </div>
-                                </div>
-                                <div class="modal-footer" style="padding: 10px;" >
-                                    <button  type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </section>
             <!--end content-->
         </section>
@@ -248,6 +110,6 @@
 <script th:src="@{/js/angularjs/angular-sanitize.min.js}"></script>
 <script th:src="@{/js/common.js}"></script>
 <script th:src="@{/js/angularjs/transform-request.js}"></script>
-<script th:src="@{/js/project/admin/system/user/list.js}"></script>
+<script th:src="@{/js/project/admin/system/authority/list.js}"></script>
 </body>
 </html>

@@ -7,9 +7,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "group")
+@Table(name = "group_role")
 @Data
-public class Group implements Serializable {
+public class GroupRole implements Serializable {
     private static final long serialVersionUID = -166399391710801760L;
 
     @Id

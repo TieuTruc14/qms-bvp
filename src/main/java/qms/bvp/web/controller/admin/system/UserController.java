@@ -6,15 +6,25 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import qms.bvp.common.PagingResult;
 import qms.bvp.common.Utils;
+import qms.bvp.model.GroupRole;
+import qms.bvp.model.GroupUser;
 import qms.bvp.model.User;
+import qms.bvp.web.service.group.GroupService;
 import qms.bvp.web.service.user.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Admin on 8/25/2018.
@@ -25,6 +35,8 @@ public class UserController {
     private Logger logger= LogManager.getLogger(UserController.class);
     @Autowired
     UserService userService;
+    @Autowired
+    GroupService groupService;
 
     @GetMapping("")
     public String template(Model model){
@@ -91,5 +103,66 @@ public class UserController {
 
         }
         return new ResponseEntity<Byte>(result,HttpStatus.OK);
+    }
+
+
+    @GetMapping("/user-group/{id}")
+    public String userGroup(Model model,@PathVariable("id") Long id){
+        if(id==null) return "404";
+        User user=userService.findById(id).orElse(null);
+        if(user==null) return "404";
+        //load all groups
+        List<GroupRole> allGroups=groupService.loadAllGroup().orElse(new ArrayList<>());
+        //load group of user
+        List<GroupRole> listGroups=groupService.loadAllGroupOfUser(id).orElse(new ArrayList<>());
+        String groups="";
+        if(listGroups.size()>0){
+            for(GroupRole item:listGroups){
+                groups+=item.getId()+",";
+            }
+        }
+        model.addAttribute("user",user);
+        model.addAttribute("groups",groups);
+        model.addAttribute("allGroups",allGroups);
+        return "user.group";
+    }
+
+
+    @PostMapping("user-group")
+    public String addUserGroup(Model model, Long id,String listGroup,RedirectAttributes attributes){
+        if(id==null) return "404";
+        User user = userService.findById(id).orElse(null);
+        if (user == null) return "404";
+        listGroup=Utils.trim(listGroup);
+        try {
+            if (listGroup.length() > 0) {
+                String[] array = listGroup.split(",");
+                List<String> stringList = Arrays.stream(array).collect(Collectors.toList());
+                if (stringList.size() > 0) {
+                    List<GroupUser> items = new ArrayList<>();
+                    User userCurrent = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                    for (String item : stringList) {
+                        items.add(new GroupUser(Integer.valueOf(item), id, userCurrent.getId(), new Date()));
+                    }
+                    if (items.size() > 0) {
+                        groupService.addListGroupUser(items,id);
+                    }
+                }
+            } else {
+                groupService.deleteListGroupOfUser(id);
+            }
+            attributes.addFlashAttribute("success","Phân quyền thành công!");
+            return "redirect:/system/user/list";
+        }catch (Exception e){
+            logger.error("Have an error UserController.addUserGroup:"+e.getMessage());
+            model.addAttribute("errorMessage","Có lỗi xảy ra, hãy thử lại sau!");
+            //load all groups
+            List<GroupRole> allGroups=groupService.loadAllGroup().orElse(new ArrayList<>());
+            model.addAttribute("user",user);
+            model.addAttribute("groups",listGroup);
+            model.addAttribute("allGroups",allGroups);
+        }
+        model.addAttribute("errorMessage","Có lỗi xảy ra, hãy thử lại sau!");
+        return "user.group";
     }
 }

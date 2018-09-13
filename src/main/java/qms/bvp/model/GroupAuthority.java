@@ -32,4 +32,12 @@ public class GroupAuthority implements Serializable {
     @Column(name = "date_created",nullable = false)
     private Date date_created;
 
+    public GroupAuthority(){}
+
+//    public GroupAuthority(Integer groupId, Integer authority, Long user_created, Date genDate) {
+//        this.groupId = groupId;
+//        this.authority_id = authority;
+//        this.user_created = user_created;
+//        this.date_created = genDate;
+//    }
 }

@@ -1,14 +1,15 @@
 package qms.bvp.web.repository.group;
 
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import qms.bvp.common.PagingResult;
 import qms.bvp.model.Authority;
-import qms.bvp.model.Group;
 import qms.bvp.model.GroupAuthority;
+import qms.bvp.model.GroupRole;
 import qms.bvp.model.GroupUser;
 
 import javax.persistence.EntityManager;
@@ -29,8 +30,9 @@ public class GroupDaoImpl implements GroupDao {
     public Optional<PagingResult> page(String name, PagingResult page) {
         int offset=0;
         if(page.getPageNumber()>0) offset=(page.getPageNumber()-1)*page.getNumberPerPage();
-        Long count=(Long)entityManager.createQuery("select count(gr.id) from qms.bvp.model.Group gr where gr.groupName like :name").setParameter("name","%"+name+"%").getSingleResult();
-        List<Group> list=entityManager.createQuery("select gr from qms.bvp.model.Group gr where gr.groupName like :name",Group.class).setParameter("name","%"+name+"%")
+        if(StringUtils.isBlank(name)) name="";
+        Long count=(Long)entityManager.createQuery("select count(gr.id) from qms.bvp.model.GroupRole gr where gr.group_name like :name").setParameter("name","%"+name+"%").getSingleResult();
+        List<GroupRole> list=entityManager.createQuery("select gr from qms.bvp.model.GroupRole gr where gr.group_name like :name",GroupRole.class).setParameter("name","%"+name+"%")
                 .setFirstResult(offset).setMaxResults(page.getNumberPerPage()).getResultList();
         if(list!=null && count>0){
             page.setItems(list);
@@ -40,27 +42,27 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     @Override
-    public Optional<Integer> add(Group item) {
+    public Optional<Integer> add(GroupRole item) {
         entityManager.persist(item);
         entityManager.flush();
         return Optional.of(item.getId());
     }
 
     @Override
-    public Optional<Group> get(Integer id) {
-        Group item=entityManager.find(Group.class,id);
+    public Optional<GroupRole> get(Integer id) {
+        GroupRole item=entityManager.find(GroupRole.class,id);
         return Optional.ofNullable(item);
     }
 
     @Override
-    public Optional<List<Group>> loadAllGroup() {
-        List<Group> items=entityManager.createQuery("Select gr from com.osp.model.Group gr ",Group.class).getResultList();
+    public Optional<List<GroupRole>> loadAllGroup() {
+        List<GroupRole> items=entityManager.createQuery("Select gr from com.osp.model.Group gr ",GroupRole.class).getResultList();
         return Optional.ofNullable(items);
     }
 
     @Override
-    public Optional<List<Group>> loadAllGroupOfUser(Long userId) {
-        List<Group> items=entityManager.createQuery("SELECT gr FROM com.osp.model.Group gr JOIN GroupUser gu ON gr.id=gu.groupId where gu.userId=:userId and gr.status=1",Group.class)
+    public Optional<List<GroupRole>> loadAllGroupOfUser(Long userId) {
+        List<GroupRole> items=entityManager.createQuery("SELECT gr FROM com.osp.model.Group gr JOIN GroupUser gu ON gr.id=gu.groupId where gu.userId=:userId and gr.status=1",GroupRole.class)
                 .setParameter("userId",userId).getResultList();
         return Optional.ofNullable(items);
     }
@@ -72,7 +74,7 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     @Override
-    public Optional<Integer> edit(Group item)  {
+    public Optional<Integer> edit(GroupRole item)  {
         entityManager.merge(item);
         entityManager.flush();
         return Optional.of(item.getId());
@@ -81,7 +83,7 @@ public class GroupDaoImpl implements GroupDao {
     /*AUTHORITY*/
     @Override
     public Optional<List<Authority>> loadAllAuthority() {
-        List<Authority> list=entityManager.createQuery("select a from Authority a order by a.orderId asc",Authority.class).getResultList();
+        List<Authority> list=entityManager.createQuery("select a from Authority a order by a.order_number asc",Authority.class).getResultList();
         return Optional.ofNullable(list);
     }
 

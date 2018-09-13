@@ -18,17 +18,16 @@ public class Authority implements Serializable {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "AUTHORITY",nullable = false)
+    @Column(name = "authority",nullable = false)
     private String authority;
 
-    @Column(name = "PARENT",nullable = false)
+    @Column(name = "parent",nullable = false)
     private int parent;
 
-    @Column(name = "NAME")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "ORDER_ID")
-    private int orderId;
-
+    @Column(name = "order_number")
+    private int order_number;
 
 }

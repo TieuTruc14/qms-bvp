@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" class="app"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+    xmlns:form="http://www.springframework.org/tags/form">
+<head>
+    <title>Thêm nhóm quyền</title>
+    <div th:replace="fragments/header :: header-common"/>
+</head>
+<body>
+<section class="vbox">
+    <div th:replace="fragments/header :: header-menu" />
+    <section>
+        <section class="hbox stretch">
+            <div th:replace="fragments/leftpanel :: leafpanel" />
+            <!--begin content-->
+            <section id="content" >
+                <section class="vbox">
+                    <section class="scrollable padder">
+                        <ul class="breadcrumb no-border no-radius b-b b-light pull-in">
+                            <li><a th:href="@{/}"><i class="fa fa-home"></i>&nbsp;Home</a></li>
+                            <li><a href="#">Group</a></li>
+                        </ul>
+                        <div class="m-b-md">
+                            <h3 class="m-b-none">Thêm mới nhóm quyền </h3><br/>
+                            <span style="color:red" th:text="${messageError}"></span>
+                        </div>
+                        <section class="panel panel-default">
+                            <header class="panel-heading"><i class="fa fa-caret-square-o-right"></i>Thêm nhóm quyền</header>
+                            <div class="panel-body" style="min-height: 600px;">
+                                <form method="post" action="add" theme="simple"  enctype="multipart/form-data" class="form-horizontal" cssStyle="" validate="true">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" style="line-height: 30px">Tên nhóm quyền <span style="color: red">*</span></label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group m-b">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                                </span>
+                                                <input type="text" class="form-control input-sm" th:value="${item.groupName}"
+                                                       name="groupName" data-parsley-required="true"
+                                                       placeholder="Tên nhóm người sử dụng"
+                                                       data-parsley-type-message="<font color=green>Tên nhóm</font> không được bỏ trống"
+                                                       data-maxlength="100"
+                                                       data-maxlength-message="Độ dài không được vượt quá 100 ký tự"
+                                                />
+
+                                            </div>
+                                            <!--<form:errors cssStyle="color: red" path="groupSwap.groupName" />-->
+                                            <span style="color:red" th:text="${errorName}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="line line-dashed line-lg pull-in"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" style="line-height: 30px">Diễn giải </label>
+
+                                        <div class="col-sm-10">
+                                        <textarea  name="description"  path=""  class="form-control" th:text="${item.description}"></textarea>
+
+                                        </div>
+                                    </div>
+                                    <div class="line line-dashed line-lg pull-in"></div>
+                                    <span class="control-span m-l">Phân quyền:</span>
+                                    <div class="line line-dashed line-lg pull-in"></div>
+                                    <div class="form-group m-b-xs">
+
+                                        <div class="col-lg-12" style="margin-left: 40px">
+                                            <div><span><input type="checkbox" id="grantCheckAll" name="checkAll" /> &nbsp;<label>Tất cả các quyền</label></span></div>
+                                            <!--<c:forEach var="group" items="${groups}">-->
+                                                <div class="col-md-4" th:each="group : ${groups}" >
+                                                    <table style="line-height: 2.0; border: 0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td  style="padding-left: 15px; vertical-align: top;">
+                                                                <input type="checkbox"  name="listAuthority" th:value="${group.parent.id}"   onchange="checkAllInRow(this)" /><label th:text="${group.parent.name}"> </label>
+                                                            </td>
+                                                        </tr>
+                                                        <!--<c:forEach var="children" items="${group.childrens}">-->
+                                                            <tr th:each="children : ${group.childrens}">
+                                                                <td  style="padding-left: 40px; vertical-align: top;" >
+                                                                    <input type="checkbox"  name ="listAuthority" onchange="checkChildren(this)" th:value="${children.id}" alt="chk" th:text="${children.name}" />
+
+                                                                </td>
+                                                            </tr>
+                                                        <!--</c:forEach>-->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            <!--</c:forEach>-->
+                                        </div>
+                                    </div>
+
+                                    <div class="line line-dashed line-lg pull-in" style="clear:both ;margin-bottom: 50px"></div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4 col-sm-offset-5">
+                                            <a  th:href="@{/admin/system/group-authority}"  class="btn btn-default">Hủy bỏ</a>
+                                            <button type="submit" data-loading-text="Thêm mới" class="btn btn-primary">Thêm mới</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </section>
+                    </section>
+
+                    <div th:replace="fragments/footer :: footer-copyright"/>
+                </section>
+                <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
+
+
+            </section>
+            <!--end content-->
+        </section>
+    </section>
+</section>
+
+<div th:replace="fragments/footer :: footer-common" />
+<script th:src="@{/js/checkbox.js}"></script>
+
+<script th:inline="javascript">
+    $(document).ready(function () {
+        /*Quy uoc cha con cho checkbox*/
+        $('#grantCheckAll').checkboxes({
+            itemChild: 'list'
+        });
+        /*load quyen*/
+        // var systems = "${item.listAuthority}".split(",");
+        var systems='';
+        if([[${item.listAuthority}]]!=null){
+            systems = [[${item.listAuthority}]].split(",");
+        }
+        $("input[name='listAuthority']").each(function() {
+            for(var i=0; i<systems.length;i++){
+                if(systems[i] == this.value) {
+                    $(this).prop('checked', true);
+                }
+            }
+        });
+
+        /*Kiem tra checkbox trong bang dc check toan bo khong*/
+        function checkAllCheck(){
+            var result=true;
+            $("input[name='listAuthority']").each(function() {
+                if(!$(this).is(':checked')){
+                    result=false;
+                    return result;
+                }
+
+            });
+            return result;
+        }
+        var checkAllCheck=checkAllCheck();
+        if(checkAllCheck){
+            $('#grantCheckAll').prop('checked', true);
+        }
+
+    });
+
+    function checkAllInRow(e){
+        if($(e).is(':checked')) $(e).parent().parent().parent().find("input:checkbox").each(function() {
+            $(this).prop('checked', true);
+        });
+        else $(e).parent().parent().parent().find("input:checkbox").each(function() {
+            $(this).prop('checked', false);
+        });
+    }
+
+    function checkChildren(e) {
+        if($(e).is(':checked')){
+            var check=checkAllValue();
+            if(check){
+                $(e).parent().parent().parent().find("input:checkbox").each(function(i) {
+                    if(i==0){
+                        $(this).prop('checked', true);
+                    }
+                });
+            }
+        }else{
+            $(e).parent().parent().parent().find("input:checkbox").each(function(i) {
+                if(i==0){
+                    $(this).prop('checked', false);
+                }
+            });
+        }
+
+        function checkAllValue() {
+            var result=true;
+            $(e).parent().parent().parent().find("input[type='checkbox']").each(function(i) {
+                //ko tinh doi tuong dau tien: item_ALL(leader nhom quyen)
+                if(!$(this).is(':checked')){
+                    if(i>0){
+                        result= false;
+                    }
+                }
+            });
+            return result;
+        }
+    }
+</script>
+</body>
+</html>
