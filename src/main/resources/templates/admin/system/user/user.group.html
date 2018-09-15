@@ -21,14 +21,14 @@
                             <li><a href="#">Group</a></li>
                         </ul>
                         <div class="m-b-md">
-                            <h3 class="m-b-none">Phần quyền người dùng</h3><br/>
+                            <h3 class="m-b-none">Phần quyền người dùng: <span th:text="${user.username}"></span>---<span th:text="${user.fullname}"></span></h3><br/>
                             <span style="color:red" th:text="${messageError}"></span>
                         </div>
                         <section class="panel panel-default">
                             <header class="panel-heading"><i class="fa fa-caret-square-o-right"></i>Phân quyền</header>
                             <div class="panel-body" style="min-height: 600px;">
                                 <form method="post" th:action="@{/admin/system/user/user-group}" theme="simple"  enctype="multipart/form-data" class="form-horizontal" cssStyle="" validate="true">
-                                    <input type="hidden" name="id" value="${user.id}"/>
+                                    <input type="hidden" name="id" th:value="${user.id}"/>
                                     <div class="form-group m-b-xs">
                                         <div class="col-lg-12" style="margin-left: 40px">
                                             <div><span><input type="checkbox" id="grantCheckAll" name="checkAll" /> &nbsp;<label class="font-bold">Tất cả các nhóm quyền</label></span></div>
@@ -37,7 +37,7 @@
                                                     <tbody>
                                                     <tr>
                                                         <td  style="padding-left: 15px; vertical-align: top;">
-                                                            <input type="checkbox"  name="listGroup" value="${item.id}" /><label> ${item.groupName}</label>
+                                                            <input type="checkbox"  name="listGroup" th:value="${item.id}" /><label th:text="${item.group_name}"> </label>
                                                         </td>
                                                     </tr>
                                                     </tbody>

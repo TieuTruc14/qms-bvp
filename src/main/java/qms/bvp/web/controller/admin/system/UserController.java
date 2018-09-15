@@ -124,7 +124,7 @@ public class UserController {
         model.addAttribute("user",user);
         model.addAttribute("groups",groups);
         model.addAttribute("allGroups",allGroups);
-        return "user.group";
+        return "admin/system/user/user.group";
     }
 
 
@@ -152,7 +152,7 @@ public class UserController {
                 groupService.deleteListGroupOfUser(id);
             }
             attributes.addFlashAttribute("success","Phân quyền thành công!");
-            return "redirect:/system/user/list";
+            return "redirect:/admin/system/user";
         }catch (Exception e){
             logger.error("Have an error UserController.addUserGroup:"+e.getMessage());
             model.addAttribute("errorMessage","Có lỗi xảy ra, hãy thử lại sau!");
@@ -163,6 +163,6 @@ public class UserController {
             model.addAttribute("allGroups",allGroups);
         }
         model.addAttribute("errorMessage","Có lỗi xảy ra, hãy thử lại sau!");
-        return "user.group";
+        return "admin/system/user/user.group";
     }
 }

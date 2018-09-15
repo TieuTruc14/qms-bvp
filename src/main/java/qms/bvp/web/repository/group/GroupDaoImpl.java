@@ -56,13 +56,13 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public Optional<List<GroupRole>> loadAllGroup() {
-        List<GroupRole> items=entityManager.createQuery("Select gr from com.osp.model.Group gr ",GroupRole.class).getResultList();
+        List<GroupRole> items=entityManager.createQuery("Select gr from GroupRole gr where gr.disable=false and gr.deleted=false",GroupRole.class).getResultList();
         return Optional.ofNullable(items);
     }
 
     @Override
     public Optional<List<GroupRole>> loadAllGroupOfUser(Long userId) {
-        List<GroupRole> items=entityManager.createQuery("SELECT gr FROM com.osp.model.Group gr JOIN GroupUser gu ON gr.id=gu.groupId where gu.userId=:userId and gr.status=1",GroupRole.class)
+        List<GroupRole> items=entityManager.createQuery("SELECT gr FROM GroupRole gr JOIN GroupUser gu ON gr.id=gu.group_id where gu.user_id=:userId and gr.disable=false and gr.deleted=false",GroupRole.class)
                 .setParameter("userId",userId).getResultList();
         return Optional.ofNullable(items);
     }
@@ -128,7 +128,7 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public Optional<Boolean> deleteListGroupOfUser(Long userId) {
-        Query query=entityManager.createQuery("delete from GroupUser gu where gu.userId=:userId").setParameter("userId",userId);
+        Query query=entityManager.createQuery("delete from GroupUser gu where gu.user_id=:userId").setParameter("userId",userId);
         query.executeUpdate();
         return Optional.of(true);
     }
