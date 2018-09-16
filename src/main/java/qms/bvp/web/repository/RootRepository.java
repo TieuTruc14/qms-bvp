@@ -1,7 +1,9 @@
 package qms.bvp.web.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import qms.bvp.model.ReceptionArea;
 import qms.bvp.model.ReceptionDoor;
 import qms.bvp.model.Reception;
@@ -31,6 +33,8 @@ public class RootRepository {
     public static HashMap<Integer,Hashtable<Byte,TreeSet<Integer>>> mapAreaAndPriorityMapOrderNumber=new HashMap<>();//HashMap<IdArea,HashTable<priority,TreeSet<OrderNumber>>>
     public static HashMap<Integer,Hashtable<Integer,Reception>> mapAreaAndNumberMapReception=new HashMap<>();//HashMap<IdArea,HashTable<OrderNumber,Reception>>
 
+    public boolean checkRefresh=false;
+
     @Autowired
     ReceptionObjectTypeService objectTypeService;
     @Autowired
@@ -57,6 +61,25 @@ public class RootRepository {
         loadCurrentReceptionAndMissReceptionOfDoor();
     }
 
+    @Scheduled(cron = "0 0/10 0 * * *")
+    @Transactional(rollbackFor = Exception.class)
+    public void refreshWhenNewDay(){
+        init();
+        checkRefresh=false;
+    }
+
+    @Scheduled(cron = "0 0/0 0 * * *")
+    public void changeCheckStatus(){
+        checkRefresh=true;
+    }
+
+    @Scheduled(fixedDelay = 3600000)
+    @Transactional(rollbackFor = Exception.class)
+    public void resetData(){
+        if(checkRefresh){
+            refreshWhenNewDay();
+        }
+    }
 
     private void genInfoMapReceptionDoor(){
         mapReceptionDoor.forEach((k,v)->{
