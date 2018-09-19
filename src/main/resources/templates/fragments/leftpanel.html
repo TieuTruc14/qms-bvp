@@ -52,7 +52,7 @@
                                         <li class="" th:classappend="${T(qms.bvp.common.Utils).isActive(#httpServletRequest.getContextPath()+'/admin/system/group-authority', #httpServletRequest)} ? 'active' : '' "><a th:href="@{/admin/system/group-authority}" class=""> <i class="fa fa-angle-right"></i> <span>Nhóm quyền</span> </a></li>
                                     <!--</sec:authorize>-->
                                     <!--<sec:authorize access="hasRole('ROLE_SYSTEM_LOG_VIEW')">-->
-                                        <li class=""><a th:href="@{/admin/system/history}" class=""> <i class="fa fa-angle-right"></i> <span>Lịch sử hệ thống</span> </a></li>
+                                        <li class="" th:classappend="${T(qms.bvp.common.Utils).isActive(#httpServletRequest.getContextPath()+'/admin/system/history', #httpServletRequest)} ? 'active' : '' "><a th:href="@{/admin/system/history}" class=""> <i class="fa fa-angle-right"></i> <span>Lịch sử hệ thống</span> </a></li>
                                     <!--</sec:authorize>-->
                                 </ul>
                             </li>

@@ -129,6 +129,11 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    public Optional<List<String>> loadListAuthorityOfUserByUserId(Long userId) {
+        return groupDao.loadListAuthorityOfUserByUserId(userId);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public Optional<Integer> deleteGroup(Integer id,String ip) {
         List<GroupUser> listGU=groupDao.loadAllGroupUserByGroupId(id).orElse(new ArrayList<>());

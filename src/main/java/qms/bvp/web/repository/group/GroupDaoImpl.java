@@ -111,7 +111,7 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public Optional<Boolean> deleteGroup(Integer id) {
-        Query query=entityManager.createQuery("delete from com.osp.model.Group gr where gr.id=:id").setParameter("id",id);
+        Query query=entityManager.createQuery("delete from GroupRole gr where gr.id=:id").setParameter("id",id);
         query.executeUpdate();
         return Optional.ofNullable(true);
     }
@@ -135,9 +135,15 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public Optional<List<String>> loadListAuthorityOfUserByUsername(String username) {
-        List<String> items=entityManager.createQuery("SELECT au.authority FROM Authority au JOIN GroupAuthority ga ON au.id=ga.authority JOIN com.osp.model.Group gr ON gr.id=ga.groupId JOIN GroupUser gu ON gr.id=gu.groupId JOIN User us ON us.id=gu.userId WHERE us.username=:username")
+        List<String> items=entityManager.createQuery("SELECT au.authority FROM Authority au JOIN GroupAuthority ga ON au.id=ga.authority_id JOIN GroupRole gr ON gr.id=ga.group_id JOIN GroupUser gu ON gr.id=gu.group_id JOIN User us ON us.id=gu.user_id WHERE us.username=:username")
                 .setParameter("username",username).getResultList();
+        return Optional.ofNullable(items);
+    }
 
+    @Override
+    public Optional<List<String>> loadListAuthorityOfUserByUserId(Long userId) {
+        List<String> items=entityManager.createQuery("SELECT au.authority FROM Authority au JOIN GroupAuthority ga ON au.id=ga.authority_id JOIN GroupRole gr ON gr.id=ga.groupId JOIN GroupUser gu ON gr.id=gu.group_id JOIN User us ON us.id=gu.user_id WHERE us.id=:userId")
+                .setParameter("userId",userId).getResultList();
         return Optional.ofNullable(items);
     }
 }

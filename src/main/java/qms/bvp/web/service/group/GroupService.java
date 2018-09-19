@@ -24,5 +24,6 @@ public interface GroupService {
     Optional<Boolean> deleteListGroupOfUser(Long userId,String ip);
 
     Optional<List<String>> loadListAuthorityOfUserByUsername(String username);
+    Optional<List<String>> loadListAuthorityOfUserByUserId(Long userId);
     Optional<Integer> deleteGroup(Integer id, String ip);
 }

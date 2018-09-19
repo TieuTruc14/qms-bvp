@@ -40,7 +40,14 @@ dependencies {
 	compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.0.2.RELEASE'
 	compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.2.RELEASE'
 	compile group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
-// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+
 	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+
+	/*for log*/
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging', version: '2.0.4.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '2.0.4.RELEASE'
+	compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.9.6'
+
+
 
 }

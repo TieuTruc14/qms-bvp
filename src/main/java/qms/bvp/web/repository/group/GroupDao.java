@@ -32,4 +32,5 @@ public interface GroupDao {
     Optional<Boolean> deleteListGroupOfUser(Long userId);
     /*Authority of User*/
     Optional<List<String>> loadListAuthorityOfUserByUsername(String username);
+    Optional<List<String>> loadListAuthorityOfUserByUserId(Long userId);
 }

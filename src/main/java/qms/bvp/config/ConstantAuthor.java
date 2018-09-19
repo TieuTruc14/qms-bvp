@@ -17,4 +17,5 @@ public class ConstantAuthor {
     public class Log{//log
         public static final String view="ROLE_SYSTEM_LOG_VIEW";
     }
+
 }

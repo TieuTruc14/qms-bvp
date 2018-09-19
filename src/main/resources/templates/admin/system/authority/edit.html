@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en" class="app"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <title>Thêm nhóm quyền</title>
+    <title>Cập nhật nhóm quyền</title>
     <div th:replace="fragments/header :: header-common"/>
 </head>
 <body>
@@ -20,11 +20,11 @@
                             <li><a href="#">Group</a></li>
                         </ul>
                         <div class="m-b-md">
-                            <h3 class="m-b-none">Thêm mới nhóm quyền </h3><br/>
+                            <h3 class="m-b-none">Cập nhật nhóm quyền </h3><br/>
                             <span style="color:red" th:text="${messageError}"></span>
                         </div>
                         <section class="panel panel-default">
-                            <header class="panel-heading"><i class="fa fa-caret-square-o-right"></i>Thêm nhóm quyền</header>
+                            <header class="panel-heading"><i class="fa fa-caret-square-o-right"></i>Cập nhật nhóm quyền</header>
                             <div class="panel-body" style="min-height: 600px;">
                                 <form method="post" th:action="@{/admin/system/group-authority/edit}" theme="simple"  enctype="multipart/form-data" class="form-horizontal" cssStyle="" validate="true">
                                     <div class="form-group">

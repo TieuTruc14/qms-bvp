@@ -1,5 +1,7 @@
 package qms.bvp.web.repository;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -23,6 +25,7 @@ import java.util.*;
 @Component
 public class RootRepository {
 
+    private Logger logger= LogManager.getLogger(RootRepository.class);
     public static List<ReceptionArea> listReceptionAreas;
     public static HashMap<Integer,ReceptionArea> mapReceptionAreas=new HashMap<>();
     public static Hashtable<Integer,Integer> mapNumberOfReceptionArea=new Hashtable<>();//hien thi so hien tai cua receptionArea
@@ -48,6 +51,11 @@ public class RootRepository {
 
     @PostConstruct
     public void init(){
+        logger.debug("This is a debug message");
+        logger.info("This is an info message");
+        logger.warn("This is a warn message");
+        logger.error("This is an error message");
+        logger.fatal("This is a fatal message");
         listReceptionAreas=areaService.listAllActive().orElse(new ArrayList<>());
         for(ReceptionArea item:listReceptionAreas){
             mapReceptionAreas.put(item.getId(),item);
@@ -59,6 +67,11 @@ public class RootRepository {
         initReceptionWaitAndmapNumberOfReceptionArea(listReceptionAreas,receptionObjectTypeList);
         //load receptionCurrentDoor and ReceptionMiss of Door
         loadCurrentReceptionAndMissReceptionOfDoor();
+        logger.debug("This is a debug message");
+        logger.info("This is an info message");
+        logger.warn("This is a warn message");
+        logger.error("This is an error message");
+        logger.fatal("This is a fatal message");
     }
 
     @Scheduled(cron = "0 0/10 0 * * *")
