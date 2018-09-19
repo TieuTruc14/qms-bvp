@@ -19,7 +19,7 @@ public interface ReceptionAreaService {
 
     Optional<List<ReceptionArea>> getByNameOrPrefix(String name,String prefix);
     Optional<Boolean> checkAreaByNameOrPrefix(String name,String prefix);
-    Optional<Byte> add(AreaSwap item);
-    Optional<Byte> edit(AreaSwap item);
-    Optional<Byte> delete(Integer id);
+    Optional<Byte> add(AreaSwap item,String ip);
+    Optional<Byte> edit(AreaSwap item, String ip);
+    Optional<Byte> delete(Integer id,String ip);
 }

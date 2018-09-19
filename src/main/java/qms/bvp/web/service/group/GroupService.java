@@ -17,11 +17,11 @@ public interface GroupService {
     Optional<List<GroupRole>> loadAllGroupOfUser(Long userId);
     Optional<GroupSwap> getGroupView(Integer id);
     Optional<List<Authority>> loadAllAuthority();
-    Optional<Boolean> saveGroupView(GroupSwap item);
-    Optional<Boolean> editGroupView(GroupSwap item);
+    Optional<Boolean> saveGroupView(GroupSwap item,String ip);
+    Optional<Boolean> editGroupView(GroupSwap item,String ip);
 
-    Optional<Boolean> addListGroupUser(List<GroupUser> items, Long userId);
-    Optional<Boolean> deleteListGroupOfUser(Long userId);
+    Optional<Boolean> addListGroupUser(List<GroupUser> items, Long userId,String ip);
+    Optional<Boolean> deleteListGroupOfUser(Long userId,String ip);
 
     Optional<List<String>> loadListAuthorityOfUserByUsername(String username);
     Optional<Integer> deleteGroup(Integer id, String ip);

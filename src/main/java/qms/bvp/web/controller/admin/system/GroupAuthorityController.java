@@ -12,12 +12,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import qms.bvp.common.PagingResult;
+import qms.bvp.common.Utils;
 import qms.bvp.model.Authority;
 import qms.bvp.model.swap.AuthorityView;
 import qms.bvp.model.swap.GroupSwap;
 import qms.bvp.validator.category.GroupViewAddValidator;
 import qms.bvp.web.service.group.GroupService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,13 +91,14 @@ public class GroupAuthorityController {
     }
 
     @PostMapping("/add")
-    public String groupAddSave(Model model, @Valid GroupSwap item, BindingResult result, RedirectAttributes attributes) {
+    public String groupAddSave(Model model, @Valid GroupSwap item, BindingResult result, RedirectAttributes attributes,HttpServletRequest request) {
         groupViewAddValidator.validate(item,result);
         if(StringUtils.isBlank(item.getGroupName()) || item.getGroupName().length()>100){
             model.addAttribute("errorName","Tên không được trống và không quá 100 ký tự!");
         }
         try{
-            if(!result.hasErrors() && groupService.saveGroupView(item).orElse(false)){
+            String ip= Utils.getIpClient(request);
+            if(!result.hasErrors() && groupService.saveGroupView(item,ip).orElse(false)){
                 attributes.addFlashAttribute("success","Thêm đối tượng thành công!");
                 return "redirect:/admin/system/group-authority";
             }
@@ -133,11 +136,12 @@ public class GroupAuthorityController {
     }
 
     @PostMapping("/edit")
-    public String groupEditSave(Model model, @Valid GroupSwap item, BindingResult result, RedirectAttributes attributes) {
+    public String groupEditSave(Model model, @Valid GroupSwap item, BindingResult result, RedirectAttributes attributes,HttpServletRequest request) {
         if(item.getId()==null|| item.getId().intValue()==0) return "404";
         groupViewAddValidator.validate(item,result);
         try{
-            if(!result.hasErrors() && groupService.editGroupView(item).orElse(false)){
+            String ip= Utils.getIpClient(request);
+            if(!result.hasErrors() && groupService.editGroupView(item,ip).orElse(false)){
                 attributes.addFlashAttribute("success","Sửa nhóm quyền thành công!");
                 return "redirect:/admin/system/group-authority";
             }

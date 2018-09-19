@@ -35,6 +35,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 //    @Autowired
 //    private AccessDeniedHandler accessDeniedHandler;
+    @Autowired
+    MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
+    @Autowired
+    MyLogoutSuccessHandler myLogoutSuccessHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -44,16 +48,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/reception/**", "/door/**","/area/**").permitAll()
-//                .antMatchers("/admin/**").hasAnyRole("ROLE_ADMIN")
-//                .antMatchers("/user/**").hasAnyRole("ROLE_USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/",true)
+                .successHandler(myAuthenticationSuccessHandler)
+//                .defaultSuccessUrl("/",true)
                 .permitAll()
                 .and()
                 .logout()
+                .logoutSuccessHandler(myLogoutSuccessHandler)
                 .permitAll()
                 .and()
                 .exceptionHandling()

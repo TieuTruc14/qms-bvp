@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import qms.bvp.common.PagingResult;
+import qms.bvp.common.Utils;
 import qms.bvp.model.swap.AreaSwap;
 import qms.bvp.validator.category.AreaViewValidator;
 import qms.bvp.web.service.category.ReceptionAreaService;
@@ -55,7 +56,8 @@ public class AreaController {
         try{
             boolean checkExits=areaService.checkAreaByNameOrPrefix(item.getName(),item.getPrefix()).orElse(true);
             if(checkExits) return new ResponseEntity<Byte>(Byte.valueOf("2"), HttpStatus.CONFLICT);//409
-            Byte value=areaService.add(item).orElse(Byte.valueOf("0"));
+            String ip= Utils.getIpClient(request);
+            Byte value=areaService.add(item,ip).orElse(Byte.valueOf("0"));
             if(value==1){
                 return new ResponseEntity<Byte>(Byte.valueOf("1"), HttpStatus.OK);
             }else if(value==2){
@@ -74,7 +76,8 @@ public class AreaController {
             return new ResponseEntity<Byte>(Byte.valueOf("0"), HttpStatus.EXPECTATION_FAILED);//417
         }
         try{
-            Byte value=areaService.edit(item).orElse(Byte.valueOf("0"));
+            String ip= Utils.getIpClient(request);
+            Byte value=areaService.edit(item,ip).orElse(Byte.valueOf("0"));
             if(value==1){
                 return new ResponseEntity<Byte>(Byte.valueOf("1"), HttpStatus.OK);
             }else if(value==3){
@@ -89,9 +92,10 @@ public class AreaController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Byte> delete(@PathVariable("id") Integer id){
+    public ResponseEntity<Byte> delete(@PathVariable("id") Integer id,HttpServletRequest request){
         try{
-            Byte result=areaService.delete(id).orElse(Byte.valueOf("0"));
+            String ip= Utils.getIpClient(request);
+            Byte result=areaService.delete(id,ip).orElse(Byte.valueOf("0"));
             if(result==1){
                 return new ResponseEntity<Byte>(result,HttpStatus.OK);
             }else if(result==5){

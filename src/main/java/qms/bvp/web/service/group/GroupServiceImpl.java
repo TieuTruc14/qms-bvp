@@ -43,8 +43,8 @@ public class GroupServiceImpl implements GroupService {
 
 
     @Override
-    @Transactional
-    public Optional<Boolean> saveGroupView(GroupSwap item) {
+    @Transactional(rollbackFor = Exception.class)
+    public Optional<Boolean> saveGroupView(GroupSwap item,String ip) {
         GroupRole groupRole =new GroupRole();
         groupRole.setGroup_name(item.getGroupName());
         groupRole.setDisable(false);
@@ -82,8 +82,8 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    @Transactional
-    public Optional<Boolean> editGroupView(GroupSwap item) {
+    @Transactional(rollbackFor = Exception.class)
+    public Optional<Boolean> editGroupView(GroupSwap item,String ip) {
 
         GroupRole groupRole = groupDao.get(item.getId()).orElse(null);
         if (groupRole == null) return Optional.of(false);
@@ -112,14 +112,14 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    @Transactional
-    public Optional<Boolean> addListGroupUser(List<GroupUser> items, Long userId) {
+    @Transactional(rollbackFor = Exception.class)
+    public Optional<Boolean> addListGroupUser(List<GroupUser> items, Long userId,String ip) {
         groupDao.deleteListGroupOfUser(userId);
         return groupDao.addListGroupUser(items);
     }
 
     @Override
-    public Optional<Boolean> deleteListGroupOfUser(Long userId) {
+    public Optional<Boolean> deleteListGroupOfUser(Long userId,String ip) {
         return groupDao.deleteListGroupOfUser(userId);
     }
 
@@ -129,7 +129,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Optional<Integer> deleteGroup(Integer id,String ip) {
         List<GroupUser> listGU=groupDao.loadAllGroupUserByGroupId(id).orElse(new ArrayList<>());
         if(listGU.size()>0){

@@ -3,13 +3,16 @@ package qms.bvp.web.service.category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import qms.bvp.common.PagingResult;
+import qms.bvp.config.Constants;
 import qms.bvp.model.ReceptionArea;
 import qms.bvp.model.ReceptionDoor;
 import qms.bvp.model.User;
 import qms.bvp.model.swap.Door;
 import qms.bvp.web.repository.RootRepository;
 import qms.bvp.web.repository.category.ReceptionDoorRepository;
+import qms.bvp.web.service.logaccess.LogAccessService;
 import qms.bvp.web.service.reception.ReceptionService;
 
 import java.util.*;
@@ -25,6 +28,8 @@ public class ReceptionDoorServiceImpl implements ReceptionDoorService {
     RootRepository rootRepository;
     @Autowired
     ReceptionService receptionService;
+    @Autowired
+    LogAccessService logAccessService;
 
     @Override
     public Optional<PagingResult> page(PagingResult page) {
@@ -51,7 +56,8 @@ public class ReceptionDoorServiceImpl implements ReceptionDoorService {
     }
 
     @Override
-    public Optional<Byte> add(Door item) {
+    @Transactional(rollbackFor = Exception.class)
+    public Optional<Byte> add(Door item,String ip) {
         if(item==null) return Optional.of(Byte.valueOf("0"));
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(user==null) return Optional.of(Byte.valueOf("2"));
@@ -68,11 +74,13 @@ public class ReceptionDoorServiceImpl implements ReceptionDoorService {
         door.setDate_created(new Date());
         door.setUser_created(user.getId());
         doorRepository.save(door);
+        logAccessService.addLog(Constants.ActionLog.Add,"Thêm cửa tiếp đón","Danh mục",Constants.TableName.ReceptionDoor,door.getId().toString(),door.toString(),ip);
         return Optional.of(Byte.valueOf("1"));
     }
 
     @Override
-    public Optional<Byte> edit(Door item) {
+    @Transactional(rollbackFor = Exception.class)
+    public Optional<Byte> edit(Door item,String ip) {
         if(item==null) return Optional.of(Byte.valueOf("0"));
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(user==null) return Optional.of(Byte.valueOf("2"));
@@ -87,11 +95,13 @@ public class ReceptionDoorServiceImpl implements ReceptionDoorService {
         itemDB.setDate_updated(new Date());
         itemDB.setUser_updated(user.getId());
         doorRepository.save(itemDB);
+        logAccessService.addLog(Constants.ActionLog.Edit,"Sửa cửa tiếp đón","Danh mục",Constants.TableName.ReceptionDoor,itemDB.getId().toString(),itemDB.toString(),ip);
         return Optional.of(Byte.valueOf("1"));
     }
 
     @Override
-    public Optional<Byte> delete(Integer id) {
+    @Transactional(rollbackFor = Exception.class)
+    public Optional<Byte> delete(Integer id,String ip) {
         if(id==null) return Optional.of(Byte.valueOf("0"));
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(user==null) return Optional.of(Byte.valueOf("2"));
@@ -103,6 +113,7 @@ public class ReceptionDoorServiceImpl implements ReceptionDoorService {
         itemDB.setUser_updated(user.getId());
         itemDB.setDeleted(true);
         doorRepository.save(itemDB);
+        logAccessService.addLog(Constants.ActionLog.Delete,"Xóa cửa tiếp đón","Danh mục",Constants.TableName.ReceptionDoor,itemDB.getId().toString(),itemDB.toString(),ip);
         return Optional.of(Byte.valueOf("1"));
     }
 

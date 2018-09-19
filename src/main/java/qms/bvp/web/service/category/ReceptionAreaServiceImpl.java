@@ -6,10 +6,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import qms.bvp.common.DateUtils;
 import qms.bvp.common.PagingResult;
+import qms.bvp.config.Constants;
 import qms.bvp.model.ReceptionArea;
 import qms.bvp.model.User;
 import qms.bvp.model.swap.AreaSwap;
 import qms.bvp.web.repository.category.ReceptionAreaRepository;
+import qms.bvp.web.service.logaccess.LogAccessService;
 import qms.bvp.web.service.reception.ReceptionService;
 
 import java.util.*;
@@ -25,6 +27,8 @@ public class ReceptionAreaServiceImpl implements ReceptionAreaService {
     ReceptionService receptionService;
     @Autowired
     ReceptionDoorService doorService;
+    @Autowired
+    LogAccessService logAccessService;
 
     @Override
     public Optional<PagingResult> page(PagingResult page) {
@@ -84,7 +88,8 @@ public class ReceptionAreaServiceImpl implements ReceptionAreaService {
     }
 
     @Override
-    public Optional<Byte> add(AreaSwap item) {
+    @Transactional(rollbackFor = Exception.class)
+    public Optional<Byte> add(AreaSwap item,String ip) {
         if(item==null) return Optional.of(Byte.valueOf("3"));
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(user==null) return Optional.of(Byte.valueOf("2"));
@@ -98,11 +103,13 @@ public class ReceptionAreaServiceImpl implements ReceptionAreaService {
         ra.setLoudspeaker_times(item.getLoudspeaker_times());
         ra.setDescription(item.getDescription());
         areaRepository.save(ra);
+        logAccessService.addLog(Constants.ActionLog.Add,"Thêm khu vực khám","Danh mục",Constants.TableName.ReceptionArea,ra.getId().toString(),ra.toString(),ip);
         return Optional.of(Byte.valueOf("1"));
     }
 
     @Override
-    public Optional<Byte> edit(AreaSwap item) {
+    @Transactional(rollbackFor = Exception.class)
+    public Optional<Byte> edit(AreaSwap item,String ip) {
         if(item==null) return Optional.of(Byte.valueOf("3"));
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(user==null) return Optional.of(Byte.valueOf("2"));
@@ -117,12 +124,13 @@ public class ReceptionAreaServiceImpl implements ReceptionAreaService {
         itemDB.setLoudspeaker_times(item.getLoudspeaker_times());
         itemDB.setDescription(item.getDescription());
         areaRepository.save(itemDB);
+        logAccessService.addLog(Constants.ActionLog.Edit,"Sửa khu vực khám","Danh mục",Constants.TableName.ReceptionArea,itemDB.getId().toString(),itemDB.toString(),ip);
         return Optional.of(Byte.valueOf("1"));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Optional<Byte> delete(Integer id) {
+    public Optional<Byte> delete(Integer id,String ip) {
         if(id==null) return  Optional.of(Byte.valueOf("3"));
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(user==null) return Optional.of(Byte.valueOf("2"));
@@ -138,6 +146,7 @@ public class ReceptionAreaServiceImpl implements ReceptionAreaService {
         itemDB.setUser_updated(user.getId());
         itemDB.setDate_updated(new Date());
         areaRepository.save(itemDB);
+        logAccessService.addLog(Constants.ActionLog.Delete,"Xóa khu vực khám","Danh mục",Constants.TableName.ReceptionArea,itemDB.getId().toString(),itemDB.toString(),ip);
         return Optional.of(Byte.valueOf("1"));
     }
 }

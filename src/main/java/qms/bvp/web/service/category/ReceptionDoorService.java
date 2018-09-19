@@ -17,9 +17,9 @@ public interface ReceptionDoorService {
     Optional<List<ReceptionDoor>> listAll();
     Optional<List<ReceptionDoor>> listAllActive();
     Hashtable<Integer,ReceptionDoor> initReceptionDoor();
-    Optional<Byte> add(Door item);
-    Optional<Byte> edit(Door item);
-    Optional<Byte> delete(Integer id);
+    Optional<Byte> add(Door item,String ip);
+    Optional<Byte> edit(Door item,String ip);
+    Optional<Byte> delete(Integer id,String ip);
     Optional<ReceptionDoor> get(Integer id);
     Optional<ReceptionDoor> getNotDelete(Integer id);
     void deleteAllDoorOfArea(Integer areaId, Long userId, Date date);

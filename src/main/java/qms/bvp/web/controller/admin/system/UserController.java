@@ -129,12 +129,13 @@ public class UserController {
 
 
     @PostMapping("user-group")
-    public String addUserGroup(Model model, Long id,String listGroup,RedirectAttributes attributes){
+    public String addUserGroup(Model model, Long id,String listGroup,RedirectAttributes attributes,HttpServletRequest request){
         if(id==null) return "404";
         User user = userService.findById(id).orElse(null);
         if (user == null) return "404";
         listGroup=Utils.trim(listGroup);
         try {
+            String ip= Utils.getIpClient(request);
             if (listGroup.length() > 0) {
                 String[] array = listGroup.split(",");
                 List<String> stringList = Arrays.stream(array).collect(Collectors.toList());
@@ -145,11 +146,11 @@ public class UserController {
                         items.add(new GroupUser(Integer.valueOf(item), id, userCurrent.getId(), new Date()));
                     }
                     if (items.size() > 0) {
-                        groupService.addListGroupUser(items,id);
+                        groupService.addListGroupUser(items,id,ip);
                     }
                 }
             } else {
-                groupService.deleteListGroupOfUser(id);
+                groupService.deleteListGroupOfUser(id,ip);
             }
             attributes.addFlashAttribute("success","Phân quyền thành công!");
             return "redirect:/admin/system/user";

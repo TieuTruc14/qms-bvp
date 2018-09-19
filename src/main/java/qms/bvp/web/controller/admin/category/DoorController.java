@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import qms.bvp.common.PagingResult;
+import qms.bvp.common.Utils;
 import qms.bvp.model.ReceptionArea;
 import qms.bvp.model.swap.Door;
 import qms.bvp.validator.category.DoorValidator;
@@ -59,8 +60,8 @@ public class DoorController {
         try{
             ReceptionArea ra=rootService.getReceptionAreaById(item.getArea());
             if(ra==null) return new ResponseEntity<Byte>(Byte.valueOf("0"), HttpStatus.EXPECTATION_FAILED);//417
-
-            Byte value=doorService.add(item).orElse(Byte.valueOf("0"));
+            String ip= Utils.getIpClient(request);
+            Byte value=doorService.add(item,ip).orElse(Byte.valueOf("0"));
             if(value==1){
                 return new ResponseEntity<Byte>(Byte.valueOf("1"), HttpStatus.OK);
             }else if(value==2){
@@ -81,7 +82,8 @@ public class DoorController {
         try{
             ReceptionArea ra=rootService.getReceptionAreaById(item.getArea());
             if(ra==null) return new ResponseEntity<Byte>(Byte.valueOf("0"), HttpStatus.EXPECTATION_FAILED);//417
-            Byte value=doorService.edit(item).orElse(Byte.valueOf("0"));
+            String ip= Utils.getIpClient(request);
+            Byte value=doorService.edit(item,ip).orElse(Byte.valueOf("0"));
             if(value==1){
                 return new ResponseEntity<Byte>(Byte.valueOf("1"), HttpStatus.OK);
             }else if(value==2){
@@ -94,9 +96,10 @@ public class DoorController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Byte> delete(@PathVariable("id") Integer id){
+    public ResponseEntity<Byte> delete(@PathVariable("id") Integer id,HttpServletRequest request){
         try{
-            Byte result=doorService.delete(id).orElse(Byte.valueOf("0"));
+            String ip= Utils.getIpClient(request);
+            Byte result=doorService.delete(id,ip).orElse(Byte.valueOf("0"));
             if(result==1){
                 return new ResponseEntity<Byte>(result,HttpStatus.OK);
             }else if(result==2){

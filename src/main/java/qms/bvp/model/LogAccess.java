@@ -18,7 +18,7 @@ public class LogAccess implements Serializable{
 //    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOG_ACCESS_SEQ")
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "user_id",nullable = false)
     private Long user_id;
@@ -28,6 +28,9 @@ public class LogAccess implements Serializable{
 
     @Column(name = "ip",length = 100)
     private String ip;
+
+    @Column(name="action_type",nullable = false)
+    private Byte action_type;
 
     @Column(name = "action",nullable = false)
     private String action;
@@ -44,5 +47,6 @@ public class LogAccess implements Serializable{
     @Column(name = "object_str")
     @Lob
     private String object_str;
+
 
 }
