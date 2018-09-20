@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface LogAccessDao {
     Optional<PagingResult> page(PagingResult page, String username);
+    Optional<PagingResult> getByUserId(PagingResult page,Long userId);
 }

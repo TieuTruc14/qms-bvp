@@ -57,6 +57,11 @@
                                 </ul>
                             </li>
                         <!--</sec:authorize>-->
+                        <li th:classappend="${T(qms.bvp.common.Utils).isActive(#httpServletRequest.getContextPath()+'/history', #httpServletRequest)} ? 'active' : '' " ><a th:href="@{/history}">
+                        <i class="fa fa-clock-o icon">
+                            <b class="bg-danger dker"></b>
+                        </i><span>Lịch sử của tôi</span></a>
+                        </li>
                     </ul>
                 </nav>
             </div>

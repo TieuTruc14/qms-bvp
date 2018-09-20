@@ -47,6 +47,7 @@
                                         <th class="box-shadow-inner small_col text-center">Module</th>
                                         <th class="box-shadow-inner small_col text-center">Hành động</th>
                                         <th class="box-shadow-inner small_col text-center">Table</th>
+                                        <th class="box-shadow-inner small_col text-center">Id đối tượng</th>
                                         <th class="box-shadow-inner small_col text-center">Ip</th>
                                         <th class="box-shadow-inner small_col text-center">Thời gian</th>
                                         <!--<sec:authorize access="hasRole('ROLE_CATEGORY_GROUP_PRICE_EDIT')">-->
@@ -58,18 +59,20 @@
 
                                     <tr ng-repeat="item in page.items track by $index">
                                         <td class="align-center">{{(page.pageNumber-1)*page.numberPerPage + $index+1}}</td>
-                                        <td class="align-center">{{item.username}}</td>
-                                        <td class="align-center">{{item.username}}</td>
-                                        <td class="align-center">{{item.username}}</td>
-                                        <td class="align-center">{{item.username}}</td>
-                                        <td class="align-center">{{item.username}}</td>
+                                        <td class="align-center">{{item[2]}}</td>
+                                        <td class="align-center">{{item[3]}}</td>
+                                        <td class="align-center">{{item[5]}}</td>
+                                        <td class="align-center">{{item[7]}}</td>
+                                        <td class="align-center">{{item[8]}}</td>
+                                        <td class="align-center">{{item[4]}}</td>
+                                        <td class="align-center">{{item[6] | date:'dd/MM/yyyy HH:mm:ss'}}</td>
                                         <!--<sec:authorize access="hasAnyRole('ROLE_CATEGORY_GROUP_PRICE_EDIT','ROLE_CATEGORY_GROUP_PRICE_DELETE')">-->
                                         <td class="align-center">
                                             <div class="btn-group">
                                                 <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"><i
                                                         class="fa fa-random"></i></button>
                                                 <ul class="dropdown-menu pull-right">
-                                                    <li><a th:href="@{/system/history/{{item[1]}}}"><i class="fa fa-pencil-square-o"></i>Xem log người dùng</a></li>
+                                                    <li><a th:href="@{/admin/system/history/{{item[1]}}}"><i class="fa fa-pencil-square-o"></i>Xem log người dùng</a></li>
                                                 </ul>
                                             </div>
                                         </td>

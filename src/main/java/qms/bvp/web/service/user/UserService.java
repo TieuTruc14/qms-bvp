@@ -16,4 +16,5 @@ public interface UserService {
     boolean checkUserByUsername(String username);
     Optional<Byte> add(User item,String ip);
     Optional<Byte> edit(Long id,Boolean disable,String fullname,String description,String ip);
+    Optional<Integer> changeMyPass(String passwordCurrent,String passNew,String ip);
 }

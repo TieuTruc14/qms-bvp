@@ -19,13 +19,13 @@ public class LogAccessServiceImpl implements LogAccessService {
 
     @Override
     public Optional<PagingResult> page(PagingResult page, String username) {
-        return Optional.empty();
+        return logAccessRepository.page(page,username);
     }
 
     @Override
     public Optional<PagingResult> getByUserId(PagingResult page, Long userId) {
 
-        return Optional.empty();
+        return logAccessRepository.getByUserId(page,userId);
     }
 
     @Override

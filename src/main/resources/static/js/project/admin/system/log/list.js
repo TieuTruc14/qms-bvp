@@ -3,7 +3,7 @@ app.controller('qmsCtrl',['$scope','$http' ,function ($scope,$http) {
         $scope.username="";
         $scope.dataLoaded=false;
         $scope.page=page;
-        $http.get(preUrl+"/system/history/search", {params: {username:$scope.username}})
+        $http.get(preUrl+"/admin/system/history/search", {params: {username:$scope.username}})
             .then(function (response) {
                 if(response!=null && response!='undefined' && response.status==200){
                     $scope.page=response.data;
@@ -14,7 +14,7 @@ app.controller('qmsCtrl',['$scope','$http' ,function ($scope,$http) {
 
         $scope.search=function () {
             $scope.page.pageNumber=1;
-            $http.get(preUrl+"/system/history/search", {params: {username:$scope.username}})
+            $http.get(preUrl+"/admin/system/history/search", {params: {username:$scope.username}})
                 .then(function (response) {
                     if(response!=null && response!='undefined' && response.status==200){
                         $scope.page=response.data;
@@ -26,7 +26,7 @@ app.controller('qmsCtrl',['$scope','$http' ,function ($scope,$http) {
 
         $scope.loadPage=function (pageNumber) {
             if(pageNumber>=1){
-                $http.get(preUrl+"/system/history/search", {params: {p:pageNumber,username:$scope.username}})
+                $http.get(preUrl+"/admin/system/history/search", {params: {p:pageNumber,username:$scope.username}})
                     .then(function (response) {
                         $scope.page=response.data;
                         $scope.page.pageList=getPageList($scope.page);

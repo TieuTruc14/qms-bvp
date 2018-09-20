@@ -3,6 +3,7 @@ package qms.bvp.web.service.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import qms.bvp.common.PagingResult;
@@ -79,4 +80,17 @@ public class UserServiceImpl implements UserService {
         return Optional.of(Byte.valueOf("1"));
     }
 
+    @Override
+    public Optional<Integer> changeMyPass(String passwordCurrent, String passNew,String ip) {
+        User user=(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        PasswordEncoder passwordEnocder = new BCryptPasswordEncoder();
+        if(!passwordEnocder.matches(passwordCurrent,user.getPassword())){
+            return Optional.of(2);
+        }
+        passNew=encoder.encode(passNew);
+        user.setPassword(passNew);
+        userRepository.changeMyPass(passNew,user.getId());
+        logAccessService.addLog(Constants.ActionLog.Edit,"Đổi mật khẩu","","","","",ip);
+        return Optional.of(1);
+    }
 }

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" class="app"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>QMS</title>
+    <div th:replace="fragments/header :: header-common"/>
+</head>
+<body>
+<section class="vbox">
+    <div th:replace="fragments/header :: header-menu" />
+    <section>
+        <section class="hbox stretch">
+            <div th:replace="fragments/leftpanel :: leafpanel" />
+            <!--begin content-->
+            <section id="content" ng-app="qms" ng-controller="qmsCtrl">
+                <section class="hbox stretch">
+                    <!-- .aside -->
+                    <aside>
+                        <section class="vbox">
+                            <header class="header bg-white b-b b-light">
+                                <p>Lịch sử của tôi</p>
+                            </header>
+                            <section class="scrollable wrapper" >
+                                <div class="timeline">
+                                    <article class="timeline-item active">
+                                        <div class="timeline-caption">
+                                            <div class="panel bg-primary lter no-borders">
+                                                <div class="panel-body">
+                                                    <span class="timeline-icon"><i class="fa fa-bell-o time-icon bg-primary"></i></span>
+                                                    <span class="timeline-date">Timeline </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <div class="timeline" ng-repeat="item in list.items track by $index">
+                                        <article class="timeline-item" ng-if="$index%2!=0">
+                                            <div class="timeline-caption">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-body">
+                                                        <span class="arrow left"></span>
+                                                        <span class="timeline-icon"><i class="fa fa-pencil-square-o time-icon"
+                                                                                       ng-class="item.action_type == 1 ? 'bg-text-success' : (item.action_type == 2 ? 'bg-info' : (item.action_type == 3 ? 'bg-danger' : (item.action_type == 4 ? 'bg-primary' : 'bg-primary')))"></i></span>
+                                                        <span class="timeline-date">{{item.date_created | date:'dd/MM/yyyy HH:mm:ss'}}</span>
+                                                        <h5>
+                                                            <span>{{item.module}}</span>
+                                                            <div ng-switch on="item.action_type">
+                                                                <p ng-switch-when="1" class="text-success">{{item.action}}</p>
+                                                                <p ng-switch-when="2" class="text-info">{{item.action}}</p>
+                                                                <p ng-switch-when="3" class="text-danger">{{item.action}}</p>
+                                                                <p ng-switch-when="4" class="text-primary">{{item.action}}</p>
+                                                                <p ng-switch-default>
+                                                                    {{item.action}}
+                                                                </p>
+                                                            </div>
+
+
+                                                        </h5>
+                                                        <p>Bảng tác động: {{item.table_name}}</p>
+                                                        <p>Id đối tượng: {{item.object_id}}</p>
+                                                        <p>IP: {{item.ip}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </article>
+                                        <article class="timeline-item alt" ng-if="$index%2==0">
+                                            <div class="timeline-caption" >
+                                                <div class="panel panel-default">
+                                                    <div class="panel-body">
+                                                        <span class="arrow right"></span>
+                                                        <span class="timeline-icon"><i class="fa fa-pencil-square-o time-icon"
+                                                                                       ng-class="item.action_type == 1 ? 'bg-text-success' : (item.action_type == 2 ? 'bg-info' : (item.action_type == 3 ? 'bg-danger' : (item.action_type == 4 ? 'bg-primary' : 'bg-primary')))"></i></span>
+                                                        <span class="timeline-date">{{item.date_created | date:'dd/MM/yyyy HH:mm:ss'}}</span>
+                                                        <h5>
+                                                            <span>{{item.module}}</span>
+                                                            <div ng-switch on="item.action_type">
+                                                                <p ng-switch-when="1" class="text-success">{{item.action}}</p>
+                                                                <p ng-switch-when="2" class="text-info">{{item.action}}</p>
+                                                                <p ng-switch-when="3" class="text-danger">{{item.action}}</p>
+                                                                <p ng-switch-when="4" class="text-primary">{{item.action}}</p>
+                                                                <p ng-switch-default>
+                                                                    {{item.action}}
+                                                                </p>
+                                                            </div>
+
+                                                        </h5>
+                                                        <p>Bảng tác động: {{item.table_name}}</p>
+                                                        <p>Id đối tượng: {{item.object_id}}</p>
+                                                        <p>IP: {{item.ip}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </article>
+                                        <div ng-show="loadContinue" ng-if="$index+1==list.items.length" class="timeline-footer"><a href="javascript:void(0)" ng-click="loadPage(page.pageNumber+1)"><i class="fa fa-plus time-icon inline-block bg-dark"></i></a></div>
+                                    </div>
+                                </div>
+                            </section>
+                        </section>
+                    </aside>
+                    <!-- /.aside -->
+
+                </section>
+                <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
+
+
+            </section>
+            <!--end content-->
+        </section>
+    </section>
+</section>
+
+<div th:replace="fragments/footer :: footer-common" />
+<script th:src="@{/js/angularjs/angular.min.js}"></script>
+<script th:src="@{/js/angularjs/angular-sanitize.min.js}"></script>
+<script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/angularjs/transform-request.js}"></script>
+<script th:src="@{/js/project/admin/system/log/my.history.js}"></script>
+</body>
+</html>

@@ -166,4 +166,30 @@ public class UserController {
         model.addAttribute("errorMessage","Có lỗi xảy ra, hãy thử lại sau!");
         return "admin/system/user/user.group";
     }
+
+
+    @GetMapping("/change-my-pass")
+    public String changeMyPassView(){
+        return "admin/system/user/change.my.pass";
+    }
+    @PutMapping("change-my-pass")
+    public ResponseEntity<Integer> changeMyPass(@RequestParam String passwordCurrent, @RequestParam String passwordNew,HttpServletRequest request){
+        //0-dieu kien ko phu hop, 1-oke thanh cong,2-mat khau cu khong dung,3-co loi server khi change
+        passwordCurrent=Utils.trim(passwordCurrent);
+        passwordNew=Utils.trim(passwordNew);
+        if(StringUtils.isBlank(passwordCurrent)||StringUtils.isBlank(passwordNew)){
+            return new  ResponseEntity<Integer>(0, HttpStatus.OK);
+        }
+        Integer result=0;
+        try{
+            String ip= Utils.getIpClient(request);
+            result=userService.changeMyPass(passwordCurrent,passwordNew,ip).orElse(3);
+
+        }catch (Exception e){
+            logger.error("Have an error changMyPass:"+e.getMessage());
+            return new  ResponseEntity<Integer>(3, HttpStatus.OK);
+        }
+        return new ResponseEntity<Integer>(result, HttpStatus.OK);
+    }
+
 }
