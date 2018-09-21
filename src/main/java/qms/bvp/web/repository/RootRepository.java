@@ -51,34 +51,31 @@ public class RootRepository {
 
     @PostConstruct
     public void init(){
-        logger.debug("This is a debug message");
-        logger.info("This is an info message");
-        logger.warn("This is a warn message");
-        logger.error("This is an error message");
-        logger.fatal("This is a fatal message");
-        listReceptionAreas=areaService.listAllActive().orElse(new ArrayList<>());
-        for(ReceptionArea item:listReceptionAreas){
-            mapReceptionAreas.put(item.getId(),item);
+        try{
+            listReceptionAreas=areaService.listAllActive().orElse(new ArrayList<>());
+            for(ReceptionArea item:listReceptionAreas){
+                mapReceptionAreas.put(item.getId(),item);
+            }
+            mapNumberOfReceptionArea=areaService.initAreaWithOrderNumber(listReceptionAreas).orElse(new Hashtable<>());
+            receptionObjectTypeList=objectTypeService.listAllActive().orElse(new ArrayList<>());
+            mapReceptionDoor=doorService.initReceptionDoor();
+            genInfoMapReceptionDoor();
+            initReceptionWaitAndmapNumberOfReceptionArea(listReceptionAreas,receptionObjectTypeList);
+            //load receptionCurrentDoor and ReceptionMiss of Door
+            loadCurrentReceptionAndMissReceptionOfDoor();
+        }catch (Exception e){
+            logger.error("Have an error: "+e.getMessage());
         }
-        mapNumberOfReceptionArea=areaService.initAreaWithOrderNumber(listReceptionAreas).orElse(new Hashtable<>());
-        receptionObjectTypeList=objectTypeService.listAllActive().orElse(new ArrayList<>());
-        mapReceptionDoor=doorService.initReceptionDoor();
-        genInfoMapReceptionDoor();
-        initReceptionWaitAndmapNumberOfReceptionArea(listReceptionAreas,receptionObjectTypeList);
-        //load receptionCurrentDoor and ReceptionMiss of Door
-        loadCurrentReceptionAndMissReceptionOfDoor();
-        logger.debug("This is a debug message");
-        logger.info("This is an info message");
-        logger.warn("This is a warn message");
-        logger.error("This is an error message");
-        logger.fatal("This is a fatal message");
+
     }
 
     @Scheduled(cron = "0 0/10 0 * * *")
     @Transactional(rollbackFor = Exception.class)
     public void refreshWhenNewDay(){
+        logger.warn("Start reset Data new Day!");
         init();
         checkRefresh=false;
+        logger.warn("End reset Data new Day!");
     }
 
     @Scheduled(cron = "0 0/05 0 * * *")

@@ -26,6 +26,7 @@ repositories {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
+
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile group: 'org.springframework.security', name: 'spring-security-taglibs', version: '5.0.5.RELEASE'
@@ -45,9 +46,4 @@ dependencies {
 
 	/*for log*/
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging', version: '2.0.4.RELEASE'
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '2.0.4.RELEASE'
-	compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.9.6'
-
-
-
 }

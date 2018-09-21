@@ -90,7 +90,7 @@ public class DoorController {
                 return new ResponseEntity<Byte>(Byte.valueOf("2"), HttpStatus.FORBIDDEN);//403
             }
         }catch (Exception e){
-            logger.error("Have an error on method add:"+e.getMessage());
+            logger.error("Have an error on method edit:"+e.getMessage());
         }
         return new ResponseEntity<Byte>(Byte.valueOf("0"), HttpStatus.NOT_FOUND);
     }
