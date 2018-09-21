@@ -1,4 +1,4 @@
-package qms.bvp.web.controller.admin;
+package qms.bvp.web.controller.admin.manager;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import qms.bvp.common.PagingResult;
+import qms.bvp.common.Utils;
 import qms.bvp.model.Reception;
 import qms.bvp.web.controller.ReceptionController;
 import qms.bvp.web.service.RootService;
@@ -19,7 +20,7 @@ import qms.bvp.web.service.reception.ReceptionService;
  * Created by Admin on 8/22/2018.
  */
 @Controller
-@RequestMapping("/admin/reception")
+@RequestMapping("/admin/management/reception")
 public class AdminReceptionControler {
     private Logger logger= LogManager.getLogger(ReceptionController.class);
     @Autowired
@@ -28,12 +29,13 @@ public class AdminReceptionControler {
     ReceptionService receptionService;
 
     @GetMapping("/list")
-    public ResponseEntity<PagingResult> list(@RequestParam(value = "p", required = false, defaultValue = "1") int pageNumber) {
+    public ResponseEntity<PagingResult> list(@RequestParam(value = "p", required = false, defaultValue = "1") int pageNumber
+    ,String code,String from,String to) {
         PagingResult page=new PagingResult();
         page.setPageNumber(pageNumber);
         page.setNumberPerPage(50);
         try{
-            page=receptionService.page(page).orElse(new PagingResult());
+            page=receptionService.page(page, Utils.trim(code),Utils.trim(from),Utils.trim(to)).orElse(new PagingResult());
             return new ResponseEntity<PagingResult>(page, HttpStatus.OK);
         }catch (Exception e){
             logger.error("Have an error method list:"+e.getMessage());
@@ -43,6 +45,6 @@ public class AdminReceptionControler {
 
     @GetMapping("")
     public String reception(){
-        return "admin/admin.reception";
+        return "admin/manager/admin.reception";
     }
 }

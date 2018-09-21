@@ -19,5 +19,5 @@ public interface ReceptionService {
     Optional<Boolean> confirmReceptionOfDoor(Integer doorId,byte status);
     Optional<Long> countReceptionByDoor(Integer doorId);
     Optional<Long> countReceptionByArea(Integer doorId);
-    Optional<PagingResult> page(PagingResult page);
+    Optional<PagingResult> page(PagingResult page,String code,String from,String to);
 }

@@ -103,6 +103,19 @@ public class QueryBuilder {
         return this.query;
     }
 
+    public Query initNativeQuery(boolean order) {
+        if(order){
+            genOrder();
+        }
+        this.query = this.em.createNativeQuery(sqlbuffer.toString());
+        if (this.keys.size() > 0) {
+            for (int i = 0; i < this.keys.size(); i++) {
+                this.query.setParameter(keys.get(i), values.get(i));
+            }
+        }
+        return this.query;
+    }
+
     public Query initQueryHaveGroupBy(boolean order) {
         genGroupBy();
         if(order){

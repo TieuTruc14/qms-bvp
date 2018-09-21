@@ -195,7 +195,20 @@ public class ReceptionServiceImpl implements ReceptionService {
     }
 
     @Override
-    public Optional<PagingResult> page(PagingResult page) {
-        return receptionRepository.page(page);
+    public Optional<PagingResult> page(PagingResult page,String code,String from,String to) {
+        try {
+            Date fromDate = null;
+            Date toDate = null;
+            if (StringUtils.isNotBlank(from)) {
+                fromDate = DateUtils.strToDate(from + " 00:00:00", "dd/MM/yyyy HH:mm:ss");
+            }
+            if (StringUtils.isNotBlank(to)) {
+                toDate = DateUtils.strToDate(to + " 23:59:59", "dd/MM/yyyy HH:mm:ss");
+            }
+            return receptionRepository.page(page, code, fromDate, toDate);
+        } catch (Exception e) {
+            return Optional.ofNullable(null);
+        }
+//        return receptionRepository.page(page);
     }
 }

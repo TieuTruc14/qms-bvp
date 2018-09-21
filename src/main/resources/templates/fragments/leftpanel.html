@@ -28,6 +28,7 @@
                         <li  th:classappend="${T(qms.bvp.common.Utils).isActive(#httpServletRequest.getContextPath()+'/admin/management', #httpServletRequest)} ? 'active' : '' "><a href="#" class=""> <i class="fa fa-paste icon"> <b class="bg-primary"></b> </i> <span class="pull-right"> <i class="fa fa-angle-down text"></i> <i class="fa fa-angle-up text-active"></i> </span> <span>Quản lý</span> </a>
                             <ul class="nav lt">
                                 <li th:classappend="${T(qms.bvp.common.Utils).isActive(#httpServletRequest.getContextPath()+'/admin/management/generality', #httpServletRequest)} ? 'active' : '' " class=""><a th:href="@{/admin/management/generality}" class=""> <i class="fa fa-angle-right"></i> <span>Thông tin cửa tiếp đón</span> </a></li>
+                                <li th:classappend="${T(qms.bvp.common.Utils).isActive(#httpServletRequest.getContextPath()+'/admin/management/reception', #httpServletRequest)} ? 'active' : '' " class=""><a th:href="@{/admin/management/reception}" class=""> <i class="fa fa-angle-right"></i> <span>Thông tin tiếp đón</span> </a></li>
                             </ul>
                         </li>
                         <li th:classappend="${T(qms.bvp.common.Utils).isActive(#httpServletRequest.getContextPath()+'/admin/category', #httpServletRequest)} ? 'active' : '' "><a href="#" class=""> <i class="fa fa-file-text icon"> <b class="bg-primary"></b> </i> <span class="pull-right"> <i class="fa fa-angle-down text"></i> <i class="fa fa-angle-up text-active"></i> </span> <span>Danh mục</span> </a>
@@ -37,11 +38,11 @@
                                     <li class="" th:classappend="${T(qms.bvp.common.Utils).isActive(#httpServletRequest.getContextPath()+'/admin/category/object-type', #httpServletRequest)} ? 'active' : '' "><a th:href="@{/admin/category/object-type}" class=""> <i class="fa fa-angle-right"></i> <span>Loại đối tượng tiếp đón</span> </a></li>
                             </ul>
                         </li>
-                        <li class=""  th:classappend="${T(qms.bvp.common.Utils).isActive(#httpServletRequest.getContextPath()+'/admin/reception', #httpServletRequest)} ? 'active' : '' "><a th:href="@{/admin/reception}">
-                            <i class="fa fa-dashboard icon">
-                                <b class="bg-info"></b>
-                            </i><span>Thông tin tiếp đón</span></a>
-                        </li>
+                        <!--<li class=""  th:classappend="${T(qms.bvp.common.Utils).isActive(#httpServletRequest.getContextPath()+'/admin/reception', #httpServletRequest)} ? 'active' : '' "><a th:href="@{/admin/reception}">-->
+                            <!--<i class="fa fa-dashboard icon">-->
+                                <!--<b class="bg-info"></b>-->
+                            <!--</i><span>Thông tin tiếp đón</span></a>-->
+                        <!--</li>-->
                         <!--<sec:authorize access="hasAnyRole('ROLE_SYSTEM_USER_VIEW','ROLE_SYSTEM_GROUP_VIEW','ROLE_SYSTEM_LOG_VIEW')">-->
                             <li th:classappend="${T(qms.bvp.common.Utils).isActive(#httpServletRequest.getContextPath()+'/admin/system', #httpServletRequest)} ? 'active' : '' " ><a href="#" class=""> <i class="fa fa-cogs icon"> <b class="bg-warning"></b> </i> <span class="pull-right"> <i class="fa fa-angle-down text"></i> <i class="fa fa-angle-up text-active"></i> </span> <span>Quản trị hệ thống</span> </a>
                                 <ul class="nav lt">
