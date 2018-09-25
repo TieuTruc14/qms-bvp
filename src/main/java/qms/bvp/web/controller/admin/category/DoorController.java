@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import qms.bvp.common.PagingResult;
 import qms.bvp.common.Utils;
+import qms.bvp.config.ConstantAuthor;
 import qms.bvp.model.ReceptionArea;
 import qms.bvp.model.swap.Door;
 import qms.bvp.validator.category.DoorValidator;
@@ -35,11 +37,13 @@ public class DoorController {
     RootService rootService;
 
     @GetMapping("")
+    @Secured(ConstantAuthor.Door.view)
     public String list(Model model){
         return "admin/category/door/list";
     }
 
     @GetMapping("/list-all")
+    @Secured(ConstantAuthor.Door.view)
     public ResponseEntity<PagingResult> listAll(@RequestParam(value = "p", required = false, defaultValue = "1") int pageNumber){
         PagingResult page=new PagingResult();
         page.setPageNumber(pageNumber);
@@ -52,6 +56,7 @@ public class DoorController {
     }
 
     @PostMapping("/add")
+    @Secured(ConstantAuthor.Door.add)
     public ResponseEntity<Byte> add(@RequestBody Door item, BindingResult result, RedirectAttributes attributes, HttpServletRequest request){
         doorValidator.validate(item,result);
         if(result.hasErrors()){
@@ -74,6 +79,7 @@ public class DoorController {
     }
 
     @PutMapping("/edit")
+    @Secured(ConstantAuthor.Door.edit)
     public ResponseEntity<Byte> edit(@RequestBody Door item, BindingResult result, RedirectAttributes attributes, HttpServletRequest request){
         doorValidator.validate(item,result);
         if(result.hasErrors() || item.getId()==null || item.getId().intValue()==0){
@@ -96,6 +102,7 @@ public class DoorController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @Secured(ConstantAuthor.Door.delete)
     public ResponseEntity<Byte> delete(@PathVariable("id") Integer id,HttpServletRequest request){
         try{
             String ip= Utils.getIpClient(request);

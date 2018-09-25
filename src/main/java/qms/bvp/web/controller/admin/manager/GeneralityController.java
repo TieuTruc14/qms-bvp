@@ -5,10 +5,12 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import qms.bvp.config.ConstantAuthor;
 import qms.bvp.model.ReceptionDoor;
 import qms.bvp.model.swap.GeneralityDoor;
 import qms.bvp.web.service.RootService;
@@ -32,6 +34,7 @@ public class GeneralityController {
     }
 
     @GetMapping("/list-door")
+    @Secured(ConstantAuthor.MANAGEMENT.door)
     public ResponseEntity<List<GeneralityDoor>> listAll(){
        List<ReceptionDoor> list=rootService.listAllReceptionDoor();
        List<GeneralityDoor> lst=new ArrayList<>();

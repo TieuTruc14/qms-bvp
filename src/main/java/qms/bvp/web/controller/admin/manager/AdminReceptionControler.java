@@ -5,12 +5,14 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import qms.bvp.common.PagingResult;
 import qms.bvp.common.Utils;
+import qms.bvp.config.ConstantAuthor;
 import qms.bvp.model.Reception;
 import qms.bvp.web.controller.ReceptionController;
 import qms.bvp.web.service.RootService;
@@ -29,6 +31,7 @@ public class AdminReceptionControler {
     ReceptionService receptionService;
 
     @GetMapping("/list")
+    @Secured(ConstantAuthor.MANAGEMENT.reception)
     public ResponseEntity<PagingResult> list(@RequestParam(value = "p", required = false, defaultValue = "1") int pageNumber
     ,String code,String from,String to) {
         PagingResult page=new PagingResult();
@@ -44,6 +47,7 @@ public class AdminReceptionControler {
     }
 
     @GetMapping("")
+    @Secured(ConstantAuthor.MANAGEMENT.reception)
     public String reception(){
         return "admin/manager/admin.reception";
     }

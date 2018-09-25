@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import qms.bvp.common.PagingResult;
 import qms.bvp.common.Utils;
+import qms.bvp.config.ConstantAuthor;
 import qms.bvp.model.GroupRole;
 import qms.bvp.model.GroupUser;
 import qms.bvp.model.User;
@@ -44,6 +46,7 @@ public class UserController {
     }
 
     @GetMapping("/list")
+    @Secured(ConstantAuthor.User.view)
     public ResponseEntity<PagingResult> list(@RequestParam(value = "p", required = false, defaultValue = "1") int pageNumber,String username){
         PagingResult page=new PagingResult();
         page.setPageNumber(pageNumber);
@@ -56,6 +59,7 @@ public class UserController {
     }
 
     @GetMapping("/check-username")
+    @Secured(ConstantAuthor.User.view)
     public ResponseEntity<Boolean> checkUserByUsername(String username){
         if(StringUtils.isBlank(username)){
             return new ResponseEntity<Boolean>(true,HttpStatus.OK);
@@ -69,6 +73,7 @@ public class UserController {
         return new ResponseEntity<Boolean>(check,HttpStatus.OK);
     }
     @PostMapping("/add")
+    @Secured(ConstantAuthor.User.add)
     public ResponseEntity<Byte> add(String username,String fullname,String password,String description,HttpServletRequest request){
         if(StringUtils.isBlank(username)||StringUtils.isBlank(fullname)||StringUtils.isBlank(password)){
             return new ResponseEntity<Byte>(Byte.valueOf("2"),HttpStatus.OK);
@@ -89,6 +94,7 @@ public class UserController {
     }
 
     @PutMapping("/edit")
+    @Secured(ConstantAuthor.User.edit)
     public ResponseEntity<Byte> edit(Long id,Boolean disable,String fullname,String description,HttpServletRequest request){
         if(id==null || !(id.longValue()>0) || StringUtils.isBlank(fullname)){
             return new ResponseEntity<Byte>(Byte.valueOf("2"),HttpStatus.OK);
@@ -107,6 +113,7 @@ public class UserController {
 
 
     @GetMapping("/user-group/{id}")
+    @Secured(ConstantAuthor.User.grant)
     public String userGroup(Model model,@PathVariable("id") Long id){
         if(id==null) return "404";
         User user=userService.findById(id).orElse(null);
@@ -129,6 +136,7 @@ public class UserController {
 
 
     @PostMapping("user-group")
+    @Secured(ConstantAuthor.User.grant)
     public String addUserGroup(Model model, Long id,String listGroup,RedirectAttributes attributes,HttpServletRequest request){
         if(id==null) return "404";
         User user = userService.findById(id).orElse(null);

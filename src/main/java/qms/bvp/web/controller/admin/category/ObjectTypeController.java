@@ -5,12 +5,14 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import qms.bvp.common.PagingResult;
+import qms.bvp.config.ConstantAuthor;
 import qms.bvp.model.ReceptionObjectType;
 import qms.bvp.web.service.category.ReceptionObjectTypeService;
 
@@ -29,11 +31,13 @@ public class ObjectTypeController {
     ReceptionObjectTypeService objectTypeService;
 
     @GetMapping("")
+    @Secured(ConstantAuthor.ObjectType.view)
     public String list(Model model){
         return "admin/category/objectType/list";
     }
 
     @GetMapping("/list")
+    @Secured(ConstantAuthor.ObjectType.view)
     public ResponseEntity<PagingResult> list(@RequestParam(value = "p", required = false, defaultValue = "1") int pageNumber){
         PagingResult page=new PagingResult();
         page.setPageNumber(pageNumber);

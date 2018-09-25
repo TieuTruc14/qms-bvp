@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import qms.bvp.common.PagingResult;
 import qms.bvp.common.Utils;
+import qms.bvp.config.ConstantAuthor;
 import qms.bvp.model.swap.AreaSwap;
 import qms.bvp.validator.category.AreaViewValidator;
 import qms.bvp.web.service.category.ReceptionAreaService;
@@ -36,6 +38,7 @@ public class AreaController {
     }
 
     @GetMapping("/page")
+    @Secured(ConstantAuthor.Area.view)
     public ResponseEntity<PagingResult> listAll(@RequestParam(value = "p", required = false, defaultValue = "1") int pageNumber){
         PagingResult page=new PagingResult();
         page.setPageNumber(pageNumber);
@@ -48,6 +51,7 @@ public class AreaController {
     }
 
     @PostMapping("/add")
+    @Secured(ConstantAuthor.Area.add)
     public ResponseEntity<Byte> add(@RequestBody AreaSwap item, BindingResult result, RedirectAttributes attributes, HttpServletRequest request){
         areaViewValidator.validate(item,result);
         if(result.hasErrors()){
@@ -70,6 +74,7 @@ public class AreaController {
     }
 
     @PutMapping("/edit")
+    @Secured(ConstantAuthor.Area.edit)
     public ResponseEntity<Byte> edit(@RequestBody AreaSwap item, BindingResult result, RedirectAttributes attributes, HttpServletRequest request){
                 areaViewValidator.validate(item,result);
         if(result.hasErrors() || item.getId()==null || item.getId().intValue()==0){
@@ -92,6 +97,7 @@ public class AreaController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @Secured(ConstantAuthor.Area.delete)
     public ResponseEntity<Byte> delete(@PathVariable("id") Integer id,HttpServletRequest request){
         try{
             String ip= Utils.getIpClient(request);

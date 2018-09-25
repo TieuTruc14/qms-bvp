@@ -12,7 +12,9 @@ import qms.bvp.web.service.group.GroupService;
 import qms.bvp.web.service.user.UserService;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -29,8 +31,12 @@ public class ManhUserDetailService implements UserDetailsService {
             List<GrantedAuthority> lstAuths = new ArrayList<GrantedAuthority>();
             List<String> list=groupService.loadListAuthorityOfUserByUserId(user.getId()).orElse(new ArrayList<>());
             if(list!=null && list.size()>0){
+                HashSet<String> auths=new HashSet<>();
                 for(String role:list){
-                    lstAuths.add(new SimpleGrantedAuthority(role));
+                    auths.add(role);
+                }
+                for(String str:auths){
+                    lstAuths.add(new SimpleGrantedAuthority(str));
                 }
             }
             user.setGrantedAuths(lstAuths);

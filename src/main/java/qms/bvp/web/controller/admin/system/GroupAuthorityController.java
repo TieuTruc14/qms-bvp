@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import qms.bvp.common.PagingResult;
 import qms.bvp.common.Utils;
+import qms.bvp.config.ConstantAuthor;
 import qms.bvp.model.Authority;
 import qms.bvp.model.swap.AuthorityView;
 import qms.bvp.model.swap.GroupSwap;
@@ -39,6 +41,7 @@ public class GroupAuthorityController {
     }
 
     @GetMapping("/list")
+    @Secured(ConstantAuthor.GroupAuthority.view)
     public ResponseEntity<PagingResult> list(@RequestParam(value = "p", required = false, defaultValue = "1") int pageNumber, String filtername){
         PagingResult page=new PagingResult();
         page.setPageNumber(pageNumber);
@@ -51,6 +54,7 @@ public class GroupAuthorityController {
     }
 
     @GetMapping("/add")
+    @Secured(ConstantAuthor.GroupAuthority.add)
     public String groupAdd(Model model) {
         try{
             List<Authority> items=groupService.loadAllAuthority().orElse(new ArrayList<>());
@@ -91,6 +95,7 @@ public class GroupAuthorityController {
     }
 
     @PostMapping("/add")
+    @Secured(ConstantAuthor.GroupAuthority.add)
     public String groupAddSave(Model model, @Valid GroupSwap item, BindingResult result, RedirectAttributes attributes,HttpServletRequest request) {
         groupViewAddValidator.validate(item,result);
         if(StringUtils.isBlank(item.getGroupName()) || item.getGroupName().length()>100){
@@ -118,6 +123,7 @@ public class GroupAuthorityController {
 
 
     @GetMapping("/edit/{id}")
+    @Secured(ConstantAuthor.GroupAuthority.edit)
     public String groupEdit(Model model,@PathVariable("id") Integer id) {
         if(id==null || id.intValue()==0) return "404";
         try{
@@ -136,6 +142,7 @@ public class GroupAuthorityController {
     }
 
     @PostMapping("/edit")
+    @Secured(ConstantAuthor.GroupAuthority.edit)
     public String groupEditSave(Model model, @Valid GroupSwap item, BindingResult result, RedirectAttributes attributes,HttpServletRequest request) {
         if(item.getId()==null|| item.getId().intValue()==0) return "404";
         groupViewAddValidator.validate(item,result);
