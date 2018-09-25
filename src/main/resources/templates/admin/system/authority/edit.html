@@ -73,14 +73,12 @@
                                                                 <input type="checkbox"  name="listAuthority" th:value="${group.parent.id}"   onchange="checkAllInRow(this)" /><label th:text="${group.parent.name}"> </label>
                                                             </td>
                                                         </tr>
-                                                        <!--<c:forEach var="children" items="${group.childrens}">-->
                                                         <tr th:each="children : ${group.childrens}">
                                                             <td  style="padding-left: 40px; vertical-align: top;" >
                                                                 <input type="checkbox"  name ="listAuthority" onchange="checkChildren(this)" th:value="${children.id}" alt="chk" th:text="${children.name}" />
 
                                                             </td>
                                                         </tr>
-                                                        <!--</c:forEach>-->
                                                         </tbody>
                                                     </table>
                                                 </div>
